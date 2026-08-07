@@ -1,0 +1,1417 @@
+{
+  "300456": {
+    "code": "300456",
+    "name": "赛微电子",
+    "sw2": "半导体-制造",
+    "biz": "MEMS微机电系统芯片制造，全球领先的纯MEMS代工厂，覆盖加速度计/陀螺仪/压力传感器/硅麦克风等，客户包括意法半导体/博世/惠普等。瑞典产线(FAB1+2)+北京产线(FAB3)，8英寸MEMS量产线。",
+    "comp": "全球MEMS代工CR3>70%（博世/意法半导体/Teledyne），公司通过并购Silex进入第一梯队，纯代工模式差异化竞争。国内竞争对手包括美泰科技/微电子所，公司在MEMS纯代工领域国内绝对龙头。",
+    "edge": "1)全球稀缺的MEMS纯代工产能 2)瑞典Silex技术+中国产能双轮驱动 3)北京FAB3量产爬坡打开成长天花板 4)客户粘性极高（认证周期2-3年）",
+    "plan": "北京FAB3产能从3000片/月→30000片/月，布局硅光子/生物医疗MEMS新品类，瑞典产线向12英寸升级",
+    "risk": {
+      "var_95_pct": 5.6938,
+      "cvar_95_pct": 10.1687,
+      "annual_vol": 73.1
+    },
+    "analysis_date": "2026-07-28",
+    "basic": {
+      "price": 28.55,
+      "pe_ttm": 14.7,
+      "pb": 3.29,
+      "mcap_yi": 170.57,
+      "turnover_pct": 5.09,
+      "last_close": 29.57
+    },
+    "technical": {
+      "kline_rows": 333,
+      "latest_close": 28.55,
+      "ma_score": 0,
+      "ma_verdict": "均线强烈看空（强势空头排列，评分0）",
+      "ma_alignment": "强势空头排列",
+      "cross_signals": 5,
+      "patterns": [],
+      "verdict": "偏空",
+      "verdict_score": 30,
+      "confidence": "中",
+      "position_advice": "减仓至轻仓",
+      "conflicts": []
+    },
+    "valuation": {
+      "final_value": 38.93,
+      "current_price": 28.55,
+      "margin_of_safety_pct": 26.7,
+      "margin_verdict": "适度低估",
+      "dcf_per_share": 8.66,
+      "dcf_wacc": 10.75,
+      "dcf_terminal_g": 3.0,
+      "dcf_tv_ratio": 87.4,
+      "peg_value": {
+        "peg": 0.29,
+        "fair_pe": 50.0,
+        "fair_value": 100.5,
+        "verdict": "极度低估",
+        "detail": "PE=14.7, EPS CAGR=50.0%, PEG=0.29"
+      },
+      "pb_roe_value": {
+        "pb": 3.29,
+        "roe_pct": 18.1,
+        "fair_pb": 1.54,
+        "fair_value": 17.05,
+        "verdict": "高估",
+        "detail": "ROE=18.1%, PB=3.29, 合理PB=1.54"
+      },
+      "scenarios": {
+        "乐观": {
+          "growth_adjustment": "120%",
+          "margin_adjustment": "110%",
+          "dcf_value": 10.97,
+          "relative_value": 72.3,
+          "composite_value": 41.64,
+          "upside_pct": 45.8
+        },
+        "中性": {
+          "growth_adjustment": "100%",
+          "margin_adjustment": "100%",
+          "dcf_value": 8.66,
+          "relative_value": 65.73,
+          "composite_value": 37.2,
+          "upside_pct": 30.3
+        },
+        "悲观": {
+          "growth_adjustment": "80%",
+          "margin_adjustment": "90%",
+          "dcf_value": 7.18,
+          "relative_value": 59.16,
+          "composite_value": 33.17,
+          "upside_pct": 16.2
+        }
+      },
+      "earnings": {
+        "current_year": 2026,
+        "eps_forecast": [
+          0.04,
+          0.09
+        ],
+        "growth_rates": [
+          -0.9801,
+          1.25
+        ],
+        "cagr_3y": 0.5,
+        "num_analysts": 1,
+        "source": "同花顺一致预期",
+        "trailing_eps": 2.01,
+        "research_targets": []
+      }
+    },
+    "financials": {
+      "lrb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "key_metrics": {
+        "revenue": 9854.2482,
+        "net_profit": -6202.0554,
+        "gross_margin": null
+      },
+      "fzb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "balance": {
+        "total_assets": 876724.7769,
+        "equity": 662388.7552,
+        "cash": 197968.35,
+        "debt_ratio": 24.4
+      },
+      "llb": {
+        "reports": 8,
+        "latest_period": ""
+      }
+    },
+    "consensus": {
+      "num_analysts": 1,
+      "eps_2026": 0.04,
+      "eps_2027": 0.09,
+      "hist_eps": [
+        {
+          "year": "2023",
+          "eps": 0.14
+        },
+        {
+          "year": "2024",
+          "eps": -0.23
+        },
+        {
+          "year": "2025",
+          "eps": 2.01
+        }
+      ]
+    },
+    "wacc": {
+      "wacc": 0.1075,
+      "ke": 0.1284,
+      "beta": 1.54,
+      "kd": 0.0333,
+      "d_e_ratio": 0.28
+    },
+    "market_regime": {
+      "verdict": "",
+      "score": 39,
+      "transition": "【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭"
+    }
+  },
+  "600288": {
+    "code": "600288",
+    "name": "大恒科技",
+    "sw2": "元件-光学",
+    "biz": "精密光学元件及系统，覆盖机器视觉/激光光学/太赫兹安检/数字放映等。子公司大恒光电在激光晶体和非线性晶体领域行业领先，太赫兹安检仪应用于轨道交通/法院等场景。",
+    "comp": "光学元件行业格局分散，高端市场由舜宇光学/凤凰光学/日本腾龙主导。大恒在激光光学和太赫兹领域有差异化优势，太赫兹安检为稀缺A股标的。",
+    "edge": "1)太赫兹技术稀缺性（A股唯一太赫兹安检标的）2)中科院光机所技术背景 3)机器视觉行业高景气（>20%增速）",
+    "plan": "太赫兹安检仪从轨道交通向法院/医院拓展，激光光学向半导体设备配套延伸，机器视觉向3D检测升级",
+    "risk": {
+      "var_95_pct": 3.5827,
+      "cvar_95_pct": 6.6608,
+      "annual_vol": 45.6
+    },
+    "analysis_date": "2026-07-28",
+    "basic": {
+      "price": 9.9,
+      "pe_ttm": 26.44,
+      "pb": 2.17,
+      "mcap_yi": 43.24,
+      "turnover_pct": 9.07,
+      "last_close": 10.06
+    },
+    "technical": {
+      "kline_rows": 333,
+      "latest_close": 9.9,
+      "ma_score": 0,
+      "ma_verdict": "均线强烈看空（强势空头排列，评分0）",
+      "ma_alignment": "强势空头排列",
+      "cross_signals": 4,
+      "patterns": [],
+      "verdict": "偏空",
+      "verdict_score": 30,
+      "confidence": "中",
+      "position_advice": "减仓至轻仓",
+      "conflicts": []
+    },
+    "valuation": {
+      "final_value": 10.57,
+      "current_price": 9.9,
+      "margin_of_safety_pct": 6.3,
+      "margin_verdict": "合理估值",
+      "dcf_per_share": 13.29,
+      "dcf_wacc": 5.71,
+      "dcf_terminal_g": 3.0,
+      "dcf_tv_ratio": 86.7,
+      "peg_value": {
+        "peg": null,
+        "fair_pe": null,
+        "fair_value": null,
+        "verdict": "数据不足"
+      },
+      "pb_roe_value": {
+        "pb": 2.17,
+        "roe_pct": 6.6,
+        "fair_pb": 0.73,
+        "fair_value": 3.32,
+        "verdict": "高估",
+        "detail": "ROE=6.6%, PB=2.17, 合理PB=0.73"
+      },
+      "scenarios": {
+        "乐观": {
+          "growth_adjustment": "120%",
+          "margin_adjustment": "110%",
+          "dcf_value": 16.81,
+          "relative_value": 3.65,
+          "composite_value": 10.23,
+          "upside_pct": 3.3
+        },
+        "中性": {
+          "growth_adjustment": "100%",
+          "margin_adjustment": "100%",
+          "dcf_value": 13.29,
+          "relative_value": 3.32,
+          "composite_value": 8.3,
+          "upside_pct": -16.2
+        },
+        "悲观": {
+          "growth_adjustment": "80%",
+          "margin_adjustment": "90%",
+          "dcf_value": 10.21,
+          "relative_value": 2.99,
+          "composite_value": 6.6,
+          "upside_pct": -33.3
+        }
+      },
+      "earnings": {
+        "current_year": 2026,
+        "eps_forecast": [],
+        "growth_rates": [],
+        "cagr_3y": 0.0,
+        "num_analysts": 0,
+        "source": "",
+        "trailing_eps": 0.6196,
+        "research_targets": []
+      }
+    },
+    "financials": {
+      "lrb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "key_metrics": {
+        "revenue": 37107.4809,
+        "net_profit": 6679.9008,
+        "gross_margin": null
+      },
+      "fzb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "balance": {
+        "total_assets": 326416.3307,
+        "equity": 198994.0555,
+        "cash": 108698.2405,
+        "debt_ratio": 39.0
+      },
+      "llb": {
+        "reports": 8,
+        "latest_period": ""
+      }
+    },
+    "consensus": {},
+    "wacc": {
+      "wacc": 0.0571,
+      "ke": 0.079,
+      "beta": 0.78,
+      "kd": 0.0088,
+      "d_e_ratio": 0.45
+    },
+    "market_regime": {
+      "verdict": "",
+      "score": 39,
+      "transition": "【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭"
+    }
+  },
+  "688636": {
+    "code": "688636",
+    "name": "智明达",
+    "sw2": "元件-军工电子",
+    "biz": "军用嵌入式计算机系统，产品覆盖机载/弹载/舰载/车载嵌入式计算机及信号处理模块，核心客户为中航工业/中国电科/兵器集团等军工央企。",
+    "comp": "军用嵌入式计算机行业进入壁垒极高（军工四证+型号定型周期5-10年），格局稳定。主要竞争对手包括雷科防务/景嘉微/中科海讯等。公司营收体量较小但绑定核心型号。",
+    "edge": "1)军工嵌入式计算机完整资质 2)绑定多型重点型号（歼-XX/运-XX等）3)国产化率100%要求下的替代逻辑 4)型号定型后收入高度可预期",
+    "plan": "从嵌入式计算机向综合任务系统升级，拓展无人机/智能弹药新领域，研发新一代VPX架构产品",
+    "risk": {
+      "var_95_pct": 5.4145,
+      "cvar_95_pct": 9.9387,
+      "annual_vol": 65.0
+    },
+    "analysis_date": "2026-07-28",
+    "basic": {
+      "price": 17.29,
+      "pe_ttm": 26.92,
+      "pb": 2.15,
+      "mcap_yi": 30.07,
+      "turnover_pct": 7.29,
+      "last_close": 17.6
+    },
+    "technical": {
+      "kline_rows": 333,
+      "latest_close": 17.29,
+      "ma_score": 0,
+      "ma_verdict": "均线强烈看空（强势空头排列，评分0）",
+      "ma_alignment": "强势空头排列",
+      "cross_signals": 5,
+      "patterns": [],
+      "verdict": "偏空",
+      "verdict_score": 30,
+      "confidence": "中",
+      "position_advice": "减仓至轻仓",
+      "conflicts": []
+    },
+    "valuation": {
+      "final_value": 23.5,
+      "current_price": 17.29,
+      "margin_of_safety_pct": 26.4,
+      "margin_verdict": "适度低估",
+      "dcf_per_share": 39.81,
+      "dcf_wacc": 6.94,
+      "dcf_terminal_g": 3.0,
+      "dcf_tv_ratio": 88.0,
+      "peg_value": {
+        "peg": 2.0,
+        "fair_pe": 13.5,
+        "fair_value": 8.21,
+        "verdict": "严重高估",
+        "detail": "PE=26.9, EPS CAGR=13.5%, PEG=2.00"
+      },
+      "pb_roe_value": {
+        "pb": 2.15,
+        "roe_pct": 7.5,
+        "fair_pb": 0.68,
+        "fair_value": 5.5,
+        "verdict": "高估",
+        "detail": "ROE=7.5%, PB=2.15, 合理PB=0.68"
+      },
+      "scenarios": {
+        "乐观": {
+          "growth_adjustment": "120%",
+          "margin_adjustment": "110%",
+          "dcf_value": 59.47,
+          "relative_value": 7.79,
+          "composite_value": 33.63,
+          "upside_pct": 94.5
+        },
+        "中性": {
+          "growth_adjustment": "100%",
+          "margin_adjustment": "100%",
+          "dcf_value": 39.81,
+          "relative_value": 7.08,
+          "composite_value": 23.44,
+          "upside_pct": 35.6
+        },
+        "悲观": {
+          "growth_adjustment": "80%",
+          "margin_adjustment": "90%",
+          "dcf_value": 29.86,
+          "relative_value": 6.37,
+          "composite_value": 18.11,
+          "upside_pct": 4.7
+        }
+      },
+      "earnings": {
+        "current_year": 2026,
+        "eps_forecast": [
+          0.87,
+          1.12
+        ],
+        "growth_rates": [
+          0.4262,
+          0.2874
+        ],
+        "cagr_3y": 0.1346,
+        "num_analysts": 1,
+        "source": "同花顺一致预期",
+        "trailing_eps": 0.61,
+        "research_targets": []
+      }
+    },
+    "financials": {
+      "lrb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "key_metrics": {
+        "revenue": 10838.0494,
+        "net_profit": 1762.5495,
+        "gross_margin": null
+      },
+      "fzb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "balance": {
+        "total_assets": 203272.5558,
+        "equity": 141436.7135,
+        "cash": 3522.5855,
+        "debt_ratio": 30.4
+      },
+      "llb": {
+        "reports": 8,
+        "latest_period": ""
+      }
+    },
+    "consensus": {
+      "num_analysts": 1,
+      "eps_2026": 0.87,
+      "eps_2027": 1.12,
+      "hist_eps": [
+        {
+          "year": "2023",
+          "eps": 0.86
+        },
+        {
+          "year": "2024",
+          "eps": 0.12
+        },
+        {
+          "year": "2025",
+          "eps": 0.61
+        }
+      ]
+    },
+    "wacc": {
+      "wacc": 0.0694,
+      "ke": 0.0965,
+      "beta": 1.05,
+      "kd": 0.0075,
+      "d_e_ratio": 0.44
+    },
+    "market_regime": {
+      "verdict": "",
+      "score": 39,
+      "transition": "【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭"
+    }
+  },
+  "000733": {
+    "code": "000733",
+    "name": "振华科技",
+    "sw2": "元件-被动元件",
+    "biz": "军用电子元器件龙头，产品覆盖电阻/电容/电感/半导体分立器件/电源模块等，旗下振华新云（钽电容龙头）、振华微（厚膜混合IC）、振华富（MLCC）等子公司均为军工电子核心供应商。",
+    "comp": "军工被动元件行业双寡头（振华科技+宏达电子），CR2>60%。民品市场格局分散但公司军工占比>80%，受民品周期影响小。",
+    "edge": "1)军工电子元器件平台型公司 2)钽电容国内垄断地位(市占率>70%) 3)国产替代主 beneficiary 4)产品覆盖面最广的军工电子标的",
+    "plan": "新型钽电容/高分子电容扩产，厚膜混合IC向系统级封装(SiP)升级，MLCC向高压/高频方向拓展",
+    "risk": {
+      "var_95_pct": 5.0625,
+      "cvar_95_pct": 6.5682,
+      "annual_vol": 44.7
+    },
+    "analysis_date": "2026-07-28",
+    "basic": {
+      "price": 39.03,
+      "pe_ttm": 22.01,
+      "pb": 1.39,
+      "mcap_yi": 216.26,
+      "turnover_pct": 1.8,
+      "last_close": 39.88
+    },
+    "technical": {
+      "kline_rows": 333,
+      "latest_close": 39.03,
+      "ma_score": 0,
+      "ma_verdict": "均线强烈看空（强势空头排列，评分0）",
+      "ma_alignment": "强势空头排列",
+      "cross_signals": 3,
+      "patterns": [],
+      "verdict": "偏空",
+      "verdict_score": 30,
+      "confidence": "中",
+      "position_advice": "减仓至轻仓",
+      "conflicts": []
+    },
+    "valuation": {
+      "final_value": 25.72,
+      "current_price": 39.03,
+      "margin_of_safety_pct": -51.7,
+      "margin_verdict": "显著高估",
+      "dcf_per_share": 38.09,
+      "dcf_wacc": 10.08,
+      "dcf_terminal_g": 3.0,
+      "dcf_tv_ratio": 75.8,
+      "peg_value": {
+        "peg": 3.17,
+        "fair_pe": 6.9,
+        "fair_value": 12.84,
+        "verdict": "严重高估",
+        "detail": "PE=22.0, EPS CAGR=6.9%, PEG=3.17"
+      },
+      "pb_roe_value": {
+        "pb": 1.39,
+        "roe_pct": 6.5,
+        "fair_pb": 0.5,
+        "fair_value": 14.22,
+        "verdict": "高估",
+        "detail": "ROE=6.5%, PB=1.39, 合理PB=0.50"
+      },
+      "scenarios": {
+        "乐观": {
+          "growth_adjustment": "120%",
+          "margin_adjustment": "110%",
+          "dcf_value": 47.34,
+          "relative_value": 14.76,
+          "composite_value": 31.05,
+          "upside_pct": -20.4
+        },
+        "中性": {
+          "growth_adjustment": "100%",
+          "margin_adjustment": "100%",
+          "dcf_value": 38.09,
+          "relative_value": 13.42,
+          "composite_value": 25.76,
+          "upside_pct": -34.0
+        },
+        "悲观": {
+          "growth_adjustment": "80%",
+          "margin_adjustment": "90%",
+          "dcf_value": 32.25,
+          "relative_value": 12.08,
+          "composite_value": 22.16,
+          "upside_pct": -43.2
+        }
+      },
+      "earnings": {
+        "current_year": 2026,
+        "eps_forecast": [
+          2.02,
+          2.31
+        ],
+        "growth_rates": [
+          0.0919,
+          0.1436
+        ],
+        "cagr_3y": 0.0694,
+        "num_analysts": 1,
+        "source": "同花顺一致预期",
+        "trailing_eps": 1.85,
+        "research_targets": []
+      }
+    },
+    "financials": {
+      "lrb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "key_metrics": {
+        "revenue": 83688.9586,
+        "net_profit": 1554.1829,
+        "gross_margin": null
+      },
+      "fzb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "balance": {
+        "total_assets": 1897894.3604,
+        "equity": 1576077.4662,
+        "cash": 379063.2397,
+        "debt_ratio": 17.0
+      },
+      "llb": {
+        "reports": 8,
+        "latest_period": ""
+      }
+    },
+    "consensus": {
+      "num_analysts": 1,
+      "eps_2026": 2.02,
+      "eps_2027": 2.31,
+      "hist_eps": [
+        {
+          "year": "2023",
+          "eps": 5.13
+        },
+        {
+          "year": "2024",
+          "eps": 1.75
+        },
+        {
+          "year": "2025",
+          "eps": 1.85
+        }
+      ]
+    },
+    "wacc": {
+      "wacc": 0.1008,
+      "ke": 0.1185,
+      "beta": 1.39,
+      "kd": 0.0144,
+      "d_e_ratio": 0.2
+    },
+    "market_regime": {
+      "verdict": "",
+      "score": 39,
+      "transition": "【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭"
+    }
+  },
+  "688332": {
+    "code": "688332",
+    "name": "中科蓝讯",
+    "sw2": "半导体-数字IC",
+    "biz": "无线音频SoC芯片设计公司，产品覆盖TWS耳机/蓝牙音箱/智能手表/车载音频等。RISC-V架构芯片出货量国内第一，客户包括传音/QCY/漫步者/realme等品牌及白牌市场。",
+    "comp": "TWS SoC市场格局：恒玄科技(中高端)/中科蓝讯(中低端放量)/杰理科技(白牌)。公司以性价比+快速放量策略抢占份额，2024年出货量超10亿颗。RISC-V路线差异化于ARM阵营。",
+    "edge": "1)RISC-V架构先发优势(免ARM授权费) 2)出货量国内第一形成规模效应 3)从白牌向品牌升级(传音/realme等) 4)22nm→12nm制程演进降低功耗",
+    "plan": "品牌客户渗透率提升(从30%→60%)，AI降噪/语音唤醒新功能迭代，智能手表/车载新品类拓展",
+    "risk": {
+      "var_95_pct": 6.347,
+      "cvar_95_pct": 10.7897,
+      "annual_vol": 67.9
+    },
+    "analysis_date": "2026-07-28",
+    "basic": {
+      "price": 78.07,
+      "pe_ttm": 10.21,
+      "pb": 2.77,
+      "mcap_yi": 139.34,
+      "turnover_pct": 2.32,
+      "last_close": 84.67
+    },
+    "technical": {
+      "kline_rows": 333,
+      "latest_close": 78.07,
+      "ma_score": 13,
+      "ma_verdict": "均线强烈看空（均线缠绕无方向，评分13）",
+      "ma_alignment": "均线缠绕无方向",
+      "cross_signals": 2,
+      "patterns": [],
+      "verdict": "偏空",
+      "verdict_score": 35,
+      "confidence": "中",
+      "position_advice": "减仓至轻仓",
+      "conflicts": []
+    },
+    "valuation": {
+      "final_value": 110.74,
+      "current_price": 78.07,
+      "margin_of_safety_pct": 29.5,
+      "margin_verdict": "适度低估",
+      "dcf_per_share": 52.16,
+      "dcf_wacc": 11.97,
+      "dcf_terminal_g": 3.0,
+      "dcf_tv_ratio": 76.9,
+      "peg_value": {
+        "peg": 0.59,
+        "fair_pe": 17.3,
+        "fair_value": 203.16,
+        "verdict": "低估",
+        "detail": "PE=10.2, EPS CAGR=17.3%, PEG=0.59"
+      },
+      "pb_roe_value": {
+        "pb": 2.77,
+        "roe_pct": 39.7,
+        "fair_pb": 3.82,
+        "fair_value": 112.92,
+        "verdict": "合理",
+        "detail": "ROE=39.7%, PB=2.77, 合理PB=3.82"
+      },
+      "scenarios": {
+        "乐观": {
+          "growth_adjustment": "120%",
+          "margin_adjustment": "110%",
+          "dcf_value": 64.63,
+          "relative_value": 182.12,
+          "composite_value": 123.38,
+          "upside_pct": 58.0
+        },
+        "中性": {
+          "growth_adjustment": "100%",
+          "margin_adjustment": "100%",
+          "dcf_value": 52.16,
+          "relative_value": 165.56,
+          "composite_value": 108.86,
+          "upside_pct": 39.4
+        },
+        "悲观": {
+          "growth_adjustment": "80%",
+          "margin_adjustment": "90%",
+          "dcf_value": 43.86,
+          "relative_value": 149.0,
+          "composite_value": 96.43,
+          "upside_pct": 23.5
+        }
+      },
+      "earnings": {
+        "current_year": 2026,
+        "eps_forecast": [
+          1.97,
+          2.71
+        ],
+        "growth_rates": [
+          -0.8323,
+          0.3756
+        ],
+        "cagr_3y": 0.1729,
+        "num_analysts": 1,
+        "source": "同花顺一致预期",
+        "trailing_eps": 11.75,
+        "research_targets": []
+      }
+    },
+    "financials": {
+      "lrb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "key_metrics": {
+        "revenue": 40696.5338,
+        "net_profit": -589.7902,
+        "gross_margin": null
+      },
+      "fzb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "balance": {
+        "total_assets": 569530.2921,
+        "equity": 527951.5708,
+        "cash": 89809.2056,
+        "debt_ratio": 7.3
+      },
+      "llb": {
+        "reports": 8,
+        "latest_period": ""
+      }
+    },
+    "consensus": {
+      "num_analysts": 1,
+      "eps_2026": 1.97,
+      "eps_2027": 2.71,
+      "hist_eps": [
+        {
+          "year": "2023",
+          "eps": 2.1
+        },
+        {
+          "year": "2024",
+          "eps": 2.5
+        },
+        {
+          "year": "2025",
+          "eps": 11.75
+        }
+      ]
+    },
+    "wacc": {
+      "wacc": 0.1197,
+      "ke": 0.1262,
+      "beta": 1.51,
+      "kd": 0.0349,
+      "d_e_ratio": 0.08
+    },
+    "market_regime": {
+      "verdict": "",
+      "score": 39,
+      "transition": "【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭"
+    }
+  },
+  "301631": {
+    "code": "301631",
+    "name": "壹连科技",
+    "sw2": "元件-连接器",
+    "biz": "电连接器及线束组件制造商，产品应用于新能源汽车(高压连接器)/储能/工业控制/医疗设备等。新能源汽车连接器市场份额快速提升，进入比亚迪/宁德时代/特斯拉供应链。",
+    "comp": "国内连接器市场格局：立讯精密(消费电子连接器龙头)/瑞可达(新能源连接器)/中航光电(军工连接器)。壹连科技聚焦新能源高压连接器细分赛道，成长性突出。",
+    "edge": "1)新能源汽车高压连接器高景气(行业增速>30%) 2)进入头部客户(比亚迪/宁德/特斯拉) 3)从连接器向线束组件延伸提升单车价值 4)储能连接器第二增长曲线",
+    "plan": "高压连接器产品线从400V向800V升级，储能连接器产能翻倍，工业/医疗连接器横向拓展",
+    "risk": {
+      "var_95_pct": 4.4198,
+      "cvar_95_pct": 9.8399,
+      "annual_vol": 62.4
+    },
+    "analysis_date": "2026-07-28",
+    "basic": {
+      "price": 57.3,
+      "pe_ttm": 24.13,
+      "pb": 2.85,
+      "mcap_yi": 24.98,
+      "turnover_pct": 5.22,
+      "last_close": 59.08
+    },
+    "technical": {
+      "kline_rows": 333,
+      "latest_close": 57.3,
+      "ma_score": 0,
+      "ma_verdict": "均线强烈看空（强势空头排列，评分0）",
+      "ma_alignment": "强势空头排列",
+      "cross_signals": 2,
+      "patterns": [],
+      "verdict": "偏空",
+      "verdict_score": 30,
+      "confidence": "中",
+      "position_advice": "减仓至轻仓",
+      "conflicts": []
+    },
+    "valuation": {
+      "final_value": 39.68,
+      "current_price": 57.3,
+      "margin_of_safety_pct": -44.4,
+      "margin_verdict": "显著高估",
+      "dcf_per_share": 34.18,
+      "dcf_wacc": 5.65,
+      "dcf_terminal_g": 3.0,
+      "dcf_tv_ratio": 92.4,
+      "peg_value": {
+        "peg": 1.44,
+        "fair_pe": 16.8,
+        "fair_value": 53.93,
+        "verdict": "高估",
+        "detail": "PE=24.1, EPS CAGR=16.8%, PEG=1.44"
+      },
+      "pb_roe_value": {
+        "pb": 2.85,
+        "roe_pct": 5.2,
+        "fair_pb": 0.5,
+        "fair_value": 30.58,
+        "verdict": "高估",
+        "detail": "ROE=5.2%, PB=2.85, 合理PB=0.50"
+      },
+      "scenarios": {
+        "乐观": {
+          "growth_adjustment": "120%",
+          "margin_adjustment": "110%",
+          "dcf_value": 41.73,
+          "relative_value": 48.62,
+          "composite_value": 45.18,
+          "upside_pct": -21.2
+        },
+        "中性": {
+          "growth_adjustment": "100%",
+          "margin_adjustment": "100%",
+          "dcf_value": 34.18,
+          "relative_value": 44.2,
+          "composite_value": 39.19,
+          "upside_pct": -31.6
+        },
+        "悲观": {
+          "growth_adjustment": "80%",
+          "margin_adjustment": "90%",
+          "dcf_value": 26.82,
+          "relative_value": 39.78,
+          "composite_value": 33.3,
+          "upside_pct": -41.9
+        }
+      },
+      "earnings": {
+        "current_year": 2026,
+        "eps_forecast": [
+          3.02,
+          4.12
+        ],
+        "growth_rates": [
+          -0.0592,
+          0.3642
+        ],
+        "cagr_3y": 0.168,
+        "num_analysts": 1,
+        "source": "同花顺一致预期",
+        "trailing_eps": 3.21,
+        "research_targets": []
+      }
+    },
+    "financials": {
+      "lrb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "key_metrics": {
+        "revenue": 131616.0786,
+        "net_profit": 6970.4529,
+        "gross_margin": null
+      },
+      "fzb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "balance": {
+        "total_assets": 584968.9936,
+        "equity": 266634.0742,
+        "cash": 60950.057,
+        "debt_ratio": 54.4
+      },
+      "llb": {
+        "reports": 8,
+        "latest_period": ""
+      }
+    },
+    "consensus": {
+      "num_analysts": 1,
+      "eps_2026": 3.02,
+      "eps_2027": 4.12,
+      "hist_eps": [
+        {
+          "year": "2023",
+          "eps": 5.31
+        },
+        {
+          "year": "2024",
+          "eps": 3.31
+        },
+        {
+          "year": "2025",
+          "eps": 3.21
+        }
+      ]
+    },
+    "wacc": {
+      "wacc": 0.0565,
+      "ke": 0.1147,
+      "beta": 1.33,
+      "kd": 0.0075,
+      "d_e_ratio": 1.19
+    },
+    "market_regime": {
+      "verdict": "",
+      "score": 39,
+      "transition": "【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭"
+    }
+  },
+  "301195": {
+    "code": "301195",
+    "name": "北路智控",
+    "sw2": "软件-工业",
+    "biz": "智能矿山工业软件及系统解决方案，产品覆盖煤矿智能化管控平台/精确定位系统/ AI视频分析/综合自动化等。背靠中煤科工集团，煤矿智能化政策驱动成长。",
+    "comp": "煤矿智能化市场格局：北路智控(定位/通信)/梅安森(监测监控)/龙软科技(GIS系统)/科达自控(自动化)。公司在精确定位和智能管控平台领域技术领先。",
+    "edge": "1)煤矿智能化政策强制推动(2026年大型煤矿全部实现智能化) 2)UWB精确定位技术领先 3)中煤科工集团产业背景 4)从煤矿向非煤矿山/化工园区拓展",
+    "plan": "煤矿智能化覆盖率从30%→60%目标，AI+矿山大模型应用落地，化工园区安全管控平台新市场",
+    "risk": {
+      "var_95_pct": 4.0629,
+      "cvar_95_pct": 6.1237,
+      "annual_vol": 40.7
+    },
+    "analysis_date": "2026-07-28",
+    "basic": {
+      "price": 24.26,
+      "pe_ttm": 23.55,
+      "pb": 1.34,
+      "mcap_yi": 21.27,
+      "turnover_pct": 1.15,
+      "last_close": 24.34
+    },
+    "technical": {
+      "kline_rows": 333,
+      "latest_close": 24.26,
+      "ma_score": 0,
+      "ma_verdict": "均线强烈看空（强势空头排列，评分0）",
+      "ma_alignment": "强势空头排列",
+      "cross_signals": 2,
+      "patterns": [],
+      "verdict": "偏空",
+      "verdict_score": 30,
+      "confidence": "中",
+      "position_advice": "减仓至轻仓",
+      "conflicts": []
+    },
+    "valuation": {
+      "final_value": 37.36,
+      "current_price": 24.26,
+      "margin_of_safety_pct": 35.1,
+      "margin_verdict": "显著低估",
+      "dcf_per_share": 63.49,
+      "dcf_wacc": 5.9,
+      "dcf_terminal_g": 3.0,
+      "dcf_tv_ratio": 89.6,
+      "peg_value": {
+        "peg": 2.84,
+        "fair_pe": 8.3,
+        "fair_value": 9.53,
+        "verdict": "严重高估",
+        "detail": "PE=23.6, EPS CAGR=8.3%, PEG=2.84"
+      },
+      "pb_roe_value": {
+        "pb": 1.34,
+        "roe_pct": 4.1,
+        "fair_pb": 0.5,
+        "fair_value": 14.08,
+        "verdict": "高估",
+        "detail": "ROE=4.1%, PB=1.34, 合理PB=0.50"
+      },
+      "scenarios": {
+        "乐观": {
+          "growth_adjustment": "120%",
+          "margin_adjustment": "110%",
+          "dcf_value": 90.49,
+          "relative_value": 12.57,
+          "composite_value": 51.53,
+          "upside_pct": 112.4
+        },
+        "中性": {
+          "growth_adjustment": "100%",
+          "margin_adjustment": "100%",
+          "dcf_value": 63.49,
+          "relative_value": 11.43,
+          "composite_value": 37.46,
+          "upside_pct": 54.4
+        },
+        "悲观": {
+          "growth_adjustment": "80%",
+          "margin_adjustment": "90%",
+          "dcf_value": 45.74,
+          "relative_value": 10.29,
+          "composite_value": 28.02,
+          "upside_pct": 15.5
+        }
+      },
+      "earnings": {
+        "current_year": 2026,
+        "eps_forecast": [
+          1.39,
+          1.63
+        ],
+        "growth_rates": [
+          0.2087,
+          0.1727
+        ],
+        "cagr_3y": 0.0829,
+        "num_analysts": 1,
+        "source": "同花顺一致预期",
+        "trailing_eps": 1.15,
+        "research_targets": []
+      }
+    },
+    "financials": {
+      "lrb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "key_metrics": {
+        "revenue": 20824.1887,
+        "net_profit": 2657.4365,
+        "gross_margin": null
+      },
+      "fzb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "balance": {
+        "total_assets": 290937.8909,
+        "equity": 246934.9851,
+        "cash": 8013.4487,
+        "debt_ratio": 15.1
+      },
+      "llb": {
+        "reports": 8,
+        "latest_period": ""
+      }
+    },
+    "consensus": {
+      "num_analysts": 1,
+      "eps_2026": 1.39,
+      "eps_2027": 1.63,
+      "hist_eps": [
+        {
+          "year": "2023",
+          "eps": 1.71
+        },
+        {
+          "year": "2024",
+          "eps": 1.54
+        },
+        {
+          "year": "2025",
+          "eps": 1.15
+        }
+      ]
+    },
+    "wacc": {
+      "wacc": 0.059,
+      "ke": 0.0681,
+      "beta": 0.62,
+      "kd": 0.0075,
+      "d_e_ratio": 0.18
+    },
+    "market_regime": {
+      "verdict": "",
+      "score": 39,
+      "transition": "【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭"
+    }
+  },
+  "003019": {
+    "code": "003019",
+    "name": "宸展光电",
+    "sw2": "元件-显示模组",
+    "biz": "商用显示及触控一体机解决方案，产品覆盖POS/自助终端/数字标牌/智能健身镜/医疗显示等。ODM+自有品牌双轮驱动，客户包括NCR/Diebold/富士通等全球头部POS厂商。",
+    "comp": "全球商用显示市场分散，POS终端市场CR3约40%(NCR/Diebold/Toshiba)。公司以ODM模式切入全球供应链，同时培育自有品牌(3R系列)提升毛利率。",
+    "edge": "1)全球POS ODM龙头地位(市占率约15%) 2)智能健身镜/医疗显示等新品类放量 3)自有品牌提升毛利率(从20%→30%) 4)在东南亚/印度等新兴市场布局",
+    "plan": "自有品牌收入占比从15%→30%，医疗显示认证推进，东南亚制造基地降低关税风险",
+    "risk": {
+      "var_95_pct": 5.6546,
+      "cvar_95_pct": 7.6891,
+      "annual_vol": 51.5
+    },
+    "analysis_date": "2026-07-28",
+    "basic": {
+      "price": 22.08,
+      "pe_ttm": 22.69,
+      "pb": 2.39,
+      "mcap_yi": 37.77,
+      "turnover_pct": 2.67,
+      "last_close": 22.31
+    },
+    "technical": {
+      "kline_rows": 333,
+      "latest_close": 22.08,
+      "ma_score": 0,
+      "ma_verdict": "均线强烈看空（强势空头排列，评分0）",
+      "ma_alignment": "强势空头排列",
+      "cross_signals": 2,
+      "patterns": [],
+      "verdict": "偏空",
+      "verdict_score": 30,
+      "confidence": "中",
+      "position_advice": "减仓至轻仓",
+      "conflicts": []
+    },
+    "valuation": {
+      "final_value": 8.81,
+      "current_price": 22.08,
+      "margin_of_safety_pct": -150.6,
+      "margin_verdict": "显著高估",
+      "dcf_per_share": 0.4,
+      "dcf_wacc": 6.82,
+      "dcf_terminal_g": 3.0,
+      "dcf_tv_ratio": 89.5,
+      "peg_value": {
+        "peg": 1.26,
+        "fair_pe": 18.0,
+        "fair_value": 20.39,
+        "verdict": "高估",
+        "detail": "PE=22.7, EPS CAGR=18.0%, PEG=1.26"
+      },
+      "pb_roe_value": {
+        "pb": 2.39,
+        "roe_pct": 11.2,
+        "fair_pb": 1.19,
+        "fair_value": 11.95,
+        "verdict": "高估",
+        "detail": "ROE=11.2%, PB=2.39, 合理PB=1.19"
+      },
+      "scenarios": {
+        "乐观": {
+          "growth_adjustment": "120%",
+          "margin_adjustment": "110%",
+          "dcf_value": 0.68,
+          "relative_value": 18.56,
+          "composite_value": 9.62,
+          "upside_pct": -56.4
+        },
+        "中性": {
+          "growth_adjustment": "100%",
+          "margin_adjustment": "100%",
+          "dcf_value": 0.4,
+          "relative_value": 16.87,
+          "composite_value": 8.64,
+          "upside_pct": -60.9
+        },
+        "悲观": {
+          "growth_adjustment": "80%",
+          "margin_adjustment": "90%",
+          "dcf_value": 0.26,
+          "relative_value": 15.18,
+          "composite_value": 7.72,
+          "upside_pct": -65.0
+        }
+      },
+      "earnings": {
+        "current_year": 2026,
+        "eps_forecast": [
+          1.22,
+          1.7
+        ],
+        "growth_rates": [
+          0.0796,
+          0.3934
+        ],
+        "cagr_3y": 0.1804,
+        "num_analysts": 1,
+        "source": "同花顺一致预期",
+        "trailing_eps": 1.13,
+        "research_targets": []
+      }
+    },
+    "financials": {
+      "lrb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "key_metrics": {
+        "revenue": 58431.9053,
+        "net_profit": 2637.9821,
+        "gross_margin": null
+      },
+      "fzb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "balance": {
+        "total_assets": 296969.4381,
+        "equity": 172296.4881,
+        "cash": 53483.984,
+        "debt_ratio": 42.0
+      },
+      "llb": {
+        "reports": 8,
+        "latest_period": ""
+      }
+    },
+    "consensus": {
+      "num_analysts": 1,
+      "eps_2026": 1.22,
+      "eps_2027": 1.7,
+      "hist_eps": [
+        {
+          "year": "2023",
+          "eps": 0.93
+        },
+        {
+          "year": "2024",
+          "eps": 1.11
+        },
+        {
+          "year": "2025",
+          "eps": 1.13
+        }
+      ]
+    },
+    "wacc": {
+      "wacc": 0.0682,
+      "ke": 0.0993,
+      "beta": 1.1,
+      "kd": 0.0225,
+      "d_e_ratio": 0.68
+    },
+    "market_regime": {
+      "verdict": "",
+      "score": 39,
+      "transition": "【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭"
+    }
+  },
+  "000551": {
+    "code": "000551",
+    "name": "创元科技",
+    "sw2": "机械-环保",
+    "biz": "环保设备+精密制造双主业。环保板块：垃圾焚烧/危废处理/水处理设备(中环环保)。精密制造：超高压液压件/精密轴承/光学镜头(苏州轴承厂/创元光电)。",
+    "comp": "环保设备行业高度分散，公司在垃圾焚烧和危废处理设备细分领域有一定优势。精密制造板块竞争激烈但技术壁垒较高。",
+    "edge": "1)双主业分散风险 2)精密轴承国产替代逻辑 3)环保设备受益于无废城市建设 4)国企改革预期(苏州国资旗下)",
+    "plan": "环保设备从垃圾焚烧向危废/固废全产业链延伸，精密制造向高端液压件/机器人关节升级",
+    "risk": {
+      "var_95_pct": 4.521,
+      "cvar_95_pct": 7.7819,
+      "annual_vol": 49.4
+    },
+    "analysis_date": "2026-07-28",
+    "basic": {
+      "price": 12.79,
+      "pe_ttm": 18.25,
+      "pb": 2.06,
+      "mcap_yi": 61.97,
+      "turnover_pct": 5.12,
+      "last_close": 12.91
+    },
+    "technical": {
+      "kline_rows": 333,
+      "latest_close": 12.79,
+      "ma_score": 0,
+      "ma_verdict": "均线强烈看空（强势空头排列，评分0）",
+      "ma_alignment": "强势空头排列",
+      "cross_signals": 2,
+      "patterns": [],
+      "verdict": "偏空",
+      "verdict_score": 30,
+      "confidence": "中",
+      "position_advice": "减仓至轻仓",
+      "conflicts": []
+    },
+    "valuation": {
+      "final_value": 11.94,
+      "current_price": 12.79,
+      "margin_of_safety_pct": -7.1,
+      "margin_verdict": "合理估值",
+      "dcf_per_share": 18.43,
+      "dcf_wacc": 5.65,
+      "dcf_terminal_g": 3.0,
+      "dcf_tv_ratio": 90.3,
+      "peg_value": {
+        "peg": 2.4,
+        "fair_pe": 7.6,
+        "fair_value": 4.64,
+        "verdict": "严重高估",
+        "detail": "PE=18.2, EPS CAGR=7.6%, PEG=2.40"
+      },
+      "pb_roe_value": {
+        "pb": 2.06,
+        "roe_pct": 9.7,
+        "fair_pb": 1.08,
+        "fair_value": 6.8,
+        "verdict": "高估",
+        "detail": "ROE=9.7%, PB=2.06, 合理PB=1.08"
+      },
+      "scenarios": {
+        "乐观": {
+          "growth_adjustment": "120%",
+          "margin_adjustment": "110%",
+          "dcf_value": 23.18,
+          "relative_value": 6.09,
+          "composite_value": 14.64,
+          "upside_pct": 14.5
+        },
+        "中性": {
+          "growth_adjustment": "100%",
+          "margin_adjustment": "100%",
+          "dcf_value": 18.43,
+          "relative_value": 5.54,
+          "composite_value": 11.98,
+          "upside_pct": -6.3
+        },
+        "悲观": {
+          "growth_adjustment": "80%",
+          "margin_adjustment": "90%",
+          "dcf_value": 13.79,
+          "relative_value": 4.99,
+          "composite_value": 9.39,
+          "upside_pct": -26.6
+        }
+      },
+      "earnings": {
+        "current_year": 2026,
+        "eps_forecast": [
+          0.76,
+          0.88
+        ],
+        "growth_rates": [
+          0.2459,
+          0.1579
+        ],
+        "cagr_3y": 0.0761,
+        "num_analysts": 1,
+        "source": "同花顺一致预期",
+        "trailing_eps": 0.61,
+        "research_targets": []
+      }
+    },
+    "financials": {
+      "lrb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "key_metrics": {
+        "revenue": 121793.6241,
+        "net_profit": 15667.906,
+        "gross_margin": null
+      },
+      "fzb": {
+        "reports": 8,
+        "latest_period": ""
+      },
+      "balance": {
+        "total_assets": 652336.6009,
+        "equity": 304504.8814,
+        "cash": 162616.6775,
+        "debt_ratio": 53.3
+      },
+      "llb": {
+        "reports": 8,
+        "latest_period": ""
+      }
+    },
+    "consensus": {
+      "num_analysts": 1,
+      "eps_2026": 0.76,
+      "eps_2027": 0.88,
+      "hist_eps": [
+        {
+          "year": "2023",
+          "eps": 0.38
+        },
+        {
+          "year": "2024",
+          "eps": 0.52
+        },
+        {
+          "year": "2025",
+          "eps": 0.61
+        }
+      ]
+    },
+    "wacc": {
+      "wacc": 0.0565,
+      "ke": 0.092,
+      "beta": 0.98,
+      "kd": 0.01,
+      "d_e_ratio": 0.76
+    },
+    "market_regime": {
+      "verdict": "",
+      "score": 39,
+      "transition": "【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭"
+    }
+  }
+}

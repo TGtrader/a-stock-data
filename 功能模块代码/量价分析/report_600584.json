@@ -1,0 +1,243 @@
+{
+  "code": "600584",
+  "name": "JCET",
+  "market": "上海主板",
+  "date": "2026-07-24",
+  "period": "daily",
+  "data_points": 159,
+  "rating": "观望",
+  "rating_detail": {
+    "rating": "观望",
+    "score": 53,
+    "trend_score": 40,
+    "vpa_score": 80,
+    "flow_score": 45
+  },
+  "trend": {
+    "short_term": {
+      "direction": "下跌",
+      "phase": "下跌趋势",
+      "strength": 60,
+      "ma_alignment": "空头排列",
+      "ma_detail": "空头排列",
+      "pivot_detail": "高位支点连续3次抬高",
+      "vol_detail": "多数上涨日放量",
+      "volume_confirmation": "多数上涨日放量",
+      "channel": {
+        "upper": 113.87,
+        "lower": 88.35,
+        "stop_loss": 86.58,
+        "status": "趋势完好"
+      },
+      "days_in_trend": 0,
+      "price_vs_ma20_pct": -14.4,
+      "summary": "短期下跌趋势，下跌趋势阶段。均线空头排列，高位支点连续3次抬高。量价配合：多数上涨日放量。趋势强度60/100。"
+    },
+    "medium_term": {
+      "direction": "上涨",
+      "strength": 80,
+      "ma60_slope_pct_per_week": 5.59,
+      "ma_alignment": "MA20>MA60>MA120 多头排列",
+      "constraint": "做多为主",
+      "phase": "上涨"
+    },
+    "alignment": {
+      "alignment": "短空中多(回调)",
+      "signal": "[短期回调，中期趋势向好——关注回调结束信号]",
+      "short_term_direction": "下跌",
+      "medium_term_direction": "上涨"
+    }
+  },
+  "signals": {
+    "latest_bar": {
+      "date": "2026-07-23",
+      "open": 85.78,
+      "high": 86.88,
+      "low": 80.3,
+      "close": 80.81,
+      "volume": 1685303,
+      "body_type": "高实体阴线",
+      "volume_level": "低于平均(30)",
+      "vpa_validation": "NEUTRAL",
+      "candle_pattern": null,
+      "is_anomaly": false
+    },
+    "recent_signals": [
+      {
+        "date": "2026-07-23",
+        "signal": "高位支点失败",
+        "type": "趋势破坏",
+        "priority": 1,
+        "action": "减仓",
+        "description": "最新高位支点低于前一高位支点——趋势结构破坏"
+      },
+      {
+        "date": "2026-01-07",
+        "signal": "抛售高峰",
+        "type": "趋势反转",
+        "priority": 2,
+        "action": "减仓",
+        "description": "超长上影线+极量2.7x——派筹尾声信号"
+      },
+      {
+        "date": "2026-01-19",
+        "signal": "抛售高峰",
+        "type": "趋势反转",
+        "priority": 2,
+        "action": "减仓",
+        "description": "超长上影线+极量2.9x——派筹尾声信号"
+      },
+      {
+        "date": "2026-02-02",
+        "signal": "健康回调(缩量)",
+        "type": "趋势延续",
+        "priority": 2,
+        "action": "观察/准备加仓",
+        "description": "回踩均线+缩量至0.7x，健康回调"
+      },
+      {
+        "date": "2026-02-03",
+        "signal": "健康回调(缩量)",
+        "type": "趋势延续",
+        "priority": 2,
+        "action": "观察/准备加仓",
+        "description": "回踩均线+缩量至0.5x，健康回调"
+      },
+      {
+        "date": "2026-03-31",
+        "signal": "量价背离(下跌)",
+        "type": "趋势反转",
+        "priority": 2,
+        "action": "关注",
+        "description": "价格创新低但成交量递减——下跌动能衰竭"
+      },
+      {
+        "date": "2026-04-02",
+        "signal": "量价背离(下跌)",
+        "type": "趋势反转",
+        "priority": 2,
+        "action": "关注",
+        "description": "价格创新低但成交量递减——下跌动能衰竭"
+      },
+      {
+        "date": "2026-04-03",
+        "signal": "量价背离(下跌)",
+        "type": "趋势反转",
+        "priority": 2,
+        "action": "关注",
+        "description": "价格创新低但成交量递减——下跌动能衰竭"
+      },
+      {
+        "date": "2026-06-09",
+        "signal": "健康回调(缩量)",
+        "type": "趋势延续",
+        "priority": 2,
+        "action": "观察/准备加仓",
+        "description": "回踩均线+缩量至0.6x，健康回调"
+      },
+      {
+        "date": "2026-06-10",
+        "signal": "健康回调(缩量)",
+        "type": "趋势延续",
+        "priority": 2,
+        "action": "观察/准备加仓",
+        "description": "回踩均线+缩量至0.6x，健康回调"
+      }
+    ],
+    "signal_summary": "趋势延续信号11个；趋势衰竭信号10个；趋势反转信号57个"
+  },
+  "position": {
+    "phase": {
+      "phase": "趋势运行中",
+      "confidence": 40,
+      "signals": [
+        "锤头线出现4次",
+        "射击十字星出现5次"
+      ],
+      "price_range_pct": 64.3,
+      "position_60d_pct": 53.3
+    },
+    "sr_levels": {
+      "short_term": {
+        "support": [
+          88.35
+        ],
+        "resistance": [
+          111.11,
+          113.87
+        ]
+      },
+      "medium_term": {
+        "support": [
+          88.35,
+          72.65,
+          69.7
+        ],
+        "resistance": [
+          94.9,
+          111.11,
+          113.87
+        ]
+      },
+      "nearest_support": null,
+      "nearest_resistance": 111.11,
+      "current_price": 80.81
+    }
+  },
+  "money_flow": {
+    "available": true,
+    "continuous_flow": {
+      "continuous_inflow_3d": false,
+      "continuous_outflow_3d": false,
+      "continuous_inflow_5d": false,
+      "continuous_outflow_5d": false,
+      "continuous_inflow_7d": false,
+      "continuous_outflow_7d": false,
+      "continuous_inflow_10d": false,
+      "continuous_outflow_10d": false,
+      "max_consecutive_days": 1,
+      "flow_direction": "净流出",
+      "flow_ratios": {
+        "flow_absolute_3d": -21793.34,
+        "flow_ratio_3d": -0.1186,
+        "flow_absolute_5d": -102545.8,
+        "flow_ratio_5d": -0.558,
+        "flow_absolute_10d": -397544.88,
+        "flow_ratio_10d": -2.1632,
+        "flow_absolute_20d": -779344.16,
+        "flow_ratio_20d": -4.2408,
+        "avg_daily_inflow_5d": -20509.16,
+        "avg_daily_inflow_10d": -39754.49
+      }
+    },
+    "flow_ratios": {
+      "flow_absolute_3d": -21793.34,
+      "flow_ratio_3d": -0.1186,
+      "flow_absolute_5d": -102545.8,
+      "flow_ratio_5d": -0.558,
+      "flow_absolute_10d": -397544.88,
+      "flow_ratio_10d": -2.1632,
+      "flow_absolute_20d": -779344.16,
+      "flow_ratio_20d": -4.2408,
+      "avg_daily_inflow_5d": -20509.16,
+      "avg_daily_inflow_10d": -39754.49
+    },
+    "smart_retail": {
+      "divergence": "主力散户同步做多",
+      "signal": "neutral_bullish",
+      "main_force_net_5d": 14419.72,
+      "retail_net_5d": 122255.43,
+      "interpretation": "主力和散户都在买入——需结合趋势位置判断（高位可能是诱多）"
+    },
+    "flow_trend_resonance": {
+      "resonance": "资金趋势关系中性",
+      "signal_strength": 45,
+      "trend_direction": "下跌",
+      "flow_rating": "neutral",
+      "flow_continuous_days": 1,
+      "smart_retail_divergence": "主力散户同步做多",
+      "summary": "趋势和资金流方向不明确——观望等待"
+    }
+  },
+  "conclusion": "【三维评级：[WAIT] 观望，综合强度 53/100】\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n趋势维度(40/100)：短期下跌趋势，下跌趋势阶段。均线空头排列，高位支点连续3次抬高。量价配合：多数上涨日放量。趋势强度60/100。\n量价维度(80/100)：趋势延续信号11个；趋势衰竭信号10个；趋势反转信号57个\n资金维度(45/100)：趋势和资金流方向不明确——观望等待\n━━━━━━━━━━━━━━━━━━━━━━━━━━\n短中期共振：短空中多(回调) → [短期回调，中期趋势向好——关注回调结束信号]\n操作建议：\n① 不建议新开仓位\n② 已持仓者考虑减仓至半仓\n③ 等待方向明确（放量突破盘整区或跌破支撑）"
+}

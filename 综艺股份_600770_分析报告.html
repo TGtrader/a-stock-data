@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>综艺股份(600770) 综合分析报告</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+       background: #f0f2f5; color: #333; line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+.header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+          color: white; padding: 40px; border-radius: 16px; margin-bottom: 24px; }
+.header h1 { font-size: 2.2em; margin-bottom: 8px; }
+.header .subtitle { opacity: 0.85; font-size: 1.1em; }
+.header .meta { margin-top: 16px; display: flex; gap: 24px; flex-wrap: wrap; }
+.header .meta-item { background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 8px; }
+
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                 gap: 16px; margin-bottom: 24px; }
+.metric-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+               text-align: center; }
+.metric-card .label { font-size: 0.85em; color: #666; margin-bottom: 6px; }
+.metric-card .value { font-size: 1.6em; font-weight: 700; }
+.metric-card .value.up { color: #e53e3e; }
+.metric-card .value.down { color: #38a169; }
+.metric-card .sub { font-size: 0.8em; color: #999; margin-top: 4px; }
+
+.section { background: white; border-radius: 12px; padding: 28px; margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.section h2 { font-size: 1.5em; margin-bottom: 20px; padding-bottom: 12px;
+              border-bottom: 2px solid #e2e8f0; color: #1a1a2e; }
+.section h3 { font-size: 1.15em; margin: 16px 0 10px; color: #2d3748; }
+
+.chart-container { position: relative; height: 350px; margin: 16px 0; }
+.chart-container.tall { height: 400px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+th { background: #f7fafc; font-weight: 600; color: #4a5568; }
+tr:hover { background: #f7fafc; }
+
+.report-card { border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; margin: 16px 0;
+               border-left: 4px solid #3182ce; }
+.report-card .r-title { font-size: 1.05em; font-weight: 600; color: #1a1a2e; }
+.report-card .r-meta { color: #718096; font-size: 0.85em; margin: 6px 0; }
+.report-card .r-rating { display: inline-block; padding: 2px 10px; border-radius: 12px;
+                          font-size: 0.85em; font-weight: 600; }
+.r-rating.buy { background: #fed7d7; color: #c53030; }
+.r-rating.hold { background: #fefcbf; color: #975a16; }
+.r-rating.overweight { background: #c6f6d5; color: #276749; }
+.report-card .r-text { font-size: 0.9em; color: #4a5568; margin-top: 10px; line-height: 1.7;
+                        max-height: 200px; overflow-y: auto; background: #f7fafc; padding: 10px;
+                        border-radius: 6px; white-space: pre-wrap; }
+.report-card .r-keypoints { margin-top: 10px; }
+.report-card .r-keypoints li { font-size: 0.9em; margin: 4px 0; color: #4a5568; }
+
+.tag { display: inline-block; padding: 3px 10px; margin: 3px; background: #ebf4ff;
+       color: #3182ce; border-radius: 12px; font-size: 0.82em; }
+
+.alert { padding: 16px; border-radius: 8px; margin: 12px 0; }
+.alert.warn { background: #fffbeb; border: 1px solid #fbd38d; color: #975a16; }
+.alert.info { background: #ebf8ff; border: 1px solid #90cdf4; color: #2b6cb0; }
+.alert.good { background: #f0fff4; border: 1px solid #9ae6b4; color: #276749; }
+
+.footer { text-align: center; color: #a0aec0; padding: 20px; font-size: 0.85em; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+.news-item { padding: 10px 0; border-bottom: 1px solid #e2e8f0; }
+.news-item .n-time { color: #a0aec0; font-size: 0.82em; }
+.news-item .n-title { font-weight: 500; }
+.news-item .n-source { color: #718096; font-size: 0.82em; }
+
+.valuation-box { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                 color: white; padding: 24px; border-radius: 12px; margin: 16px 0; }
+.valuation-box h3 { color: white; margin-bottom: 16px; }
+.valuation-row { display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-around; }
+.valuation-item { text-align: center; }
+.valuation-item .v-label { font-size: 0.85em; opacity: 0.85; }
+.valuation-item .v-value { font-size: 1.8em; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ====== Header ====== -->
+<div class="header">
+    <h1>综艺股份 <small style="font-weight:400;opacity:0.8">(600770)</small></h1>
+    <div class="subtitle">A股全栈数据分析报告 · 基于 a-stock-data V3.3.0 十层数据架构</div>
+    <div class="meta">
+        <span class="meta-item">📅 报告日期: 2026-06-29 18:15</span>
+        <span class="meta-item">🏭 行业: 综合Ⅱ</span>
+        <span class="meta-item">📋 上市日期: 19961120</span>
+    </div>
+</div>
+
+<!-- ====== 核心指标 ====== -->
+<div class="metrics-grid">
+    <div class="metric-card">
+        <div class="label">💰 最新价</div>
+        <div class="value down">6.68</div>
+        <div class="sub">-0.14 (-2.05%)</div>
+    </div>
+    <div class="metric-card">
+        <div class="label">📊 PE(TTM)</div>
+        <div class="value">66.4</div>
+        <div class="sub">PB: 2.55</div>
+    </div>
+    <div class="metric-card">
+        <div class="label">🏢 总市值</div>
+        <div class="value">86.8亿</div>
+        <div class="sub">流通: 86.8亿</div>
+    </div>
+    <div class="metric-card">
+        <div class="label">📈 前向PE</div>
+        <div class="value">—</div>
+        <div class="sub">EPS预测: —</div>
+    </div>
+    <div class="metric-card">
+        <div class="label">🎯 PEG</div>
+        <div class="value">—</div>
+        <div class="sub">CAGR: 0%</div>
+    </div>
+    <div class="metric-card">
+        <div class="label">⏳ PE消化</div>
+        <div class="value">0年</div>
+        <div class="sub">目标PE: 30x</div>
+    </div>
+    <div class="metric-card">
+        <div class="label">🔄 换手率</div>
+        <div class="value">7.08%</div>
+        <div class="sub">量比: 1.16</div>
+    </div>
+    <div class="metric-card">
+        <div class="label">📏 振幅</div>
+        <div class="value">6.60%</div>
+        <div class="sub">高6.95 低6.50</div>
+    </div>
+</div>
+
+<!-- ====== 估值分析 ====== -->
+<div class="section">
+    <h2>📊 估值分析</h2>
+    <div class="valuation-box">
+        <h3>投资框架速查</h3>
+        <div class="valuation-row">
+            <div class="valuation-item">
+                <div class="v-label">前向PE</div>
+                <div class="v-value">N/Ax</div>
+            </div>
+            <div class="valuation-item">
+                <div class="v-label">PEG</div>
+                <div class="v-value">N/A</div>
+            </div>
+            <div class="valuation-item">
+                <div class="v-label">PE消化到30x</div>
+                <div class="v-value">N/A年</div>
+            </div>
+        </div>
+    </div>
+    <div class="alert warn">
+        <strong>PEG评估：</strong>
+        暂无机构覆盖，无法计算PEG。当前PE(TTM)=66.4x。
+    </div>
+    <div class="alert warn">
+        <strong>PE消化分析：</strong>
+        暂无CAGR数据无法计算消化时间。
+    </div>
+</div>
+
+<!-- ====== K线走势图 ====== -->
+<div class="section">
+    <h2>📈 股价走势 (近120日)</h2>
+    <div class="chart-container tall">
+        <canvas id="klineChart"></canvas>
+    </div>
+</div>
+
+<!-- ====== 资金流向 + 融资融券 ====== -->
+<div class="two-col">
+<div class="section">
+    <h2>💹 主力资金流向 (近60日)</h2>
+    <div class="chart-container">
+        <canvas id="fundFlowChart"></canvas>
+    </div>
+    <div class="alert good"><strong>近20日主力累计：</strong>17116万元</div>
+</div>
+<div class="section">
+    <h2>🏦 融资余额趋势</h2>
+    <div class="chart-container">
+        <canvas id="marginChart"></canvas>
+    </div>
+    <div class="alert info">最新融资余额: 3.58亿 | 融券余额: 0.0114亿</div>
+</div>
+</div>
+
+<!-- ====== 概念板块 ====== -->
+<div class="section">
+    <h2>🏷️ 概念板块归属</h2>
+    <div style="margin-bottom:12px;">
+        <span class="tag">综合Ⅲ</span><span class="tag">综合</span><span class="tag">综合Ⅱ</span><span class="tag">江苏板块</span><span class="tag">新能源</span><span class="tag">创投</span><span class="tag">网络游戏</span><span class="tag">光伏概念</span><span class="tag">长江三角</span><span class="tag">融资融券</span><span class="tag">电商概念</span><span class="tag">人工智能</span><span class="tag">独角兽</span><span class="tag">国产芯片</span><span class="tag">半导体概念</span><span class="tag">并购重组概念</span><span class="tag">昨日高振幅</span><span class="tag">2025年报预增</span><span class="tag">沪股通</span>
+    </div>
+    <p style="color:#718096;font-size:0.9em;">共 <strong>19</strong> 个板块（含行业/概念/地域，板块名自解释）</p>
+</div>
+
+<!-- ====== 研报分析 ====== -->
+<div class="section">
+    <h2>📝 机构研报分析 (0篇)</h2>
+    <p style="color:#718096;margin-bottom:16px;">以下为东财 reportapi 检索到的个股研报，已下载PDF完整阅读后总结核心观点：</p>
+<div class="alert warn">⚠️ 该股票近期无机构研报覆盖，或研报接口返回为空。这可能意味着：① 该股不是机构重点覆盖标的；② 机构关注度较低。</div>
+</div>
+
+<!-- ====== 研报观点总结 ====== -->
+<div class="section">
+    <h2>📋 研报观点综合总结</h2>
+
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="label">📄 研报总数</div>
+            <div class="value">0</div>
+            <div class="sub">篇</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">⭐ 评级分布</div>
+            <div class="value">—</div>
+            <div class="sub">无</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">📊 一致预期EPS(今年)</div>
+            <div class="value">—</div>
+            <div class="sub">0家机构</div>
+        </div>
+        <div class="metric-card">
+            <div class="label">📊 一致预期EPS(明年)</div>
+            <div class="value">—</div>
+            <div class="sub">0家机构</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ====== 财务数据 ====== -->
+<div class="section">
+    <h2>📊 财务数据一览</h2>
+<h3>利润表（最近4期）</h3><div style="overflow-x:auto;"><table><thead><tr><th>报告期</th><th>营业总收入</th><th>营业收入</th><th>营业总成本</th><th>营业利润</th><th>利润总额</th><th>净利润</th><th>归属于母公司所有者的净利润</th></tr></thead><tbody><tr><td>2026-03-31</td><td>131355301.070000</td><td>131355301.070000</td><td>145956716.820000</td><td>11711818.040000</td><td>11718534.700000</td><td>11563823.380000</td><td>15112100.510000</td></tr><tr><td>2025-12-31</td><td>471969544.720000</td><td>471969544.720000</td><td>539338694.850000</td><td>130749051.180000</td><td>157712040.370000</td><td>136086626.210000</td><td>109116696.350000</td></tr><tr><td>2025-09-30</td><td>323610575.270000</td><td>323610575.270000</td><td>360476976.520000</td><td>103118716.810000</td><td>117966217.120000</td><td>105147046.540000</td><td>90798809.070000</td></tr><tr><td>2025-06-30</td><td>213149581.250000</td><td>213149581.250000</td><td>247366308.550000</td><td>31394125.340000</td><td>31370513.300000</td><td>28532154.840000</td><td>19896104.660000</td></tr></tbody></table></div>
+</div>
+
+<!-- ====== 新闻 + 公告 ====== -->
+<div class="two-col">
+<div class="section">
+    <h2>📰 近期新闻</h2>
+<div class="news-item">
+            <div class="n-title">综艺股份(600770.SH)：董事会秘书顾政巍辞任，吴涵接任</div>
+            <div class="n-time">2026-06-24 16:24:44 | <span class="n-source">界面新闻</span></div>
+        </div><div class="news-item">
+            <div class="n-title">强势股追踪 主力资金连续5日净流入77股</div>
+            <div class="n-time">2026-06-29 17:05:00 | <span class="n-source">证券时报网</span></div>
+        </div><div class="news-item">
+            <div class="n-title">综合行业6月29日资金流向日报</div>
+            <div class="n-time">2026-06-29 16:36:00 | <span class="n-source">证券时报网</span></div>
+        </div><div class="news-item">
+            <div class="n-title">48只股中线走稳 站上半年线</div>
+            <div class="n-time">2026-06-25 14:32:00 | <span class="n-source">证券时报网</span></div>
+        </div><div class="news-item">
+            <div class="n-title">51只股中线走稳 站上半年线</div>
+            <div class="n-time">2026-06-25 12:02:00 | <span class="n-source">证券时报网</span></div>
+        </div><div class="news-item">
+            <div class="n-title">2.67亿元主力资金今日抢筹综合板块</div>
+            <div class="n-time">2026-06-24 16:50:00 | <span class="n-source">证券时报网</span></div>
+        </div><div class="news-item">
+            <div class="n-title">5372.28万元资金今日流出综合股</div>
+            <div class="n-time">2026-06-22 16:58:00 | <span class="n-source">证券时报网</span></div>
+        </div><div class="news-item">
+            <div class="n-title">31.33亿主力资金净流入，汽车芯片概念涨1.64%</div>
+            <div class="n-time">2026-06-25 16:35:00 | <span class="n-source">证券时报网</span></div>
+        </div><div class="news-item">
+            <div class="n-title">汽车芯片概念涨2.28%，主力资金净流入64股</div>
+            <div class="n-time">2026-06-24 16:50:00 | <span class="n-source">证券时报网</span></div>
+        </div><div class="news-item">
+            <div class="n-title">综合行业今日涨4.23%，主力资金净流入8.14亿元</div>
+            <div class="n-time">2026-06-17 17:00:00 | <span class="n-source">证券时报网</span></div>
+        </div>
+</div>
+<div class="section">
+    <h2>📢 近期公告</h2>
+<div class="news-item">
+            <div class="n-title"><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225395915" target="_blank" style="color:#3182ce;text-decoration:none;">综艺股份关于为控股子公司提供担保的进展公告</a></div>
+            <div class="n-time">2026-06-30 | None</div>
+        </div><div class="news-item">
+            <div class="n-title"><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225384926" target="_blank" style="color:#3182ce;text-decoration:none;">综艺股份关于变更董事会秘书的公告</a></div>
+            <div class="n-time">2026-06-25 | None</div>
+        </div><div class="news-item">
+            <div class="n-title"><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225366904" target="_blank" style="color:#3182ce;text-decoration:none;">综艺股份关于股东部分股份质押的公告</a></div>
+            <div class="n-time">2026-06-13 | None</div>
+        </div><div class="news-item">
+            <div class="n-title"><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225356559" target="_blank" style="color:#3182ce;text-decoration:none;">综艺股份关于控股股东取得增持股份专项贷款承诺函的公告</a></div>
+            <div class="n-time">2026-06-09 | None</div>
+        </div><div class="news-item">
+            <div class="n-title"><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225350698" target="_blank" style="color:#3182ce;text-decoration:none;">综艺股份关于召开2025年年度业绩说明会的公告</a></div>
+            <div class="n-time">2026-06-05 | None</div>
+        </div><div class="news-item">
+            <div class="n-title"><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225329588" target="_blank" style="color:#3182ce;text-decoration:none;">综艺股份关于控股股东增持公司股份计划公告</a></div>
+            <div class="n-time">2026-05-26 | None</div>
+        </div><div class="news-item">
+            <div class="n-title"><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225329586" target="_blank" style="color:#3182ce;text-decoration:none;">综艺股份关于股东部分股份解除质押及再质押的公告</a></div>
+            <div class="n-time">2026-05-26 | None</div>
+        </div><div class="news-item">
+            <div class="n-title"><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225323544" target="_blank" style="color:#3182ce;text-decoration:none;">综艺股份2025年年度股东会决议公告</a></div>
+            <div class="n-time">2026-05-22 | None</div>
+        </div><div class="news-item">
+            <div class="n-title"><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225323538" target="_blank" style="color:#3182ce;text-decoration:none;">江苏世纪同仁律师事务所关于综艺股份2025年年度股东会的法律意见书</a></div>
+            <div class="n-time">2026-05-22 | None</div>
+        </div><div class="news-item">
+            <div class="n-title"><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225323535" target="_blank" style="color:#3182ce;text-decoration:none;">综艺股份关于使用公积金弥补亏损通知债权人的公告</a></div>
+            <div class="n-time">2026-05-22 | None</div>
+        </div>
+</div>
+</div>
+
+<!-- ====== 股东户数 + 分红 + 龙虎榜 ====== -->
+<div class="two-col">
+<div class="section">
+    <h2>👥 股东户数变化</h2>
+<table><thead><tr><th>日期</th><th>股东户数</th><th>变化户数</th><th>环比变化%</th><th>户均持股</th></tr></thead><tbody><tr><td>2026-03-31</td><td>62,026</td><td class="down">-2,313</td><td class="down">-3.60%</td><td>0</td></tr></tbody></table><div class="alert good">📈 股东户数持续减少 → 筹码趋于集中，可能是主力吸筹信号。</div>
+</div>
+<div class="section">
+    <h2>💵 分红送转历史</h2>
+<table><thead><tr><th>除权日</th><th>每股派息(元)</th><th>送股(每10股)</th><th>转增(每10股)</th><th>进度</th></tr></thead><tbody><tr><td>2013-08-02</td><td>0.5</td><td>None</td><td>0</td><td>实施分配</td></tr><tr><td>2012-07-16</td><td>0.5</td><td>0</td><td>0</td><td>实施分配</td></tr><tr><td>2010-07-16</td><td>None</td><td>0</td><td>0</td><td>实施分配</td></tr><tr><td>2007-05-24</td><td>0.6</td><td>5</td><td>0</td><td>实施分配</td></tr><tr><td>2002-08-20</td><td>0.5</td><td>0</td><td>0</td><td>实施分配</td></tr><tr><td>2001-06-13</td><td>1</td><td>0</td><td>0</td><td>实施分配</td></tr><tr><td>1999-09-02</td><td>None</td><td>3</td><td>0</td><td>实施分配</td></tr><tr><td>1998-09-24</td><td>None</td><td>2</td><td>0</td><td>实施分配</td></tr></tbody></table>
+</div>
+</div>
+
+<!-- ====== 龙虎榜 ====== -->
+<div class="section">
+    <h2>🐉 龙虎榜记录 (近180日)</h2>
+<table><thead><tr><th>日期</th><th>上榜原因</th><th>净买额(万)</th><th>换手率%</th></tr></thead><tbody><tr><td>2026-04-29</td><td>有价格涨跌幅限制的日价格振幅达到15%的前五只证券</td><td>-14,685</td><td>22.66</td></tr><tr><td>2026-04-28</td><td>有价格涨跌幅限制的日收盘价格涨幅偏离值达到7%的前五只证券</td><td>+18,867</td><td>14.69</td></tr><tr><td>2026-04-28</td><td>有价格涨跌幅限制的日价格振幅达到15%的前五只证券</td><td>+18,867</td><td>14.69</td></tr><tr><td>2026-04-24</td><td>非ST、*ST和S证券连续三个交易日内收盘价格涨幅偏离值累计达到20%的证券</td><td>+5,632</td><td>6.95</td></tr><tr><td>2026-04-23</td><td>有价格涨跌幅限制的日收盘价格涨幅偏离值达到7%的前五只证券</td><td>+7,156</td><td>3.87</td></tr><tr><td>2026-01-22</td><td>非ST、*ST和S证券连续三个交易日内收盘价格涨幅偏离值累计达到20%的证券</td><td>+6,436</td><td>13.79</td></tr></tbody></table>
+</div>
+
+<!-- ====== 行业大环境 ====== -->
+<div class="section">
+    <h2>🏭 行业板块排名 (全市场)</h2>
+
+</div>
+
+<!-- ====== 风险提示 ====== -->
+<div class="section">
+    <h2>⚠️ 风险提示</h2>
+    <div class="alert warn">
+        <strong>📊 数据说明：</strong>
+        <ul style="margin:8px 0 0 18px;">
+            <li>行情数据来自腾讯财经（不封IP，实时数据）</li>
+            <li>K线数据来自通达信mootdx（原始不复权价格）</li>
+            <li>研报来自东财reportapi，PDF已完整下载并提取文本</li>
+            <li>财务数据来自新浪财经三表接口</li>
+            <li>资金流/融资融券/股东户数来自东财datacenter</li>
+            <li>本报告由a-stock-data V3.3.0十层数据架构自动生成，仅供参考，不构成投资建议</li>
+            <li>投资有风险，入市需谨慎。请结合自身风险承受能力独立判断。</li>
+        </ul>
+    </div>
+</div>
+
+<div class="footer">
+    <p>📦 Generated by <a href="https://github.com/simonlin1212/a-stock-data" style="color:#3182ce;">a-stock-data V3.3.0</a> | {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>
+    <p>数据源：腾讯财经 | mootdx通达信 | 东财 | 新浪 | 巨潮 | 同花顺</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+// K-line chart
+(function() {
+    var ctx = document.getElementById('klineChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Close',
+                data: [],
+                borderColor: '#e53e3e',
+                backgroundColor: 'rgba(229,62,62,0.1)',
+                fill: true,
+                tension: 0.1,
+                pointRadius: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { ticks: { callback: function(v) { return v.toFixed(2); } } } }
+        }
+    });
+})();
+
+// Fund flow chart
+(function() {
+    var flowData = [-1229.3317, 924.3035, -361.9572, -83.1021, -702.9598, 229.3972, -399.7741, 328.3914, 4141.6051, 705.4026, -839.1147, -299.5238, 2111.8761, -417.9239, -1055.7272, -295.597, 13249.8224, 9816.5711, -20536.2522, 26227.7772, -16720.8866, -4257.9394, 20782.3989, -19300.1248, -5835.6749, 20605.935, -4643.2552, -7043.445, -12505.6143, -13933.1358, -3367.6458, 872.8181, -755.4582, 398.1364, -2405.9213, -2451.6414, 177.3269, -2661.0073, 1098.5001, -6641.3279, 793.2898, -1437.7959, 2115.6428, 546.2844, -2006.6695, -2910.9751, 124.7488, 651.1575, -651.8596, 164.5648, 521.8737, 967.272, 557.239, 3007.6857, -592.812, -497.7662, 4003.7782, 5911.2441, 5075.3733, 773.4546];
+    var ctx = document.getElementById('fundFlowChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["2026-03-31", "2026-04-01", "2026-04-02", "2026-04-03", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-06", "2026-05-07", "2026-05-08", "2026-05-11", "2026-05-12", "2026-05-13", "2026-05-14", "2026-05-15", "2026-05-18", "2026-05-19", "2026-05-20", "2026-05-21", "2026-05-22", "2026-05-25", "2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-06-01", "2026-06-02", "2026-06-03", "2026-06-04", "2026-06-05", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-22", "2026-06-23", "2026-06-24", "2026-06-25", "2026-06-26", "2026-06-29"],
+            datasets: [{
+                label: 'Main net inflow (10k CNY)',
+                data: flowData,
+                backgroundColor: flowData.map(function(v) { return v >= 0 ? 'rgba(56,161,105,0.7)' : 'rgba(229,62,62,0.7)'; }),
+                borderColor: flowData.map(function(v) { return v >= 0 ? '#38a169' : '#e53e3e'; }),
+                borderWidth: 0.5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { ticks: { callback: function(v) { return (v/1e4).toFixed(0) + 'Yi'; } } } }
+        }
+    });
+})();
+
+// Margin balance chart
+(function() {
+    var ctx = document.getElementById('marginChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["2026-05-29", "2026-06-01", "2026-06-02", "2026-06-03", "2026-06-04", "2026-06-05", "2026-06-08", "2026-06-09", "2026-06-10", "2026-06-11", "2026-06-12", "2026-06-15", "2026-06-16", "2026-06-17", "2026-06-18", "2026-06-22", "2026-06-23", "2026-06-24", "2026-06-25", "2026-06-26"],
+            datasets: [{
+                label: 'Margin balance (100M)',
+                data: [3.53819302, 3.48202143, 3.50994856, 3.51397643, 3.45222014, 3.45905706, 3.47435823, 3.48125599, 3.4525637, 3.35561554, 3.31904358, 3.26259868, 3.32226883, 3.34417684, 3.36517793, 3.41554034, 3.40430171, 3.4820837, 3.6111268, 3.58329682],
+                borderColor: '#3182ce',
+                backgroundColor: 'rgba(49,130,206,0.1)',
+                fill: true,
+                tension: 0.2,
+                pointRadius: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+        }
+    });
+})();
+</script>
+</body>
+</html>

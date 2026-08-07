@@ -1,0 +1,2416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股科技成长板块 — V3 深度分析报告</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background:#0d1117; color:#c9d1d9; line-height:1.6; }
+.container { max-width:1200px; margin:0 auto; padding:20px; }
+
+/* Header */
+.page-header { background: linear-gradient(135deg, #161b22, #1a2332); border-radius:16px; padding:40px; margin-bottom:30px; text-align:center; border:1px solid #30363d; }
+.page-header h1 { font-size:32px; background: linear-gradient(90deg, #58a6ff, #3fb950); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:10px; }
+.page-header .subtitle { color:#8b949e; font-size:16px; }
+.page-header .stats { display:flex; justify-content:center; gap:30px; margin-top:20px; flex-wrap:wrap; }
+.page-header .stat { text-align:center; }
+.page-header .stat-num { font-size: 28px; font-weight:bold; color:#58a6ff; }
+.page-header .stat-label { font-size:13px; color:#8b949e; }
+
+.section-title { font-size:22px; color:#58a6ff; margin:40px 0 20px 0; padding-bottom:10px; border-bottom:1px solid #30363d; }
+
+/* Stock cards */
+.cards-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap:18px; margin-bottom:30px; }
+.stock-card { background:#161b22; border:1px solid #30363d; border-radius:12px; overflow:hidden; transition: transform .15s, border-color .15s; }
+.stock-card:hover { transform:translateY(-2px); border-color:#58a6ff; }
+.card-header { background:#1a2332; padding:14px 18px; display:flex; align-items:center; gap:12px; }
+.stock-code { font-family:'SF Mono','Consolas',monospace; font-size:14px; color:#58a6ff; font-weight:bold; }
+.stock-name { font-size:16px; font-weight:600; }
+.stock-sw2 { font-size:12px; color:#8b949e; background:#21262d; padding:2px 8px; border-radius:10px; margin-left:auto; }
+.card-body { padding:18px; }
+.card-metrics { display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin-bottom:14px; }
+.metric { text-align:center; }
+.metric-value { font-size:20px; font-weight:bold; }
+.metric-label { font-size:11px; color:#8b949e; margin-top:2px; }
+.card-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+.tag { font-size:11px; background:#21262d; color:#8b949e; padding:3px 10px; border-radius:10px; }
+.tag-buy { background:#1a3a2a; color:#3fb950; }
+.tag-verdict { background:#1a3a2a; color:#3fb950; }
+.card-link { display:block; text-align:center; color:#58a6ff; text-decoration:none; font-size:13px; padding:6px; border-top:1px solid #21262d; }
+.card-link:hover { color:#79c0ff; }
+
+/* Detail sections */
+.detail-section { background:#161b22; border:1px solid #30363d; border-radius:16px; margin-bottom:30px; overflow:hidden; }
+.detail-header { background:#1a2332; padding:18px 24px; display:flex; align-items:center; gap:10px; font-size:14px; flex-wrap:wrap; }
+.detail-code { font-family:'SF Mono','Consolas',monospace; font-size:15px; color:#58a6ff; font-weight:bold; }
+.detail-name { font-size:18px; font-weight:600; }
+.detail-sw2 { font-size:12px; color:#8b949e; background:#21262d; padding:2px 10px; border-radius:10px; }
+.back-link { margin-left:auto; color:#58a6ff; text-decoration:none; font-size:13px; }
+
+.detail-block { padding:20px 24px; border-bottom:1px solid #21262d; }
+
+/* Dim tags (6-dimension quick summary) */
+.dim-tags-container { margin-top:12px; }
+.dim-tags-row { display:flex; gap:8px; flex-wrap:wrap; }
+.dim-tag { font-size:12px; padding:5px 12px; border-radius:14px; border:1px solid; font-weight:600; }
+
+/* Six-dimension cards */
+.sixdim-card { margin-bottom:16px; border:1px solid #21262d; border-radius:10px; overflow:hidden; }
+.sixdim-header { padding:10px 16px; font-size:14px; font-weight:bold; color:#c9d1d9; }
+.sixdim-body { padding:14px 16px; background:#0d1117; font-size:13px; color:#c9d1d9; line-height:1.7; }
+.sixdim-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:8px; }
+.sixdim-table th { text-align:left; padding:6px 8px; color:#8b949e; border-bottom:1px solid #21262d; font-weight:normal; }
+.sixdim-table td { padding:6px 8px; border-bottom:1px solid #1a1a2e; }
+.detail-block:last-child { border-bottom:none; }
+.detail-block h3 { font-size:16px; color:#c9d1d9; margin-bottom:12px; }
+.block-content { color:#c9d1d9; font-size:14px; }
+.block-content p { margin-bottom:6px; }
+.block-content ol { padding-left:20px; }
+.block-content li { margin-bottom:4px; color:#c9d1d9; }
+
+.section-summary { font-size:14px; color:#8b949e; margin-bottom:14px; line-height:1.6; }
+.section-subtitle { font-size:14px; color:#58a6ff; font-weight:600; margin-bottom:10px; }
+
+/* Executive Summary */
+.exec-summary { display:flex; gap:24px; padding:20px 0; border-bottom:1px solid #21262d; }
+.exec-left { flex:0 0 180px; text-align:center; }
+.exec-verdict { font-size:22px; font-weight:bold; margin-bottom:4px; }
+.exec-price { font-size:32px; font-weight:bold; color:#c9d1d9; }
+.exec-target { font-size:13px; color:#8b949e; margin-top:4px; }
+.exec-right { flex:1; }
+.exec-conclusion { font-size:14px; color:#c9d1d9; line-height:1.8; margin-bottom:14px; }
+.dim-bars { display:flex; flex-direction:column; gap:6px; }
+.dim-item { display:flex; align-items:center; gap:10px; }
+.dim-label { width:50px; font-size:12px; color:#8b949e; text-align:right; }
+.dim-bar-track { flex:1; height:6px; background:#21262d; border-radius:3px; overflow:hidden; }
+.dim-bar-fill { height:100%; border-radius:3px; transition: width .6s; }
+
+/* Business section */
+.biz-section { }
+.biz-label { font-size:12px; color:#58a6ff; font-weight:600; margin-bottom:6px; text-transform:uppercase; }
+.biz-text { font-size:14px; color:#c9d1d9; line-height:1.8; white-space:pre-wrap; }
+.biz-source { font-size:11px; color:#8b949e; margin-top:6px; }
+
+/* Financial grid */
+.fin-grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; }
+.fin-card { background:#0d1117; border:1px solid #21262d; border-radius:8px; padding:16px; text-align:center; }
+.fin-card-title { font-size:11px; color:#8b949e; margin-bottom:4px; text-transform:uppercase; }
+.fin-card-val { font-size:22px; font-weight:bold; color:#58a6ff; }
+.fin-card-sub { font-size:11px; color:#8b949e; margin-top:4px; }
+
+/* Valuation grid */
+.val-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:12px; margin-bottom:16px; }
+.val-card { background:#0d1117; border-radius:8px; padding:16px; text-align:center; border:1px solid #21262d; }
+.val-title { font-size:12px; color:#8b949e; margin-bottom:6px; }
+.val-number { font-size:24px; font-weight:bold; }
+.val-sub { font-size:11px; color:#8b949e; margin-top:4px; }
+
+.scenario-row { display:flex; gap:12px; margin-bottom:16px; }
+.scenario-card { flex:1; background:#0d1117; border-radius:8px; padding:14px; text-align:center; border:1px solid #21262d; }
+.sc-title { font-size:12px; color:#8b949e; }
+.sc-value { font-size:20px; font-weight:bold; color:#ffd740; margin:6px 0; }
+.sc-upside { font-size:13px; }
+
+/* Research synthesis */
+.research-synthesis { background:#0d1117; border:1px solid #30363d; border-radius:8px; padding:18px; margin-top:16px; }
+.synth-summary { font-size:14px; color:#c9d1d9; line-height:1.8; margin-bottom:12px; }
+.synth-themes { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+.research-theme-tag { font-size:11px; background:#1a2332; color:#58a6ff; padding:3px 10px; border-radius:12px; border:1px solid #58a6ff44; }
+.synth-detail { font-size:13px; color:#8b949e; margin-bottom:10px; }
+.synth-views { margin-top:10px; }
+.synth-view-item { padding:8px 12px; border-bottom:1px solid #21262d; font-size:13px; display:flex; gap:10px; align-items:baseline; flex-wrap:wrap; }
+.synth-view-org { color:#58a6ff; font-weight:600; white-space:nowrap; }
+.synth-view-date { color:#8b949e; font-size:11px; white-space:nowrap; }
+.synth-view-rating { font-size:11px; white-space:nowrap; }
+.synth-view-text { color:#c9d1d9; flex:1; min-width:200px; }
+
+/* Enhanced synthesis */
+.synth-narrative { font-size:15px; color:#c9d1d9; line-height:2; margin-bottom:16px; padding:14px 16px; background:#1a2332; border-radius:8px; border-left:3px solid #58a6ff; }
+.implied-target-box { display:flex; gap:20px; background:linear-gradient(135deg,#1a2332,#0d1117); border:1px solid #30363d; border-radius:8px; padding:16px; margin:12px 0; }
+.implied-target-main { flex:0 0 200px; text-align:center; font-size:13px; color:#8b949e; }
+.implied-big { font-size:28px; font-weight:bold; color:#3fb950; margin:4px 0; }
+.implied-target-detail { flex:1; display:flex; flex-direction:column; justify-content:center; gap:4px; font-size:13px; color:#8b949e; }
+.viewpoint-group { display:flex; align-items:flex-start; gap:10px; margin:8px 0; }
+.viewpoint-group-name { font-size:12px; color:#58a6ff; font-weight:600; white-space:nowrap; min-width:60px; }
+.viewpoint-tags { display:flex; gap:6px; flex-wrap:wrap; }
+.viewpoint-tag { font-size:12px; background:#0d1117; color:#c9d1d9; padding:3px 10px; border-radius:10px; border:1px solid #30363d; }
+.synth-view-signal { font-size:11px; padding:1px 6px; border-radius:8px; margin-left:6px; }
+.synth-view-title { font-size:13px; color:#c9d1d9; margin-top:4px; font-style:italic; }
+.synth-view-drivers { font-size:11px; color:#8b949e; margin-top:2px; }
+.synth-view-header { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+
+/* PDF extracts */
+.pdf-extracts { display:flex; flex-direction:column; gap:14px; margin-top:10px; }
+.pdf-extract-item { background:#0d1117; border:1px solid #30363d; border-radius:8px; padding:14px; }
+.pdf-extract-header { display:flex; gap:10px; align-items:center; margin-bottom:8px; font-size:12px; }
+.pdf-extract-text { font-size:13px; color:#8b949e; line-height:1.8; max-height:360px; overflow-y:auto; white-space:pre-wrap; }
+
+/* Research table */
+.research-table-wrap { margin-top:20px; }
+.research-table { width:100%; border-collapse:collapse; font-size:13px; margin-top:10px; }
+.research-table th { text-align:left; color:#8b949e; font-size:11px; padding:8px 10px; border-bottom:1px solid #30363d; }
+.research-table td { padding:8px 10px; border-bottom:1px solid #21262d; }
+.research-table tr:hover td { background:#1a2332; }
+.research-compare { background:#1a2332; border-radius:8px; padding:12px 16px; margin-top:12px; font-size:14px; color:#c9d1d9; }
+
+/* Volume-Price card */
+.vp-card { background:#0d1117; border:1px solid #21262d; border-radius:8px; padding:18px; }
+.vp-row { display:flex; gap:16px; }
+.vp-item { flex:1; text-align:center; }
+.vp-val { font-size:20px; font-weight:bold; color:#58a6ff; }
+.vp-label { font-size:11px; color:#8b949e; margin-top:4px; }
+
+/* VPA Rating Card */
+.vpa-rating-card { display:flex; gap:24px; background:#0d1117; border:1px solid #21262d; border-radius:8px; padding:18px; margin-top:10px; align-items:center; }
+.vpa-main-rating { flex:0 0 140px; text-align:center; }
+.vpa-big-rating { font-size:24px; font-weight:bold; }
+.vpa-score { font-size:13px; color:#8b949e; margin-top:4px; }
+.vpa-dims { flex:1; display:flex; flex-direction:column; gap:8px; }
+.vpa-dim { display:flex; align-items:center; gap:8px; font-size:12px; color:#8b949e; }
+.vpa-dim-bar { flex:1; height:6px; background:#21262d; border-radius:3px; overflow:hidden; }
+.vpa-dim-bar div { height:100%; border-radius:3px; transition:width .6s; }
+
+.vpa-detail-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:12px; }
+.vpa-detail-item { background:#0d1117; border:1px solid #21262d; border-radius:8px; padding:12px; }
+.vpa-detail-label { font-size:11px; color:#58a6ff; margin-bottom:4px; }
+.vpa-detail-val { font-size:15px; font-weight:bold; color:#c9d1d9; }
+.vpa-detail-sub { font-size:11px; color:#8b949e; margin-top:4px; }
+
+.vpa-signals-row { display:flex; gap:6px; flex-wrap:wrap; margin-top:12px; }
+.vpa-sig-tag { font-size:11px; padding:4px 10px; border-radius:12px; background:#1a2332; color:#8b949e; border:1px solid #30363d; }
+.vpa-sig-趋势 { border-color:#3fb95044; color:#3fb950; }
+.vpa-sig-趋势延 { border-color:#3fb95044; color:#3fb950; }
+.vpa-sig-趋势启 { border-color:#3fb95044; color:#3fb950; }
+.vpa-sig-趋势衰 { border-color:#ff525244; color:#ff5252; }
+.vpa-sig-反转 { border-color:#ffd74044; color:#ffd740; }
+
+.vpa-anomaly-warn { margin-top:12px; padding:10px 14px; background:#ff52521a; border:1px solid #ff525244; border-radius:8px; font-size:13px; color:#ff5252; }
+.vpa-mf-extra { margin-top:12px; padding:10px 14px; background:#0d1117; border:1px solid #21262d; border-radius:8px; font-size:12px; color:#8b949e; }
+
+/* Money flow dashboard */
+.mf-dashboard { display:flex; gap:20px; background:#0d1117; border:1px solid #21262d; border-radius:8px; padding:18px; margin-top:10px; }
+.mf-main { flex:0 0 240px; text-align:center; border-right:1px solid #21262d; padding-right:20px; }
+.mf-big-num { font-size:32px; font-weight:bold; }
+.mf-big-label { font-size:13px; color:#8b949e; margin-top:4px; }
+.mf-cons { font-size:12px; color:#8b949e; margin-top:10px; }
+.mf-detail { flex:1; display:flex; flex-direction:column; gap:8px; }
+.mf-row { display:flex; justify-content:space-between; font-size:14px; padding:4px 8px; }
+
+/* Risk explain */
+.risk-explain { background:#1a2332; border-radius:8px; padding:12px; margin-top:12px; font-size:13px; color:#8b949e; line-height:1.8; }
+
+/* Conclusion */
+.conclusion-box { }
+.conclusion-signals { display:flex; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+.conclusion-tag { padding:6px 14px; border-radius:20px; font-size:13px; font-weight:600; }
+.conclusion-text { font-size:14px; color:#c9d1d9; line-height:1.8; }
+
+/* Misc */
+.metric-row { display:flex; gap:16px; flex-wrap:wrap; }
+.mini-metric { flex:1; min-width:120px; background:#0d1117; border-radius:8px; padding:14px; text-align:center; border:1px solid #21262d; }
+.mm-val { display:block; font-size:20px; font-weight:bold; color:#58a6ff; }
+.mm-label { display:block; font-size:11px; color:#8b949e; margin-top:4px; }
+
+.page-footer { text-align:center; color:#484f58; font-size:12px; padding:40px 0; }
+.page-footer a { color:#58a6ff; }
+.nav-top { position:fixed; bottom:30px; right:30px; background:#238636; color:#fff; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:20px; box-shadow:0 4px 12px rgba(0,0,0,.4); z-index:100; }
+.nav-top:hover { background:#2ea043; }
+
+@media (max-width:768px) {
+    .cards-grid { grid-template-columns:1fr; }
+    .val-grid, .fin-grid { grid-template-columns:1fr 1fr; }
+    .metric-row { flex-direction:column; }
+    .scenario-row { flex-direction:column; }
+    .exec-summary { flex-direction:column; }
+    .mf-dashboard { flex-direction:column; }
+    .mf-main { border-right:none; border-bottom:1px solid #21262d; padding:0 0 16px 0; }
+    .vp-row { flex-wrap:wrap; }
+}
+</style>
+</head>
+<body id="top">
+<div class="container">
+
+<!-- ═══════════ HEADER ═══════════ -->
+<div class="page-header">
+    <h1>A股科技成长板块 · V3 深度分析报告</h1>
+    <div class="subtitle">TG-trading-sys V4.0 全模块分析 | 研报驱动 + 量价资金 + 业务深度 | 2026-07-30</div>
+    <div class="stats">
+        <div class="stat"><div class="stat-num">4</div><div class="stat-label">精选标的</div></div>
+        <div class="stat"><div class="stat-num">11</div><div class="stat-label">分析模块</div></div>
+        <div class="stat"><div class="stat-num">23</div><div class="stat-label">券商研报</div></div>
+        <div class="stat"><div class="stat-num">0/4</div><div class="stat-label">资金流覆盖</div></div>
+    </div>
+</div>
+
+<!-- ═══════════ 筛选说明 ═══════════ -->
+<div class="detail-block" style="border-radius:12px;margin-bottom:30px;background:#161b22;">
+    <h3>🔬 筛选流程</h3>
+    <div class="block-content">
+        <p><strong>第一轮</strong>：全市场5533只 → 12个科技行业 → <strong>2293只</strong></p>
+        <p><strong>第二轮</strong>：5期财报QoQ环比分析 + 业绩预告信号 + 现金流健康 + 负债惩罚 + 营收利润双改善加分 → <strong>Top 124只</strong></p>
+        <p><strong>第三轮</strong>：综合估值定价(DCF+PEG+PB-ROE+研报目标价) + 安全边际评分 → <strong>低估精选</strong></p>
+        <p><strong>第四轮（本报告）</strong>：11模块深度分析 = 业务深度(F10/年报) + 财务诊断 + 估值定价 + 技术面(均线+VPA量价) + 资金面(主力流+Tushare) + VaR风控 + 六维度综合结论</p>
+    </div>
+</div>
+
+<!-- ═══════════ 快速概览卡片 ═══════════ -->
+<h2 class="section-title">📊 4只精选 — 快速概览</h2>
+<div class="cards-grid">
+
+    <div class="stock-card" id="card-688336">
+        <div class="card-header">
+            <span class="stock-code">688336</span>
+            <span class="stock-name">三生国健</span>
+            <span class="stock-sw2">生物制药</span>
+        </div>
+        <div class="card-body">
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">41.30</div>
+                    <div class="metric-label">现价</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">12.4</div>
+                    <div class="metric-label">PE(TTM)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">4.44</div>
+                    <div class="metric-label">PB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">370亿</div>
+                    <div class="metric-label">市值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff9100">偏空</div>
+                    <div class="metric-label">择时信号</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">+42.1%</div>
+                    <div class="metric-label">安全边际</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                <span class="tag">研报13篇</span><span class="tag tag-buy">12家买入</span><span class="tag">目标78</span>
+                
+                <span class="tag tag-verdict">显著低估</span>
+                <span class="tag">波动率75%</span>
+            </div>
+            <a href="#detail-688336" class="card-link">查看深度分析 →</a>
+        </div>
+    </div>
+    <div class="stock-card" id="card-300773">
+        <div class="card-header">
+            <span class="stock-code">300773</span>
+            <span class="stock-name">拉卡拉</span>
+            <span class="stock-sw2">软件服务</span>
+        </div>
+        <div class="card-body">
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">15.09</div>
+                    <div class="metric-label">现价</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">9.9</div>
+                    <div class="metric-label">PE(TTM)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">3.59</div>
+                    <div class="metric-label">PB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">155亿</div>
+                    <div class="metric-label">市值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff9100">偏空</div>
+                    <div class="metric-label">择时信号</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">+36.8%</div>
+                    <div class="metric-label">安全边际</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                <span class="tag">研报8篇</span><span class="tag tag-buy">7家买入</span>
+                
+                <span class="tag tag-verdict">显著低估</span>
+                <span class="tag">波动率66%</span>
+            </div>
+            <a href="#detail-300773" class="card-link">查看深度分析 →</a>
+        </div>
+    </div>
+    <div class="stock-card" id="card-002546">
+        <div class="card-header">
+            <span class="stock-code">002546</span>
+            <span class="stock-name">新联电子</span>
+            <span class="stock-sw2">电气设备</span>
+        </div>
+        <div class="card-body">
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">8.53</div>
+                    <div class="metric-label">现价</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">12.7</div>
+                    <div class="metric-label">PE(TTM)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">1.88</div>
+                    <div class="metric-label">PB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">68亿</div>
+                    <div class="metric-label">市值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#69f0ae">做多</div>
+                    <div class="metric-label">择时信号</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">+27.6%</div>
+                    <div class="metric-label">安全边际</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                
+                
+                <span class="tag tag-verdict">适度低估</span>
+                <span class="tag">波动率49%</span>
+            </div>
+            <a href="#detail-002546" class="card-link">查看深度分析 →</a>
+        </div>
+    </div>
+    <div class="stock-card" id="card-300613">
+        <div class="card-header">
+            <span class="stock-code">300613</span>
+            <span class="stock-name">富瀚微</span>
+            <span class="stock-sw2">半导体</span>
+        </div>
+        <div class="card-body">
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff5252">58.75</div>
+                    <div class="metric-label">现价</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff5252">63.5</div>
+                    <div class="metric-label">PE(TTM)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">4.73</div>
+                    <div class="metric-label">PB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">129亿</div>
+                    <div class="metric-label">市值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#90a4ae">观望</div>
+                    <div class="metric-label">择时信号</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff9100">-23.6%</div>
+                    <div class="metric-label">安全边际</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                <span class="tag">研报2篇</span><span class="tag tag-buy">2家买入</span>
+                
+                <span class="tag tag-verdict">适度高估</span>
+                <span class="tag">波动率55%</span>
+            </div>
+            <a href="#detail-300613" class="card-link">查看深度分析 →</a>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ 深度分析 ═══════════ -->
+<h2 class="section-title">📋 逐只深度分析</h2>
+
+    <div class="detail-section" id="detail-688336">
+        <div class="detail-header">
+            <span class="detail-code">688336</span>
+            <span class="detail-name">三生国健</span>
+            <span class="detail-sw2">生物制药</span>
+            <span style="color:#8b949e">|</span>
+            <span style="font-size:18px;color:#00e676">41.30</span>
+            <span style="color:#8b949e">| PE 12.4 | PB 4.44 | 市值 370亿</span>
+            <a href="#top" class="back-link">↑ 回顶部</a>
+        </div>
+        
+    <div class="exec-summary">
+        <div class="exec-left">
+            <div class="exec-verdict" style="color:#00e676">显著低估</div>
+            <div class="exec-price">41.30<span style="font-size:14px;color:#8b949e"> 元</span></div>
+            <div class="exec-target">目标价: 71.38 元</div>
+        </div>
+        <div class="exec-right">
+            <div class="exec-conclusion">估值层面处于<span style='color:#00e676'>低估区间</span>（安全边际42%）；技术面<span style='color:#ff5252'>偏空</span></div>
+            <div class="dim-tags-container"><div class="dim-tags-row"><span class="dim-tag" style="border-color:#00e676;color:#00e676">估值: 安全边际+42%</span><span class="dim-tag" style="border-color:#ff5252;color:#ff5252">技术: 偏空 30分</span><span class="dim-tag" style="border-color:#ffd740;color:#ffd740">资金: 主力0.0亿/20日</span><span class="dim-tag" style="border-color:#00e676;color:#00e676">成长: 利润环比加权+180.9%</span><span class="dim-tag" style="border-color:#00e676;color:#00e676">质量: 负债率4%</span><span class="dim-tag" style="border-color:#ff5252;color:#ff5252">风险: 年化波动75%</span></div></div>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🏭 公司业务深度</h3>
+        <div class="block-content">
+            <div class="biz-section">
+                <div class="biz-label">主营业务</div>
+                <div class="biz-text"></div>
+                <div class="biz-source">数据来源: 分析团队整理</div>
+            </div>
+            <div class="biz-section" style="margin-top:16px">
+                <div class="biz-label">最新年报</div>
+                <div class="biz-text"><div><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225062101" target="_blank" style="color:#58a6ff">三生国健：2025年年度报告摘要</a> <span style="color:#8b949e;font-size:12px">(2026-03-31)</span></div><div><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225062013" target="_blank" style="color:#58a6ff">三生国健：2025年年度报告</a> <span style="color:#8b949e;font-size:12px">(2026-03-31)</span></div></div></div>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📊 财务健康诊断 <span style="font-size:12px;color:#8b949e;font-weight:normal">(最新报告期: 2026-03-31)</span></h3>
+        <p class="section-summary">低负债，<span style="color:#00e676">财务结构稳健</span> | 数据来源: 新浪财报三表</p>
+        <div class="fin-grid">
+            <div class="fin-card">
+                <div class="fin-card-title">收入规模</div>
+                <div class="fin-card-val">4.3亿</div>
+                <div class="fin-card-sub">营业收入</div>
+            </div>
+            <div class="fin-card">
+                <div class="fin-card-title">盈利能力</div>
+                <div class="fin-card-val">1.8亿</div>
+                <div class="fin-card-sub">归母净利润 | ROE 2.0%</div>
+            </div>
+            <div class="fin-card">
+                <div class="fin-card-title">资产规模</div>
+                <div class="fin-card-val">89.5亿</div>
+                <div class="fin-card-sub">总资产 | 净资产 86.2亿</div>
+            </div>
+            <div class="fin-card">
+                <div class="fin-card-title">偿债能力</div>
+                <div class="fin-card-val" style="color:#00e676">4.1%</div>
+                <div class="fin-card-sub">资产负债率 | 现金 2.8亿</div>
+            </div>
+        </div>
+        <p style="color:#8b949e;font-size:12px;margin-top:12px">数据来源: 新浪财报三表(利润表/资产负债表/现金流量表)，共 0 期</p>
+    </div>
+    <div class="detail-block">
+        <h3>💰 估值定价</h3>
+        <p class="section-summary">综合估值 <strong style="color:#00e676">71.38 元</strong>，当前价 41.30 元，安全边际 <strong style="color:#00e676">+42.1%</strong> — 显著低估</p>
+
+        <div class="val-grid">
+            <div class="val-card">
+                <div class="val-title">DCF 估值</div>
+                <div class="val-number">70.98 元</div>
+                <div class="val-sub">WACC 7.4%</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PE-PEG 估值</div>
+                <div class="val-number">47.71 元</div>
+                <div class="val-sub">高估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PB-ROE 估值</div>
+                <div class="val-number">95.90 元</div>
+                <div class="val-sub">ROE 48.9% | 合理PB 10.0</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">机构一致目标价</div>
+                <div class="val-number">77.56 元</div>
+                <div class="val-sub">13家机构覆盖</div>
+            </div>
+        </div><div class="scenario-row">
+            <div class="scenario-card">
+                <div class="sc-title">乐观</div>
+                <div class="sc-value">71.00</div>
+                <div class="sc-upside">+71.9%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">中性</div>
+                <div class="sc-value">71.34</div>
+                <div class="sc-upside">+72.7%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">悲观</div>
+                <div class="sc-value">66.56</div>
+                <div class="sc-upside">+61.2%</div>
+            </div></div>
+        <div class="research-synthesis">
+            <div class="section-subtitle">📝 券商研报综合分析</div>
+            <div class="synth-narrative">13家机构覆盖，评级共识为「强烈看多」（买入12家/增持+持有1家）。业绩趋势向好（6/6篇持正面判断）。核心增长逻辑集中在：龙头地位。综合目标价区间44.0～93.7元（均值63.7元）。（注：其中11篇目标价由EPS×合理PE推算）。</div>
+            <div class="implied-target-box">
+                <div class="implied-target-main">
+                    <div>机构综合目标价</div>
+                    <div class="implied-big">63.7元</div>
+                    <div>区间 44.02～93.65元 （上涨空间+54.2%）</div>
+                </div>
+                <div class="implied-target-detail">
+                    <div>明确目标价: 1篇</div>
+                    <div>EPS推算: 11篇</div>
+                    <div>推算PE: 80.0x（机构隐含PE中位数(80.0x)）</div>
+                </div>
+            </div>
+                <div class="viewpoint-group">
+                    <span class="viewpoint-group-name">业绩判断</span>
+                    <div class="viewpoint-tags"><span class="viewpoint-tag">业绩增长</span><span class="viewpoint-tag">业绩增长</span><span class="viewpoint-tag">业绩稳健增长</span><span class="viewpoint-tag">业绩稳健增长</span><span class="viewpoint-tag">业绩稳健增长</span><span class="viewpoint-tag">业绩大幅增长</span></div>
+                </div>
+                <div class="viewpoint-group">
+                    <span class="viewpoint-group-name">增长驱动</span>
+                    <div class="viewpoint-tags"><span class="viewpoint-tag">龙头地位</span></div>
+                </div>
+                <div class="viewpoint-group">
+                    <span class="viewpoint-group-name">公司质地</span>
+                    <div class="viewpoint-tags"><span class="viewpoint-tag">行业龙头</span><span class="viewpoint-tag">经营稳健</span></div>
+                </div>
+            <div class="section-subtitle" style="margin-top:16px">📄 近期研报观点摘录</div>
+            <div class="synth-views">
+                <div class="synth-view-item">
+                    <div class="synth-view-header">
+                        <span class="synth-view-org">长城国瑞证券</span>
+                        <span class="synth-view-date">2026-06-16</span>
+                        <span class="synth-view-rating">[买入]</span>
+                        
+                    </div>
+                    <div class="synth-view-title">"抗体龙头创新积淀厚积薄发，自免管线步入集中收获期"</div>
+                    <div class="synth-view-drivers">行业龙头/领先地位</div>
+                </div>
+                <div class="synth-view-item">
+                    <div class="synth-view-header">
+                        <span class="synth-view-org">中邮证券</span>
+                        <span class="synth-view-date">2026-05-08</span>
+                        <span class="synth-view-rating">[买入]</span>
+                        
+                    </div>
+                    <div class="synth-view-title">"授权收入增厚利润，自免管线稳步推进迈入收获期"</div>
+                    
+                </div>
+                <div class="synth-view-item">
+                    <div class="synth-view-header">
+                        <span class="synth-view-org">国金证券</span>
+                        <span class="synth-view-date">2026-04-02</span>
+                        <span class="synth-view-rating">[买入]</span>
+                        <span class="synth-view-signal">业绩增长</span>
+                    </div>
+                    <div class="synth-view-title">"授权收入推动业绩增长，26年管线密集兑现"</div>
+                    
+                </div>
+                <div class="synth-view-item">
+                    <div class="synth-view-header">
+                        <span class="synth-view-org">国金证券</span>
+                        <span class="synth-view-date">2025-12-03</span>
+                        <span class="synth-view-rating">[买入]</span>
+                        
+                    </div>
+                    <div class="synth-view-title">"深耕自免赛道，管线即将步入收获期"</div>
+                    
+                </div>
+                <div class="synth-view-item">
+                    <div class="synth-view-header">
+                        <span class="synth-view-org">开源证券</span>
+                        <span class="synth-view-date">2025-10-28</span>
+                        <span class="synth-view-rating">[买入]</span>
+                        
+                    </div>
+                    <div class="synth-view-title">"公司信息更新报告：业绩同环比增速稳健，在研项目稳步推进"</div>
+                    
+                </div>
+                <div class="synth-view-item">
+                    <div class="synth-view-header">
+                        <span class="synth-view-org">中邮证券</span>
+                        <span class="synth-view-date">2025-09-02</span>
+                        <span class="synth-view-rating">[买入]</span>
+                        <span class="synth-view-signal">业绩增长</span>
+                    </div>
+                    <div class="synth-view-title">"业绩增长稳健，创新加码为公司注入长期动能"</div>
+                    
+                </div></div></div>
+        <div class="section-subtitle" style="margin-top:20px">📄 研报原文摘录（PDF提取）</div>
+        <div class="pdf-extracts">
+                <div class="pdf-extract-item">
+                    <div class="pdf-extract-header">
+                        <span class="synth-view-org">长城国瑞证券</span>
+                        <span class="synth-view-date">2026-06-16</span>
+                        <span class="synth-view-rating">抗体龙头创新积淀厚积薄发，自免管线步入集中收获期</span>
+                    </div>
+                    <div class="pdf-extract-text">【投资建议：】
+我们预计公司 2026-2028 年的营业总收入分别为 17.63/20.41/24.65
+亿元，归母净利润分别为 6.04/7.52/8.90 亿元，对应 EPS 分别为
+0.98/1.22/1.44 元，当前股价对应P/E为 56/45/38倍。随着安沐奇塔
+单抗顺利获批上市，公司迎来驱动业绩上行的核心新增长点；急性
+痛风管线 SSGJ-613 审批进程渐近落地；SSGJ-611 成人特应性皮炎
+适应症NDA在2026年2月正式获受理。同时公司其余在研项目均
+保持良好推进节奏，后续一系列创新产品将逐步释放业绩增量，叠
+加与辉瑞合作约定的后续里程碑付款预期。我们首次给予其“买入”
+请参阅最后一页的股票投资评级说明和法律声明
+【风险提示：】
+医保降价/药品集中招标采购风险、新药研发及商业化过程漫长且成
+本高昂风险、研发人员流失风险、辉瑞里程碑付款确认节奏及退回
+2025 2026E 2027E 2028E
+营业收入(百万元) 4,199.12 1,763.07 2,041.00 2,465.13
+增长率(%) 251.81 -58.01 15.76 20.78
+归母净利润（百万元） 2,899.30 604.04 751.75 890.25
+增长率(%) 311.49 -79.17 24.45 18.42
+EPS（元/股） 4.69 0.98 1.22 1.44
+市盈率（P/E) 11.76 56.46 45.37 38.31
+市净率（P/B） 4.03 3.78 3.52 3.25
+请参阅最后一页的股票投资评级说明和法律声明
+一、从“创新积累”迈向“价值兑现”，产品商业化实现突破..............................6
+1. 抗体药物领军企业，深耕自身免疫治疗领域................................................................6
+2. 背靠三生制药，股权集中稳固........................................................................................8
+3. 走出集采阵痛，盈利能力持续回升..............................................................................10
+二、安沐奇塔单抗获批上市，为公司业绩增长注入核心新动能............................12
+1. 安沐奇塔单抗差异化优势明显，给药间隔长且免疫原性极低..................................12
+2. 银屑病市场快速增长，需求与创新双驱动....................</div>
+                </div>
+                <div class="pdf-extract-item">
+                    <div class="pdf-extract-header">
+                        <span class="synth-view-org">中邮证券</span>
+                        <span class="synth-view-date">2026-05-08</span>
+                        <span class="synth-view-rating">授权收入增厚利润，自免管线稳步推进迈入收获期</span>
+                    </div>
+                    <div class="pdf-extract-text">【证券研究报告：医药生物 | 公司点评报告】
+买入 |维持 授权收入增厚利润，自免管线稳步推进迈入收获期
+【个股表现 l 投资要点】
+事件：2025年实现营收41.99亿元，同比增长251.81%；归母净
+226% 利润28.99亿元，同比增长311.49%。2026Q1实现营收4.31亿元，
+180% 同比增长38.61%；归母净利润1.78亿元，同比增长73.00%。
+主业受政策扰动略有下滑，授权收入增厚利润表现。
+111% 按照商品销售口径统计公司25年该项收入9.1亿元，较24年
+65% 略有下滑，毛利率75.79%（-4.26pct）。预计系1）益赛普集采扩围，
+均价下降显著；2）赛普汀受医保支付收紧叠加晚期乳腺癌的竞争加
+2025-05 2025-07 2025-09 2025-12 2026-02 2026-05 剧等因素综合所致。授权使用许可25年共贡献收入31.13亿元，其
+中SSGJ-707项目确认收入约28亿元，显著增厚当期业绩。26Q1，授
+权收入的增长系公司业绩高速增长的主要动因。
+新品益赛拓上市构筑新增长引擎，自免管线布局全面夯实长期增
+长基础。公司自免管线前瞻布局，稳健推进逐步迈入收获期。益赛拓
+最新收盘价（元） 73.07 （IL-17A单抗，608）中重度银屑病适应症于2026年2月获批上市；
+总股本/流通股本（亿股）6.18/6.17 613(IL-1β)和611（IL-4R）分别于25年6月和26年2月递交NDA。
+总市值/流通市值（亿元）452/451 同时608的2个适应症进入3期，611的COPD和青少年AD启动三期
+52周内最高/最低价 92.30/27.06 入组，联合TCS 的三期已完成主要终点阳性结果，613 完成2期临
+资产负债率(%) 6.1% 床，即将进入3期推进。610的哮喘临床3期入组中。
+市盈率 15.55 临床管线推进有序，早研创新分子进入IND/临床前关键阶段。
+第一大股东 富健药业有限公司 BDCA2抗体(“626”)完成在中国健康人群中Ia 期临床；系统性红斑狼
+疮适应症临床Ib期研究入组完成；TL1A抗体（“627”）于2026年3
+月启动临床II期研究。早期创新分子加速推进IND及临床前阶段：
+重组抗 OX40L/IL-31RA 双特异性抗体注射液（“SSGJ-716”）、
+CD3/BCMA/CD19 人源化三特异性抗体（SSGJ-717）、重组抗TL1A/IL-23
+SAC登记编号:S1340525060001
+Email:shenglihua@cnpsec.com 双特异性抗体注射液（718）、TSLP/IL-4R 双特异性抗体吸入剂（SSGJ-
+分析师:徐智敏 719）、IL-23R口服多肽（SSGJ-629）等。
+SAC登记编号:S1340525100003</div>
+                </div>
+                <div class="pdf-extract-item">
+                    <div class="pdf-extract-header">
+                        <span class="synth-view-org">国金证券</span>
+                        <span class="synth-view-date">2026-04-02</span>
+                        <span class="synth-view-rating">授权收入推动业绩增长，26年管线密集兑现</span>
+                    </div>
+                    <div class="pdf-extract-text">【盈利预测、估值与评级】
+我们预计2026-2028年公司营业收入18.0/19.9/24.5亿元，同比
+分别-57.1%/+10.3%/+23.2%，归母净利润分别为 6.1/6.7/8.2 亿
+元 ， 同比 分 别 -79.1%/+11.2%/+22.1% ，对 应 EPS 分 别 为
+0.98/1.09/1.33，维持“买入”评级。
+【风险提示】
+研发及商业化不及预期风险、大股东持股集中及关联交易风险
+133052 036052 039052 132152 133062
+【公司点评】
+损益表（人民币百万元） 资产负债表（人民币百万元）
+2023 2024 2025 2026E 2027E 2028E 2023 2024 2025 2026E 2027E 2028E
+主营业务收入 1,014 1,194 4,199 1,802 1,989 2,450 货币资金 933 459 193 751 1,548 2,225
+增长率 17.7% 251.8% -57.1% 10.3% 23.2% 应收款项 133 147 154 178 191 229
+主营业务成本 -224 -304 -333 -324 -351 -434 存货 195 230 261 532 250 262
+%销售收入 22.1% 25.5% 7.9% 18.0% 17.7% 17.7% 其他流动资产 988 1,824 5,621 4,889 4,872 4,862
+毛利 790 889 3,866 1,479 1,637 2,015 流动资产 2,250 2,660 6,229 6,350 6,862 7,578
+%销售收入 77.9% 74.5% 92.1% 82.0% 82.3% 82.3% %总资产 42.4% 44.6% 69.5% 69.1% 69.7% 70.7%
+营业税金及附加 -9 -9 -12 -13 -14 -17 长期投资 97 47 100 97 98 100
+%销售收入 0.9% 0.8% 0.3% 0.7% 0.7% 0.7% 固定资产 1,562 1,539 1,534 1,605 1,666 1,727
+销售费用 -252 -238 -199 -288 -338 -490 %总资产 29.4% 25.8% 17.1% 17.5% 16.9% 16.1%
+%销售收入 24.8% 19.9% 4.7% 16.0% 17.0% 20.0% 无形资产 285 453 551 587 671 760
+管理费用 -63 -79 -101 -117 -123 -127 非流动资产 3,055 3,305 2,728 2,835 2,983 3,138
+%销售收入 6.2% 6.6% 2.4% 6.5% 6.2% 5.2% %总资产 57.6% 55.4% 30.5% 30</div>
+                </div></div>
+        <div class="research-table-wrap">
+            <div class="section-subtitle">📋 近期券商研报明细</div>
+            <table class="research-table">
+                <thead><tr>
+                    <th>机构</th><th>日期</th><th>评级</th><th>目标价</th><th>2026E EPS</th><th>2027E EPS</th>
+                </tr></thead><tbody>
+                <tr>
+                    <td>长城国瑞证券</td>
+                    <td style="color:#8b949e">2026-06-16</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>0.98</td>
+                    <td>1.22</td>
+                </tr>
+                <tr>
+                    <td>中邮证券</td>
+                    <td style="color:#8b949e">2026-05-08</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>1.02</td>
+                    <td>1.12</td>
+                </tr>
+                <tr>
+                    <td>国金证券</td>
+                    <td style="color:#8b949e">2026-04-02</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>0.98</td>
+                    <td>1.09</td>
+                </tr>
+                <tr>
+                    <td>国金证券</td>
+                    <td style="color:#8b949e">2025-12-03</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>78</td>
+                    <td>0.97</td>
+                    <td>1.11</td>
+                </tr>
+                <tr>
+                    <td>开源证券</td>
+                    <td style="color:#8b949e">2025-10-28</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>0.88</td>
+                    <td>1.10</td>
+                </tr>
+                <tr>
+                    <td>中邮证券</td>
+                    <td style="color:#8b949e">2025-09-02</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>1.17</td>
+                    <td>0.91</td>
+                </tr>
+                <tr>
+                    <td>民生证券</td>
+                    <td style="color:#8b949e">2025-03-28</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>0.55</td>
+                    <td>0.76</td>
+                </tr>
+                <tr>
+                    <td>开源证券</td>
+                    <td style="color:#8b949e">2025-03-27</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>0.56</td>
+                    <td>0.73</td>
+                </tr>
+                <tr>
+                    <td>民生证券</td>
+                    <td style="color:#8b949e">2024-10-30</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>0.59</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>开源证券</td>
+                    <td style="color:#8b949e">2024-10-23</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>0.64</td>
+                    <td>-</td>
+                </tr></tbody></table>
+            <div class="research-compare">
+                <span>📌 机构一致目标价均值: <strong>77.56 元</strong></span>
+                <span style="margin:0 16px">|</span>
+                <span>我们的估值: <strong style="color:#00e676">71.38 元</strong></span>
+                <span style="margin:0 16px">|</span>
+                <span>偏差: 低于机构均值8%</span>
+            </div></div></div>
+        <div class="detail-block">
+            <h3>🔮 盈利预测与一致预期</h3>
+            <div class="metric-row">
+                <div class="mini-metric"><span class="mm-val">0.75</span><span class="mm-label">2026E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">0.91</span><span class="mm-label">2027E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">493.5x</span><span class="mm-label">2026E PE</span></div>
+                <div class="mini-metric"><span class="mm-val" style="font-size:14px">2021: 0.03 → 2022: 0.08 → 2023: 0.48 → 2024: 1.14 → 2025: 4.7</span><span class="mm-label">历史EPS</span></div>
+            </div>
+            <p style="color:#8b949e;font-size:12px;margin-top:8px">数据来源: 同花顺一致预期 + 东财研报EPS（含异常检测）</p>
+        </div>
+    <div class="detail-block">
+        <h3>📈 技术面与资金面</h3>
+
+        <!-- 均线系统 -->
+        <div class="section-subtitle">均线形态</div>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val" style="color:#ff9100">偏空</span><span class="mm-label">综合信号</span></div>
+            <div class="mini-metric"><span class="mm-val">30/100</span><span class="mm-label">技术评分</span></div>
+            <div class="mini-metric"><span class="mm-val">0/100</span><span class="mm-label">均线评分</span></div>
+            <div class="mini-metric"><span class="mm-val">强势空头排列</span><span class="mm-label">均线排列</span></div>
+        </div>
+        <div class="section-subtitle" style="margin-top:16px">VPA 量价分析（Anna Coulling 方法论）</div>
+        <div class="vpa-rating-card">
+            <div class="vpa-main-rating">
+                <div class="vpa-big-rating" style="color:#69f0ae">偏多</div>
+                <div class="vpa-score">68/100 分</div>
+            </div>
+            <div class="vpa-dims">
+                <div class="vpa-dim"><span>趋势</span><div class="vpa-dim-bar"><div style="width:85%;background:#58a6ff"></div></div><span>85</span></div>
+                <div class="vpa-dim"><span>量价</span><div class="vpa-dim-bar"><div style="width:65%;background:#3fb950"></div></div><span>65</span></div>
+                <div class="vpa-dim"><span>资金</span><div class="vpa-dim-bar"><div style="width:50%;background:#ffd740"></div></div><span>50</span></div>
+            </div>
+        </div>
+        <div class="vpa-detail-grid">
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">短期趋势</div>
+                <div class="vpa-detail-val">下跌 (强度15)</div>
+                <div class="vpa-detail-sub">短期下跌趋势，下跌趋势阶段。均线空头排列，高位支点不再抬高。量价配合：上涨缩量——量价背离。趋势强度15/100。</div>
+            </div>
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">中期趋势</div>
+                <div class="vpa-detail-val">下跌 (强度0)</div>
+                <div class="vpa-detail-sub"></div>
+            </div>
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">趋势共振</div>
+                <div class="vpa-detail-val">短中期共振看空</div>
+                <div class="vpa-detail-sub">[持币观望最佳策略]</div>
+            </div>
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">威科夫阶段</div>
+                <div class="vpa-detail-val">下跌疑似吸筹</div>
+                <div class="vpa-detail-sub">支撑: - | 阻力: -</div>
+            </div>
+        </div><div class="vpa-signals-row"><span class="vpa-sig-tag vpa-sig-趋势">趋势延续×2: 回踩均线+缩量至0.5x，健康回调</span><span class="vpa-sig-tag vpa-sig-趋势">趋势反转×6: 价格创新低但成交量递减——下跌动能衰竭</span></div>
+            <div class="vpa-anomaly-warn">
+                ⚠ 最新K线异常:  (量级: 低(15), 形态: None)
+            </div>
+        <div class="section-subtitle" style="margin-top:20px">风险度量</div>
+        <div class="metric-row">
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">5.7%</span>
+                <span class="mm-label">VaR日(95%)</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff5252">0.0%</span>
+                <span class="mm-label">CVaR日(95%)</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">75%</span>
+                <span class="mm-label">年化波动率(极高)</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val">0.74</span>
+                <span class="mm-label">Beta系数</span>
+            </div>
+        </div>
+        <div class="risk-explain">
+            <strong>理解这些指标：</strong><br>
+            <strong>VaR 5.7%</strong> = 95%概率下，持有一股该股票，单日亏损不超过5.7%（约2.34元）。<br>
+            <strong>CVaR 0.0%</strong> = 当亏损已超过VaR时，平均会亏0.0%。代表"尾部风险"。<br>
+            <strong>波动率 75%</strong> = 年化标准差。A股科技股通常40-60%。<br>
+            <strong>Beta 0.74</strong> = 相对沪深300的波动倍数。
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📐 六维度深度分析</h3>
+
+        <!-- 估值维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#1a237e44">💰 估值定价</div>
+            <div class="sixdim-body">
+                <p><strong>综合估值:</strong> 71.38 元 | 现价 41.30 | 安全边际 +42.1% | <span style="color:#00e676">显著低估</span></p>
+                <table class="sixdim-table">
+                    <tr><th>方法</th><th>估值(元)</th><th>权重</th><th>说明</th></tr><tr><td>DCF</td><td>70.98</td><td>10%</td><td>DCF终值纠偏已启用</td></tr><tr><td>PE-PEG</td><td>47.71</td><td>40%</td><td>CAGR×合理PE</td></tr><tr><td>PB-ROE</td><td>95.90</td><td>35%</td><td>ROE/Ke模型</td></tr><tr><td>研报均价</td><td>77.56</td><td>15%</td><td>机构一致预期</td></tr>
+                </table>
+                <p style="font-size:12px;color:#8b949e;margin-top:8px">
+                DCF参数: WACC=0.0% | 永续g=0.0% | 终值占比=0.0%
+                
+                </p>
+            </div>
+        </div>
+
+        <!-- 技术维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#1b5e20 44">📈 技术分析</div>
+            <div class="sixdim-body">
+                <p><strong>综合信号:</strong> 偏空 (评分30/100, 置信度中%) |
+                均线排列: 强势空头排列</p>
+                <table class="sixdim-table">
+                    <tr><th>VPA维度</th><th>评分</th><th>权重</th><th>含义</th></tr>
+                    <tr><td>趋势分析</td><td>85/100</td><td>40%</td><td>短期+中期趋势方向与强度，威科夫阶段判断</td></tr>
+                    <tr><td>量价信号</td><td>65/100</td><td>30%</td><td>K线形态+成交量验证+序列信号(去重后2类)</td></tr>
+                    <tr><td>资金流</td><td>50/100</td><td>30%</td><td>连续资金流向+主力散户背离+趋势共振</td></tr>
+                    <tr><td><strong>综合</strong></td><td><strong>68/100</strong></td><td>100%</td><td><strong>偏多</strong></td></tr>
+                </table>
+                <p style="font-size:12px;color:#8b949e;margin-top:4px">趋势: 下跌 |
+                威科夫阶段: 下跌疑似吸筹
+                </p>
+            </div>
+        </div>
+
+        <!-- 资金维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#e6510044">💵 资金流向</div>
+            <div class="sixdim-body">
+                <p><strong>Tushare主力(统计期: 20260713~20260730):</strong></p>
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>数值</th><th>说明</th></tr>
+                    <tr><td>统计天数</td><td>14天</td><td>数据覆盖交易日数</td></tr>
+                    <tr><td>主力净流入天数</td><td style="color:#ff5252">7天</td><td>大单+特大单净买入>0的天数</td></tr>
+                    <tr><td>主力净流出天数</td><td>7天</td><td>主力净卖出>0的天数</td></tr>
+                    <tr><td>主力流入占比</td><td style="color:#ff5252">50%</td><td>流入天数/总天数</td></tr>
+                    <tr><td>主力累计净额</td><td style="color:#00e676">0万</td><td>统计期主力净买入总额</td></tr>
+                    <tr><td>近5日主力净额</td><td style="color:#ff5252">0万</td><td>短期主力动向</td></tr>
+                    <tr><td>趋势一致性</td><td>一致</td><td>5日与20日主力方向是否一致</td></tr>
+                    <tr><td>主力流入强度</td><td>0.39%</td><td>主力净额/期间总成交</td></tr>
+                </table>
+                <p style="font-size:12px;color:#8b949e;margin-top:4px">东财5日: 大单0万 特大单-0万 散户-0万 | 资金-价格共振: neutral | 主力持续出逃</p>
+            </div>
+        </div>
+
+        <!-- 成长维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#1b5e2044">📈 成长趋势</div>
+            <div class="sixdim-body">
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>最新QoQ</th><th>前季QoQ</th><th>前前季QoQ</th><th>最早QoQ</th><th>加权均值</th><th>判断</th></tr>
+                    <tr><td>营收环比</td>
+                        <td style="color:#ff5252">-89.7%</td>
+                        <td style="color:#00e676">+276.3%</td>
+                        <td>+73.8%</td>
+                        <td>+106.4%</td>
+                        <td><strong>+72.4%</strong></td>
+                        <td>减速</td></tr>
+                    <tr><td>利润环比</td>
+                        <td style="color:#ff5252">-93.9%</td>
+                        <td style="color:#00e676">+626.9%</td>
+                        <td>+109.6%</td>
+                        <td>+84.9%</td>
+                        <td><strong>+180.9%</strong></td>
+                        <td>减速</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 质量维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#4a148c44">🏭 经营质量</div>
+            <div class="sixdim-body">
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>数值</th><th>行业参考</th><th>判断</th></tr>
+                    <tr><td>毛利率</td><td>37.5%</td><td>科技>30%优</td><td style="color:#00e676">优秀</td></tr>
+                    <tr><td>ROE</td><td>2.1%</td><td>>15%优</td><td style="color:#ffd740">一般</td></tr>
+                    <tr><td>现金比率</td><td>6.44</td><td>>0.5稳健</td><td style="color:#00e676">稳健</td></tr>
+                    <tr><td>负债率</td><td>4.1%</td><td><30%优</td><td style="color:#00e676">低负债</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 风险维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#b71c1c44">⚠ 风险度量</div>
+            <div class="sixdim-body">
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>数值</th><th>说明</th></tr>
+                    <tr><td>VaR(95%)</td><td>+5.7%</td><td>95%置信度下日最大亏损比例</td></tr>
+                    <tr><td>CVaR(95%)</td><td>+0.0%</td><td>超出VaR的尾部平均亏损</td></tr>
+                    <tr><td>年化波动率</td><td>74.7%</td><td>>50%高风险, 30-50%中等, <30%低风险</td></tr>
+                    <tr><td colspan="3"><strong>情景压力测试:</strong></td></tr>
+                    <tr><td>乐观情景</td><td>71.00元</td><td>涨跌幅+71.9%</td></tr>
+                    <tr><td>中性情景</td><td>71.34元</td><td>涨跌幅+72.7%</td></tr>
+                    <tr><td>悲观情景</td><td>66.56元</td><td>涨跌幅+61.2%</td></tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="detail-block">
+        <h3>🎯 综合结论</h3>
+        <div class="conclusion-box">
+            <div class="conclusion-signals"><span class="conclusion-tag" style="background:#00e67622;color:#00e676;border:1px solid #00e67644">估值: 低估</span><span class="conclusion-tag" style="background:#ff525222;color:#ff5252;border:1px solid #ff525244">技术: 偏空</span></div>
+            <div class="conclusion-text">估值层面处于<span style='color:#00e676'>低估区间</span>（安全边际42%）；技术面<span style='color:#ff5252'>偏空</span></div>
+        </div>
+    </div>
+
+    <div class="detail-block" style="border-color:#ff5252">
+        <h3 style="color:#ff5252">⚠ 风险提示</h3>
+        <div class="block-content">
+            <p></p>
+            
+            
+            <p style="margin-top:16px;color:#8b949e;font-size:12px">
+                WACC: 7.4% |
+                Ke: 7.6% |
+                Beta: 0.74 |
+                数据日期: 20260729
+            </p>
+        </div>
+    </div>
+    </div>
+    <div class="detail-section" id="detail-300773">
+        <div class="detail-header">
+            <span class="detail-code">300773</span>
+            <span class="detail-name">拉卡拉</span>
+            <span class="detail-sw2">软件服务</span>
+            <span style="color:#8b949e">|</span>
+            <span style="font-size:18px;color:#00e676">15.09</span>
+            <span style="color:#8b949e">| PE 9.9 | PB 3.59 | 市值 155亿</span>
+            <a href="#top" class="back-link">↑ 回顶部</a>
+        </div>
+        
+    <div class="exec-summary">
+        <div class="exec-left">
+            <div class="exec-verdict" style="color:#00e676">显著低估</div>
+            <div class="exec-price">15.09<span style="font-size:14px;color:#8b949e"> 元</span></div>
+            <div class="exec-target">目标价: 23.86 元</div>
+        </div>
+        <div class="exec-right">
+            <div class="exec-conclusion">估值层面处于<span style='color:#00e676'>低估区间</span>（安全边际37%）；技术面<span style='color:#ff5252'>偏空</span></div>
+            <div class="dim-tags-container"><div class="dim-tags-row"><span class="dim-tag" style="border-color:#00e676;color:#00e676">估值: 安全边际+37%</span><span class="dim-tag" style="border-color:#ff5252;color:#ff5252">技术: 偏空 30分</span><span class="dim-tag" style="border-color:#ffd740;color:#ffd740">资金: 主力0.0亿/20日</span><span class="dim-tag" style="border-color:#00e676;color:#00e676">成长: 利润环比加权+76.3%</span><span class="dim-tag" style="border-color:#ff5252;color:#ff5252">质量: 负债率61%</span><span class="dim-tag" style="border-color:#ff5252;color:#ff5252">风险: 年化波动66%</span></div></div>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🏭 公司业务深度</h3>
+        <div class="block-content">
+            <div class="biz-section">
+                <div class="biz-label">主营业务</div>
+                <div class="biz-text"></div>
+                <div class="biz-source">数据来源: 分析团队整理</div>
+            </div>
+            <div class="biz-section" style="margin-top:16px">
+                <div class="biz-label">最新年报</div>
+                <div class="biz-text"><div><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225112036" target="_blank" style="color:#58a6ff">2025年年度报告</a> <span style="color:#8b949e;font-size:12px">(2026-04-17)</span></div><div><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225112035" target="_blank" style="color:#58a6ff">2025年年度报告摘要</a> <span style="color:#8b949e;font-size:12px">(2026-04-17)</span></div></div></div>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📊 财务健康诊断 <span style="font-size:12px;color:#8b949e;font-weight:normal">(最新报告期: 2026-03-31)</span></h3>
+        <p class="section-summary">高负债，<span style="color:#ff5252">需关注偿债压力</span> | 数据来源: 新浪财报三表</p>
+        <div class="fin-grid">
+            <div class="fin-card">
+                <div class="fin-card-title">收入规模</div>
+                <div class="fin-card-val">16.1亿</div>
+                <div class="fin-card-sub">营业收入</div>
+            </div>
+            <div class="fin-card">
+                <div class="fin-card-title">盈利能力</div>
+                <div class="fin-card-val">5.9亿</div>
+                <div class="fin-card-sub">归母净利润 | ROE 12.1%</div>
+            </div>
+            <div class="fin-card">
+                <div class="fin-card-title">资产规模</div>
+                <div class="fin-card-val">120.9亿</div>
+                <div class="fin-card-sub">总资产 | 净资产 48.7亿</div>
+            </div>
+            <div class="fin-card">
+                <div class="fin-card-title">偿债能力</div>
+                <div class="fin-card-val" style="color:#ff5252">60.7%</div>
+                <div class="fin-card-sub">资产负债率 | 现金 73.4亿</div>
+            </div>
+        </div>
+        <p style="color:#8b949e;font-size:12px;margin-top:12px">数据来源: 新浪财报三表(利润表/资产负债表/现金流量表)，共 0 期</p>
+    </div>
+    <div class="detail-block">
+        <h3>💰 估值定价</h3>
+        <p class="section-summary">综合估值 <strong style="color:#00e676">23.86 元</strong>，当前价 15.09 元，安全边际 <strong style="color:#00e676">+36.8%</strong> — 显著低估</p>
+
+        <div class="val-grid">
+            <div class="val-card">
+                <div class="val-title">DCF 估值</div>
+                <div class="val-number">10.68 元</div>
+                <div class="val-sub">WACC 3.6%</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PE-PEG 估值</div>
+                <div class="val-number">N/A 元</div>
+                <div class="val-sub">数据不足</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PB-ROE 估值</div>
+                <div class="val-number">27.63 元</div>
+                <div class="val-sub">ROE 31.9% | 合理PB 5.8</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">机构一致目标价</div>
+                <div class="val-number">N/A 元</div>
+                <div class="val-sub">8家机构覆盖</div>
+            </div>
+        </div><div class="scenario-row">
+            <div class="scenario-card">
+                <div class="sc-title">乐观</div>
+                <div class="sc-value">20.52</div>
+                <div class="sc-upside">+36.0%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">中性</div>
+                <div class="sc-value">19.16</div>
+                <div class="sc-upside">+27.0%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">悲观</div>
+                <div class="sc-value">17.79</div>
+                <div class="sc-upside">+17.9%</div>
+            </div></div>
+        <div class="research-synthesis">
+            <div class="section-subtitle">📝 券商研报综合分析</div>
+            <div class="synth-narrative">8家机构覆盖，评级共识为「强烈看多」（买入7家/增持+持有1家）。业绩判断分化（正面0篇/负面0篇）。核心增长逻辑集中在：降本增效、份额提升。综合目标价区间5.5～15.7元（均值12.5元）。（注：其中7篇目标价由EPS×合理PE推算）。</div>
+            <div class="implied-target-box">
+                <div class="implied-target-main">
+                    <div>机构综合目标价</div>
+                    <div class="implied-big">12.53元</div>
+                    <div>区间 5.52～15.67元 （上涨空间-17.0%）</div>
+                </div>
+                <div class="implied-target-detail">
+                    <div>明确目标价: 0篇</div>
+                    <div>EPS推算: 7篇</div>
+                    <div>推算PE: 9.9x（当前TTM PE(9.9x)）</div>
+                </div>
+            </div>
+                <div class="viewpoint-group">
+                    <span class="viewpoint-group-name">业绩判断</span>
+                    <div class="viewpoint-tags"><span class="viewpoint-tag">经营向好</span><span class="viewpoint-tag">经营向好</span><span class="viewpoint-tag">经营向好</span><span class="viewpoint-tag">经营向好</span></div>
+                </div>
+                <div class="viewpoint-group">
+                    <span class="viewpoint-group-name">增长驱动</span>
+                    <div class="viewpoint-tags"><span class="viewpoint-tag">降本增效</span><span class="viewpoint-tag">份额提升</span></div>
+                </div>
+            <div class="section-subtitle" style="margin-top:16px">📄 近期研报观点摘录</div>
+            <div class="synth-views">
+                <div class="synth-view-item">
+                    <div class="synth-view-header">
+                        <span class="synth-view-org">太平洋</span>
+                        <span class="synth-view-date">2025-10-19</span>
+                        <span class="synth-view-rating">[增持]</span>
+                        
+                    </div>
+                    <div class="synth-view-title">"拉卡拉2025年中报点评：业务结构持续优化，跨境与SaaS构筑新动能"</div>
+                    <div class="synth-view-drivers">新增长曲线 | 降本增效</div>
+                </div>
+                <div class="synth-view-item">
+                    <div class="synth-view-header">
+                        <span class="synth-view-org">开源证券</span>
+                        <span class="synth-view-date">2025-04-25</span>
+                        <span class="synth-view-rating">[买入]</span>
+                        <span class="synth-view-signal">经营向好</span>
+                    </div>
+                    <div class="synth-view-title">"2024年年报和2025年1季报点评：持续推动扫码和SaaS业务，跨境支付业务高增"</div>
+                    
+                </div>
+                <div class="synth-view-item">
+                    <div class="synth-view-header">
+                        <span class="synth-view-org">开源证券</span>
+                        <span class="synth-view-date">2024-10-29</span>
+                        <span class="synth-view-rating">[买入]</span>
+                        
+                    </div>
+                    <div class="synth-view-title">"拉卡拉2024前三季业绩点评：前三季支付量价趋稳，扣非受股权转让和季节扰动影响"</div>
+                    
+                </div>
+                <div class="synth-view-item">
+                    <div class="synth-view-header">
+                        <span class="synth-view-org">开源证券</span>
+                        <span class="synth-view-date">2024-08-11</span>
+                        <span class="synth-view-rating">[买入]</span>
+                        <span class="synth-view-signal">经营向好</span>
+                    </div>
+                    <div class="synth-view-title">"拉卡拉2024H1业绩点评：费率延续提升且市占率稳定，中期分红提升股东回报"</div>
+                    <div class="synth-view-drivers">市场份额提升</div>
+                </div>
+                <div class="synth-view-item">
+                    <div class="synth-view-header">
+                        <span class="synth-view-org">开源证券</span>
+                        <span class="synth-view-date">2024-07-04</span>
+                        <span class="synth-view-rating">[买入]</span>
+                        
+                    </div>
+                    <div class="synth-view-title">"拉卡拉信息更新点评：ESG理念拥抱数字经济，中报景气度有望扩张"</div>
+                    <div class="synth-view-drivers">行业景气/拐点</div>
+                </div>
+                <div class="synth-view-item">
+                    <div class="synth-view-header">
+                        <span class="synth-view-org">国金证券</span>
+                        <span class="synth-view-date">2024-04-23</span>
+                        <span class="synth-view-rating">[买入]</span>
+                        <span class="synth-view-signal">经营向好</span>
+                    </div>
+                    <div class="synth-view-title">"扫码GPV高增，Q1盈利水平回升"</div>
+                    
+                </div></div></div>
+        <div class="section-subtitle" style="margin-top:20px">📄 研报原文摘录（PDF提取）</div>
+        <div class="pdf-extracts">
+                <div class="pdf-extract-item">
+                    <div class="pdf-extract-header">
+                        <span class="synth-view-org">太平洋</span>
+                        <span class="synth-view-date">2025-10-19</span>
+                        <span class="synth-view-rating">拉卡拉2025年中报点评：业务结构持续优化，跨境与SaaS构筑新动能</span>
+                    </div>
+                    <div class="pdf-extract-text">【公 司点评】
+拉卡拉 2025 年中报点评：业务结构持续优化，跨境与 SaaS 构筑新动能
+事件：拉卡拉发布2025年半年度报告。报告期内，公司实现营业收
+入26.5亿元，同比-11.1%；实现归母净利润2.3亿元，同比-45.3%。
+支付交易金额下滑，业务结构优化。2025 年上半年，公司数字支付
+60% 业务收入 23.6 亿元，收入占比近 90%，是公司收入的主要来源。支付总
+太 40% 交易金额1.96万亿元，同比-9.2%，其中银行卡交易1.30万亿元，同比
+平 -12.2%，扫码交易0.66万亿元，同比-2.6%，主要系公司主动调整业务结
+构，小微交易占比下降所致。尽管总量收缩，但业务结构优化成果显著。
+41/01/42 62/21/42 9/3/52 12/5/52 2/8/52 41/01/52 公
+(40%) 60%。此外，跨境支付交易金额371亿元，同比+73.5%，外卡受理活跃用
+股 户同比+72%，外卡交易金额同比+210%，
+科技服务业务转型持续推进，SaaS业务稳健发展。2025H1科技业务
+收入1.4亿元，同比-17.5%，主要受公司主动收缩供应链金融业务所致。
+SaaS 业务表现亮眼，截至 2025H1，SaaS 产品已服务超 10 万家用户，优
+总股本/流通(亿股) 7.88/7.34 质客户数量大幅增长；投资的天财商龙 2025H1 实现收入 1.8 亿元，6 月
+公 总市值/流通(亿元) 192.06/178.96 开始纳入合并报表导致SaaS业务报表端贡献不足，预计下半年将为公司
+司 12 个月内最高/最低价 35.97/13.95 科技业务带来明显增量收入。公司在AI技术服务方面取得显著成果，注
+证 (元) 册用户数量近800万，月活用户150万，AI智能体应用于商户服务方面，
+投资建议：公司第三方支付龙头地位稳固，积极推进“支付+SaaS”
+战略转型，并同步加速AI与业务融合，看好跨境业务与SaaS开启新增长
+究 曲线。预计2025-2027年公司营业收入为54.61、55.28、56.14亿元，归
+报 母净利润为4.22、4.41、4.98亿元，摊薄EPS为0.54、0.56、0.63元，
+对应10月14日收盘价的PE估值为45.55、43.59、38.54倍。维持“增
+E-MAIL：xiama@tpyzq.com
+分析师登记编号：S1190523030003
+风险提示：行业竞争加剧、地缘政治风险、SaaS业务推广不及预期
+E-MAIL：wangziqin@tpyzq.com ◼ 盈利预测和财务指标
+一般证券业务登记编号：S1190124010010 2024 2025E 2026E 2027E
+营业收入（百万元） 5,761.54 5,460.60 5,527.76 5,614.06</div>
+                </div>
+                <div class="pdf-extract-item">
+                    <div class="pdf-extract-header">
+                        <span class="synth-view-org">开源证券</span>
+                        <span class="synth-view-date">2025-04-25</span>
+                        <span class="synth-view-rating">2024年年报和2025年1季报点评：持续推动扫码和SaaS业务，跨境支付业务高增</span>
+                    </div>
+                    <div class="pdf-extract-text">【——2024 年年报和 2025 年 1 季报点评】
+ 持续推动扫码和SaaS业务，跨境支付业务高增
+（1）2024年公司营业收入57.6亿/归母净利润3.5亿，同比分别-3.0%/-23.3%，
+公 一年最高最低(元) 29.99/11.10 扣非净利润 5.5 亿，同比-2.8%，扣非业绩略低于我们预期，支付费率和毛利率
+信 总市值(亿元) 183.47 改善略低于我们此前预期。报告内公司处置参股金融机构股权形成公允价值变动
+息 流通市值(亿元) 170.95 损失，拖累归母净利润。年度分红预案每股0.2元，加上中期分红后全年每股0.6
+更 元，占扣非净利润 86%（2）2025Q1 营收/归母净利润分别 13.0/1.0 亿，同比
+新 -13.0%/-51.7%，低于我们预期，主要受支付交易量GPV同比下降影响。（3）考
+虑到 GPV 和费率改善低于预期，我们下调 2025/2026 归母净利润预测分别至
+近3个月换手率(%) 301.74 6.1/7.5亿（前值10.4/12.2亿），新增2027年归母净利润预测为9.0亿，分别同比
++73%/+23%/+20%，当前估值对应PE分别30.1/24.5/20.4倍。公司作为第三方支
+付龙头，银行卡收单和扫码交易规模保持行业领先，有望充分受益于国内消费提
+振，“支付+”转型持续推进，有望受益于跨境支付发展机遇，维持“买入”评级。
+ 扫码GPV占比提升，毛利率有所改善，跨境支付和外卡支付增长明显
+（1）2024年支付手续费收入 51.7 亿，同比-0.3%，公司全年支付交易金额 4.22
+万亿（同比下降6.4%）。其中扫码交易金额1.36万亿，同比增长13.3%，扫码业
+务占比同比提升 5pct 至 32%，交易规模和增速均行业领先。年报披露，公司中
+40% 大型客户规模快速扩大，跨境支付业务发展势头良好，外卡支付建设成果显著，
+跨境支付和外卡受理商户规模增长显著，分别同比增长80%和200%。（2）2024
+年支付业务毛利 14.1 亿，同比+3%，结构优化、费率和毛利率提升支持毛利增
+长超过交易量，支付毛利率 27.2%同比+0.9pct。（3）2025Q1 公司支付交易金额
+源 2024-04 2024-08 2024-12 2025-04
+证 9820 亿，同比下降 10.5%，整体营业收入 13.0 亿，同比-13.0%，整体毛利 3.0
+券 亿同比下降40.4%，预计1季度支付业务费率和毛利率均有所承压。
+证  内生外延并举加速推进支付+SaaS融合，加快AI融合步伐
+券 相关研究报告 （1）2024年科技服务业务毛利 2.6 亿，同比+3.2%。2024 年公司“自主研发+投
+研 资并购+生态合作”三策并举，在餐饮、零售行业取得显著进展，全年新增零售
+SaaS服务门店1万家。公司跨境</div>
+                </div>
+                <div class="pdf-extract-item">
+                    <div class="pdf-extract-header">
+                        <span class="synth-view-org">开源证券</span>
+                        <span class="synth-view-date">2024-10-29</span>
+                        <span class="synth-view-rating">拉卡拉2024前三季业绩点评：前三季支付量价趋稳，扣非受股权转让和季节扰动影响</span>
+                    </div>
+                    <div class="pdf-extract-text">【——拉卡拉 2024 前三季业绩点评】
+投资评级：买入（维持） 高超（分析师） 唐关勇（联系人）
+gaochao1@kysec.cn tangguanyong@kysec.cn
+证 书编号：S0790520050001 证书编号：S0790123070030
+ 前三季支付量价趋稳，扣非受股权转让和季节扰动影响
+当前股价(元) 22.44 2024前三季公司营收43.9亿元，同比-0.8%，归母/扣非归母净利润分别5.13/5.16
+公 一年最高最低(元) 28.21/11.03 亿元，分别同比-17%/+7%，略低于我们预期。前三季总体毛利率 31.2%，同比
+信 总市值(亿元) 179.52 +1.6pct，Q3单季27.6%，同比-2.3pct，环比-4.1pct，经营活动现金流净额7.9亿
+息 流通市值(亿元) 164.78 元，同比+325%，主要受益支付板块费率提升+渠道成本改善+扫码GPV高增。
+更 考虑公司毛利有所下降，我们下调2024-2026净利润预测分别为7.4/10.4/12.2亿
+元（前值为 8.3/10.8/12.7亿元），分别同比+61%/+40%/+18%，当前估值对应PE
+告 分别24.3/17.3/14.7倍。当前股息率（TTM）为4.0%，全年业绩高增下预计分红
+表现亮眼，公司银行卡GPV市占率稳定，关注费率提升趋势，看好“支付+科技”
+股价走势图  银行卡降幅低于同业，扫码延续高增，净费率提升有所趋缓
+2024前三季公司总体毛利实现13.7亿元，同比+4%，Q3单季实现3.9亿元，同
+拉卡拉 沪深300 比-11%，环比-18%，其中主营业务收入/成本分别同比-3%/持平，环比-5%/持平。
+100% 2024前Q3数字支付业务收入39.1亿元，同比+1.9%，公司前三季度支付收入正
+增主要受益支付费率延续提升，同时GPV 降幅低于同业，市场份额稳中有升。
+50% Q3单季12.8亿元，同比-2%，预计与费率提升趋缓有关。（1）GPV：银行卡降
+幅低于同业，扫码延续高增。2024 前三季公司总体/银行卡/扫码 GPV 分别达
+2023-10 2024-02 2024-06 3.19/2.18/1.0 万亿元，分别同比-6%/-14%/+19%，银行卡/扫码 GPV 分别占比
+开 -50% 68%/32%，Q3单季总GPV环比-1%（前值-4%），银行卡GPV环比-2%（前值-2%）
+源 降幅稳定，扫码 GPV 环比+4%预计受益线下消费回暖。（2）费率：前三季费率
+证 数据来源：聚源 延续提升，Q3 单季环比有所下降。我们测算 2024 前三季公司支付净费率
+0.1226%，同比+0.009pct，环比+0.001pct，公司支付费率保持稳定。Q3 单季费
+证 率 0.123%，环比 Q2 的 0.128%有所下降</div>
+                </div></div>
+        <div class="research-table-wrap">
+            <div class="section-subtitle">📋 近期券商研报明细</div>
+            <table class="research-table">
+                <thead><tr>
+                    <th>机构</th><th>日期</th><th>评级</th><th>目标价</th><th>2026E EPS</th><th>2027E EPS</th>
+                </tr></thead><tbody>
+                <tr>
+                    <td>太平洋</td>
+                    <td style="color:#8b949e">2025-10-19</td>
+                    <td style="color:#ffd740">增持</td>
+                    <td>-</td>
+                    <td>0.56</td>
+                    <td>0.63</td>
+                </tr>
+                <tr>
+                    <td>开源证券</td>
+                    <td style="color:#8b949e">2025-04-25</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>0.95</td>
+                    <td>1.14</td>
+                </tr>
+                <tr>
+                    <td>开源证券</td>
+                    <td style="color:#8b949e">2024-10-29</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>1.52</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>开源证券</td>
+                    <td style="color:#8b949e">2024-08-11</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>1.59</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>开源证券</td>
+                    <td style="color:#8b949e">2024-07-04</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>1.59</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>国金证券</td>
+                    <td style="color:#8b949e">2024-04-23</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>1.10</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>开源证券</td>
+                    <td style="color:#8b949e">2024-04-22</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>1.59</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>开源证券</td>
+                    <td style="color:#8b949e">2024-01-15</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr></tbody></table>
+            <div class="research-compare">
+                <span>📌 机构一致目标价均值: <strong>N/A 元</strong></span>
+                <span style="margin:0 16px">|</span>
+                <span>我们的估值: <strong style="color:#00e676">23.86 元</strong></span>
+                <span style="margin:0 16px">|</span>
+                <span>偏差: N/A</span>
+            </div></div></div>
+        <div class="detail-block">
+            <h3>🔮 盈利预测与一致预期</h3>
+            <div class="metric-row">
+                <div class="mini-metric"><span class="mm-val">0.91</span><span class="mm-label">2026E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">0.55</span><span class="mm-label">2027E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">170.6x</span><span class="mm-label">2026E PE</span></div>
+                <div class="mini-metric"><span class="mm-val" style="font-size:14px">2021: 1.38 → 2022: -1.84 → 2023: 0.59 → 2024: 0.45 → 2025: 1.51</span><span class="mm-label">历史EPS</span></div>
+            </div>
+            <p style="color:#8b949e;font-size:12px;margin-top:8px">数据来源: 同花顺一致预期 + 东财研报EPS（含异常检测）</p>
+        </div>
+    <div class="detail-block">
+        <h3>📈 技术面与资金面</h3>
+
+        <!-- 均线系统 -->
+        <div class="section-subtitle">均线形态</div>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val" style="color:#ff9100">偏空</span><span class="mm-label">综合信号</span></div>
+            <div class="mini-metric"><span class="mm-val">30/100</span><span class="mm-label">技术评分</span></div>
+            <div class="mini-metric"><span class="mm-val">0/100</span><span class="mm-label">均线评分</span></div>
+            <div class="mini-metric"><span class="mm-val">空头排列</span><span class="mm-label">均线排列</span></div>
+        </div>
+        <div class="section-subtitle" style="margin-top:16px">VPA 量价分析（Anna Coulling 方法论）</div>
+        <div class="vpa-rating-card">
+            <div class="vpa-main-rating">
+                <div class="vpa-big-rating" style="color:#69f0ae">偏多</div>
+                <div class="vpa-score">59/100 分</div>
+            </div>
+            <div class="vpa-dims">
+                <div class="vpa-dim"><span>趋势</span><div class="vpa-dim-bar"><div style="width:50%;background:#58a6ff"></div></div><span>50</span></div>
+                <div class="vpa-dim"><span>量价</span><div class="vpa-dim-bar"><div style="width:80%;background:#3fb950"></div></div><span>80</span></div>
+                <div class="vpa-dim"><span>资金</span><div class="vpa-dim-bar"><div style="width:50%;background:#ffd740"></div></div><span>50</span></div>
+            </div>
+        </div>
+        <div class="vpa-detail-grid">
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">短期趋势</div>
+                <div class="vpa-detail-val">盘整 (强度15)</div>
+                <div class="vpa-detail-sub">短期盘整趋势，盘整阶段。均线空头排列，高位支点不再抬高。量价配合：上涨缩量——量价背离。趋势强度15/100。</div>
+            </div>
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">中期趋势</div>
+                <div class="vpa-detail-val">下跌 (强度0)</div>
+                <div class="vpa-detail-sub"></div>
+            </div>
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">趋势共振</div>
+                <div class="vpa-detail-val">方向不明确</div>
+                <div class="vpa-detail-sub">[观望]</div>
+            </div>
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">威科夫阶段</div>
+                <div class="vpa-detail-val">盘整疑似吸筹</div>
+                <div class="vpa-detail-sub">支撑: - | 阻力: -</div>
+            </div>
+        </div><div class="vpa-signals-row"><span class="vpa-sig-tag vpa-sig-趋势">趋势反转×5: 价格创新低但成交量递减——下跌动能衰竭</span><span class="vpa-sig-tag vpa-sig-趋势">趋势延续×3: 回踩均线+缩量至0.7x，健康回调</span></div>
+        <div class="section-subtitle" style="margin-top:20px">风险度量</div>
+        <div class="metric-row">
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">5.4%</span>
+                <span class="mm-label">VaR日(95%)</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff5252">0.0%</span>
+                <span class="mm-label">CVaR日(95%)</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">66%</span>
+                <span class="mm-label">年化波动率(极高)</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val">0.79</span>
+                <span class="mm-label">Beta系数</span>
+            </div>
+        </div>
+        <div class="risk-explain">
+            <strong>理解这些指标：</strong><br>
+            <strong>VaR 5.4%</strong> = 95%概率下，持有一股该股票，单日亏损不超过5.4%（约0.81元）。<br>
+            <strong>CVaR 0.0%</strong> = 当亏损已超过VaR时，平均会亏0.0%。代表"尾部风险"。<br>
+            <strong>波动率 66%</strong> = 年化标准差。A股科技股通常40-60%。<br>
+            <strong>Beta 0.79</strong> = 相对沪深300的波动倍数。
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📐 六维度深度分析</h3>
+
+        <!-- 估值维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#1a237e44">💰 估值定价</div>
+            <div class="sixdim-body">
+                <p><strong>综合估值:</strong> 23.86 元 | 现价 15.09 | 安全边际 +36.8% | <span style="color:#00e676">显著低估</span></p>
+                <table class="sixdim-table">
+                    <tr><th>方法</th><th>估值(元)</th><th>权重</th><th>说明</th></tr><tr><td>DCF</td><td>10.68</td><td>10%</td><td>DCF终值纠偏已启用</td></tr><tr><td>PB-ROE</td><td>27.63</td><td>35%</td><td>ROE/Ke模型</td></tr>
+                </table>
+                <p style="font-size:12px;color:#8b949e;margin-top:8px">
+                DCF参数: WACC=0.0% | 永续g=0.0% | 终值占比=0.0%
+                
+                </p>
+            </div>
+        </div>
+
+        <!-- 技术维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#1b5e20 44">📈 技术分析</div>
+            <div class="sixdim-body">
+                <p><strong>综合信号:</strong> 偏空 (评分30/100, 置信度中%) |
+                均线排列: 空头排列</p>
+                <table class="sixdim-table">
+                    <tr><th>VPA维度</th><th>评分</th><th>权重</th><th>含义</th></tr>
+                    <tr><td>趋势分析</td><td>50/100</td><td>40%</td><td>短期+中期趋势方向与强度，威科夫阶段判断</td></tr>
+                    <tr><td>量价信号</td><td>80/100</td><td>30%</td><td>K线形态+成交量验证+序列信号(去重后2类)</td></tr>
+                    <tr><td>资金流</td><td>50/100</td><td>30%</td><td>连续资金流向+主力散户背离+趋势共振</td></tr>
+                    <tr><td><strong>综合</strong></td><td><strong>59/100</strong></td><td>100%</td><td><strong>偏多</strong></td></tr>
+                </table>
+                <p style="font-size:12px;color:#8b949e;margin-top:4px">趋势: 盘整 |
+                威科夫阶段: 盘整疑似吸筹
+                </p>
+            </div>
+        </div>
+
+        <!-- 资金维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#e6510044">💵 资金流向</div>
+            <div class="sixdim-body">
+                <p><strong>Tushare主力(统计期: 20260713~20260730):</strong></p>
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>数值</th><th>说明</th></tr>
+                    <tr><td>统计天数</td><td>14天</td><td>数据覆盖交易日数</td></tr>
+                    <tr><td>主力净流入天数</td><td style="color:#ff5252">2天</td><td>大单+特大单净买入>0的天数</td></tr>
+                    <tr><td>主力净流出天数</td><td>12天</td><td>主力净卖出>0的天数</td></tr>
+                    <tr><td>主力流入占比</td><td style="color:#ff5252">14%</td><td>流入天数/总天数</td></tr>
+                    <tr><td>主力累计净额</td><td style="color:#ff5252">-2万</td><td>统计期主力净买入总额</td></tr>
+                    <tr><td>近5日主力净额</td><td style="color:#ff5252">-1万</td><td>短期主力动向</td></tr>
+                    <tr><td>趋势一致性</td><td>一致</td><td>5日与20日主力方向是否一致</td></tr>
+                    <tr><td>主力流入强度</td><td>-1.95%</td><td>主力净额/期间总成交</td></tr>
+                </table>
+                <p style="font-size:12px;color:#8b949e;margin-top:4px">东财5日: 大单-1万 特大单-0万 散户2万 | 资金-价格共振: neutral | 主力积极做多</p>
+            </div>
+        </div>
+
+        <!-- 成长维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#1b5e2044">📈 成长趋势</div>
+            <div class="sixdim-body">
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>最新QoQ</th><th>前季QoQ</th><th>前前季QoQ</th><th>最早QoQ</th><th>加权均值</th><th>判断</th></tr>
+                    <tr><td>营收环比</td>
+                        <td style="color:#ff5252">-70.9%</td>
+                        <td style="color:#00e676">+36.3%</td>
+                        <td>+53.5%</td>
+                        <td>+104.0%</td>
+                        <td><strong>+3.6%</strong></td>
+                        <td>减速</td></tr>
+                    <tr><td>利润环比</td>
+                        <td style="color:#ff5252">-49.2%</td>
+                        <td style="color:#00e676">+245.3%</td>
+                        <td>+47.8%</td>
+                        <td>+127.9%</td>
+                        <td><strong>+76.3%</strong></td>
+                        <td>减速</td></tr>
+                </table>
+                <p style="font-size:12px;color:#58a6ff;margin-top:4px">📋 业绩预告: 预增 165.96%~%</p>
+            </div>
+        </div>
+
+        <!-- 质量维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#4a148c44">🏭 经营质量</div>
+            <div class="sixdim-body">
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>数值</th><th>行业参考</th><th>判断</th></tr>
+                    <tr><td>毛利率</td><td>5.5%</td><td>科技>30%优</td><td style="color:#ffd740">一般</td></tr>
+                    <tr><td>ROE</td><td>13.0%</td><td>>15%优</td><td style="color:#ffd740">一般</td></tr>
+                    <tr><td>现金比率</td><td>1.14</td><td>>0.5稳健</td><td style="color:#00e676">稳健</td></tr>
+                    <tr><td>负债率</td><td>60.7%</td><td><30%优</td><td style="color:#ffd740">中等</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 风险维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#b71c1c44">⚠ 风险度量</div>
+            <div class="sixdim-body">
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>数值</th><th>说明</th></tr>
+                    <tr><td>VaR(95%)</td><td>+5.4%</td><td>95%置信度下日最大亏损比例</td></tr>
+                    <tr><td>CVaR(95%)</td><td>+0.0%</td><td>超出VaR的尾部平均亏损</td></tr>
+                    <tr><td>年化波动率</td><td>65.7%</td><td>>50%高风险, 30-50%中等, <30%低风险</td></tr>
+                    <tr><td colspan="3"><strong>情景压力测试:</strong></td></tr>
+                    <tr><td>乐观情景</td><td>20.52元</td><td>涨跌幅+36.0%</td></tr>
+                    <tr><td>中性情景</td><td>19.16元</td><td>涨跌幅+27.0%</td></tr>
+                    <tr><td>悲观情景</td><td>17.79元</td><td>涨跌幅+17.9%</td></tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="detail-block">
+        <h3>🎯 综合结论</h3>
+        <div class="conclusion-box">
+            <div class="conclusion-signals"><span class="conclusion-tag" style="background:#00e67622;color:#00e676;border:1px solid #00e67644">估值: 低估</span><span class="conclusion-tag" style="background:#ff525222;color:#ff5252;border:1px solid #ff525244">技术: 偏空</span></div>
+            <div class="conclusion-text">估值层面处于<span style='color:#00e676'>低估区间</span>（安全边际37%）；技术面<span style='color:#ff5252'>偏空</span></div>
+        </div>
+    </div>
+
+    <div class="detail-block" style="border-color:#ff5252">
+        <h3 style="color:#ff5252">⚠ 风险提示</h3>
+        <div class="block-content">
+            <p></p>
+            
+            
+            <p style="margin-top:16px;color:#8b949e;font-size:12px">
+                WACC: 3.6% |
+                Ke: 8.0% |
+                Beta: 0.79 |
+                数据日期: 20260729
+            </p>
+        </div>
+    </div>
+    </div>
+    <div class="detail-section" id="detail-002546">
+        <div class="detail-header">
+            <span class="detail-code">002546</span>
+            <span class="detail-name">新联电子</span>
+            <span class="detail-sw2">电气设备</span>
+            <span style="color:#8b949e">|</span>
+            <span style="font-size:18px;color:#00e676">8.53</span>
+            <span style="color:#8b949e">| PE 12.7 | PB 1.88 | 市值 68亿</span>
+            <a href="#top" class="back-link">↑ 回顶部</a>
+        </div>
+        
+    <div class="exec-summary">
+        <div class="exec-left">
+            <div class="exec-verdict" style="color:#00e676">适度低估</div>
+            <div class="exec-price">8.53<span style="font-size:14px;color:#8b949e"> 元</span></div>
+            <div class="exec-target">目标价: 11.78 元</div>
+        </div>
+        <div class="exec-right">
+            <div class="exec-conclusion">估值层面处于<span style='color:#00e676'>低估区间</span>（安全边际28%）；技术面<span style='color:#69f0ae'>做多</span></div>
+            <div class="dim-tags-container"><div class="dim-tags-row"><span class="dim-tag" style="border-color:#00e676;color:#00e676">估值: 安全边际+28%</span><span class="dim-tag" style="border-color:#00e676;color:#00e676">技术: 做多 67分</span><span class="dim-tag" style="border-color:#ffd740;color:#ffd740">资金: 主力0.0亿/20日</span><span class="dim-tag" style="border-color:#ffd740;color:#ffd740">成长: 利润环比加权+13.2%</span><span class="dim-tag" style="border-color:#00e676;color:#00e676">质量: 负债率8%</span><span class="dim-tag" style="border-color:#ffd740;color:#ffd740">风险: 年化波动49%</span></div></div>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🏭 公司业务深度</h3>
+        <div class="block-content">
+            <div class="biz-section">
+                <div class="biz-label">主营业务</div>
+                <div class="biz-text"></div>
+                <div class="biz-source">数据来源: 分析团队整理</div>
+            </div>
+            <div class="biz-section" style="margin-top:16px">
+                <div class="biz-label">最新年报</div>
+                <div class="biz-text"><div><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225028361" target="_blank" style="color:#58a6ff">2025年年度报告</a> <span style="color:#8b949e;font-size:12px">(2026-03-25)</span></div><div><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225028360" target="_blank" style="color:#58a6ff">2025年年度报告摘要</a> <span style="color:#8b949e;font-size:12px">(2026-03-25)</span></div></div></div>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📊 财务健康诊断 <span style="font-size:12px;color:#8b949e;font-weight:normal">(最新报告期: 2026-03-31)</span></h3>
+        <p class="section-summary">低负债，<span style="color:#00e676">财务结构稳健</span> | 数据来源: 新浪财报三表</p>
+        <div class="fin-grid">
+            <div class="fin-card">
+                <div class="fin-card-title">收入规模</div>
+                <div class="fin-card-val">2.0亿</div>
+                <div class="fin-card-sub">营业收入</div>
+            </div>
+            <div class="fin-card">
+                <div class="fin-card-title">盈利能力</div>
+                <div class="fin-card-val">0.9亿</div>
+                <div class="fin-card-sub">归母净利润 | ROE 2.4%</div>
+            </div>
+            <div class="fin-card">
+                <div class="fin-card-title">资产规模</div>
+                <div class="fin-card-val">42.8亿</div>
+                <div class="fin-card-sub">总资产 | 净资产 38.9亿</div>
+            </div>
+            <div class="fin-card">
+                <div class="fin-card-title">偿债能力</div>
+                <div class="fin-card-val" style="color:#00e676">8.5%</div>
+                <div class="fin-card-sub">资产负债率 | 现金 4.7亿</div>
+            </div>
+        </div>
+        <p style="color:#8b949e;font-size:12px;margin-top:12px">数据来源: 新浪财报三表(利润表/资产负债表/现金流量表)，共 0 期</p>
+    </div>
+    <div class="detail-block">
+        <h3>💰 估值定价</h3>
+        <p class="section-summary">综合估值 <strong style="color:#00e676">11.78 元</strong>，当前价 8.53 元，安全边际 <strong style="color:#00e676">+27.6%</strong> — 适度低估</p>
+
+        <div class="val-grid">
+            <div class="val-card">
+                <div class="val-title">DCF 估值</div>
+                <div class="val-number">7.43 元</div>
+                <div class="val-sub">WACC 6.9%</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PE-PEG 估值</div>
+                <div class="val-number">N/A 元</div>
+                <div class="val-sub">数据不足</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PB-ROE 估值</div>
+                <div class="val-number">13.02 元</div>
+                <div class="val-sub">ROE 14.9% | 合理PB 2.7</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">机构一致目标价</div>
+                <div class="val-number">N/A 元</div>
+                <div class="val-sub">0家机构覆盖</div>
+            </div>
+        </div><div class="scenario-row">
+            <div class="scenario-card">
+                <div class="sc-title">乐观</div>
+                <div class="sc-value">10.80</div>
+                <div class="sc-upside">+26.6%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">中性</div>
+                <div class="sc-value">10.22</div>
+                <div class="sc-upside">+19.8%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">悲观</div>
+                <div class="sc-value">9.55</div>
+                <div class="sc-upside">+12.0%</div>
+            </div></div></div>
+    <div class="detail-block">
+        <h3>📈 技术面与资金面</h3>
+
+        <!-- 均线系统 -->
+        <div class="section-subtitle">均线形态</div>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val" style="color:#69f0ae">做多</span><span class="mm-label">综合信号</span></div>
+            <div class="mini-metric"><span class="mm-val">67/100</span><span class="mm-label">技术评分</span></div>
+            <div class="mini-metric"><span class="mm-val">93/100</span><span class="mm-label">均线评分</span></div>
+            <div class="mini-metric"><span class="mm-val">强势多头排列</span><span class="mm-label">均线排列</span></div>
+        </div>
+        <div class="section-subtitle" style="margin-top:16px">VPA 量价分析（Anna Coulling 方法论）</div>
+        <div class="vpa-rating-card">
+            <div class="vpa-main-rating">
+                <div class="vpa-big-rating" style="color:#69f0ae">偏多</div>
+                <div class="vpa-score">66/100 分</div>
+            </div>
+            <div class="vpa-dims">
+                <div class="vpa-dim"><span>趋势</span><div class="vpa-dim-bar"><div style="width:90%;background:#58a6ff"></div></div><span>90</span></div>
+                <div class="vpa-dim"><span>量价</span><div class="vpa-dim-bar"><div style="width:50%;background:#3fb950"></div></div><span>50</span></div>
+                <div class="vpa-dim"><span>资金</span><div class="vpa-dim-bar"><div style="width:50%;background:#ffd740"></div></div><span>50</span></div>
+            </div>
+        </div>
+        <div class="vpa-detail-grid">
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">短期趋势</div>
+                <div class="vpa-detail-val">上涨 (强度90)</div>
+                <div class="vpa-detail-sub">短期上涨趋势，趋势加速阶段。均线多头排列，高位支点不再抬高，低位支点连续抬高。量价配合：多数上涨日放量。趋势强度90/1</div>
+            </div>
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">中期趋势</div>
+                <div class="vpa-detail-val">上涨(转弱) (强度34)</div>
+                <div class="vpa-detail-sub"></div>
+            </div>
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">趋势共振</div>
+                <div class="vpa-detail-val">短中期共振看多</div>
+                <div class="vpa-detail-sub">[最佳做多窗口]</div>
+            </div>
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">威科夫阶段</div>
+                <div class="vpa-detail-val">上涨疑似派筹</div>
+                <div class="vpa-detail-sub">支撑: - | 阻力: -</div>
+            </div>
+        </div><div class="vpa-signals-row"><span class="vpa-sig-tag vpa-sig-趋势">趋势反转×8: 价格创新低但成交量递减——下跌动能衰竭</span></div>
+        <div class="section-subtitle" style="margin-top:20px">风险度量</div>
+        <div class="metric-row">
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">4.1%</span>
+                <span class="mm-label">VaR日(95%)</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff5252">0.0%</span>
+                <span class="mm-label">CVaR日(95%)</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">49%</span>
+                <span class="mm-label">年化波动率(偏高)</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val">0.71</span>
+                <span class="mm-label">Beta系数</span>
+            </div>
+        </div>
+        <div class="risk-explain">
+            <strong>理解这些指标：</strong><br>
+            <strong>VaR 4.1%</strong> = 95%概率下，持有一股该股票，单日亏损不超过4.1%（约0.35元）。<br>
+            <strong>CVaR 0.0%</strong> = 当亏损已超过VaR时，平均会亏0.0%。代表"尾部风险"。<br>
+            <strong>波动率 49%</strong> = 年化标准差。A股科技股通常40-60%。<br>
+            <strong>Beta 0.71</strong> = 相对沪深300的波动倍数。
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📐 六维度深度分析</h3>
+
+        <!-- 估值维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#1a237e44">💰 估值定价</div>
+            <div class="sixdim-body">
+                <p><strong>综合估值:</strong> 11.78 元 | 现价 8.53 | 安全边际 +27.6% | <span style="color:#00e676">适度低估</span></p>
+                <table class="sixdim-table">
+                    <tr><th>方法</th><th>估值(元)</th><th>权重</th><th>说明</th></tr><tr><td>DCF</td><td>7.43</td><td>10%</td><td>DCF终值纠偏已启用</td></tr><tr><td>PB-ROE</td><td>13.02</td><td>35%</td><td>ROE/Ke模型</td></tr>
+                </table>
+                <p style="font-size:12px;color:#8b949e;margin-top:8px">
+                DCF参数: WACC=0.0% | 永续g=0.0% | 终值占比=0.0%
+                
+                </p>
+            </div>
+        </div>
+
+        <!-- 技术维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#1b5e20 44">📈 技术分析</div>
+            <div class="sixdim-body">
+                <p><strong>综合信号:</strong> 做多 (评分67/100, 置信度中%) |
+                均线排列: 强势多头排列</p>
+                <table class="sixdim-table">
+                    <tr><th>VPA维度</th><th>评分</th><th>权重</th><th>含义</th></tr>
+                    <tr><td>趋势分析</td><td>90/100</td><td>40%</td><td>短期+中期趋势方向与强度，威科夫阶段判断</td></tr>
+                    <tr><td>量价信号</td><td>50/100</td><td>30%</td><td>K线形态+成交量验证+序列信号(去重后1类)</td></tr>
+                    <tr><td>资金流</td><td>50/100</td><td>30%</td><td>连续资金流向+主力散户背离+趋势共振</td></tr>
+                    <tr><td><strong>综合</strong></td><td><strong>66/100</strong></td><td>100%</td><td><strong>偏多</strong></td></tr>
+                </table>
+                <p style="font-size:12px;color:#8b949e;margin-top:4px">趋势: 上涨 |
+                威科夫阶段: 上涨疑似派筹
+                </p>
+            </div>
+        </div>
+
+        <!-- 资金维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#e6510044">💵 资金流向</div>
+            <div class="sixdim-body">
+                <p><strong>Tushare主力(统计期: 20260713~20260730):</strong></p>
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>数值</th><th>说明</th></tr>
+                    <tr><td>统计天数</td><td>14天</td><td>数据覆盖交易日数</td></tr>
+                    <tr><td>主力净流入天数</td><td style="color:#ff5252">7天</td><td>大单+特大单净买入>0的天数</td></tr>
+                    <tr><td>主力净流出天数</td><td>7天</td><td>主力净卖出>0的天数</td></tr>
+                    <tr><td>主力流入占比</td><td style="color:#ff5252">50%</td><td>流入天数/总天数</td></tr>
+                    <tr><td>主力累计净额</td><td style="color:#00e676">0万</td><td>统计期主力净买入总额</td></tr>
+                    <tr><td>近5日主力净额</td><td style="color:#ff5252">-0万</td><td>短期主力动向</td></tr>
+                    <tr><td>趋势一致性</td><td>背离</td><td>5日与20日主力方向是否一致</td></tr>
+                    <tr><td>主力流入强度</td><td>0.16%</td><td>主力净额/期间总成交</td></tr>
+                </table>
+                <p style="font-size:12px;color:#8b949e;margin-top:4px">东财5日: 大单-0万 特大单-0万 散户0万 | 资金-价格共振: neutral | 主力偏空</p>
+            </div>
+        </div>
+
+        <!-- 成长维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#1b5e2044">📈 成长趋势</div>
+            <div class="sixdim-body">
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>最新QoQ</th><th>前季QoQ</th><th>前前季QoQ</th><th>最早QoQ</th><th>加权均值</th><th>判断</th></tr>
+                    <tr><td>营收环比</td>
+                        <td style="color:#ff5252">-71.4%</td>
+                        <td style="color:#00e676">+25.1%</td>
+                        <td>+46.0%</td>
+                        <td>+112.6%</td>
+                        <td><strong>-0.6%</strong></td>
+                        <td>减速</td></tr>
+                    <tr><td>利润环比</td>
+                        <td style="color:#ff5252">-84.2%</td>
+                        <td style="color:#00e676">+8.1%</td>
+                        <td>+184.5%</td>
+                        <td>+75.2%</td>
+                        <td><strong>+13.2%</strong></td>
+                        <td>减速</td></tr>
+                </table>
+                <p style="font-size:12px;color:#58a6ff;margin-top:4px">📋 业绩预告: 预增 134.57%~%</p>
+            </div>
+        </div>
+
+        <!-- 质量维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#4a148c44">🏭 经营质量</div>
+            <div class="sixdim-body">
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>数值</th><th>行业参考</th><th>判断</th></tr>
+                    <tr><td>毛利率</td><td>26.6%</td><td>科技>30%优</td><td style="color:#ffd740">一般</td></tr>
+                    <tr><td>ROE</td><td>2.4%</td><td>>15%优</td><td style="color:#ffd740">一般</td></tr>
+                    <tr><td>现金比率</td><td>12.02</td><td>>0.5稳健</td><td style="color:#00e676">稳健</td></tr>
+                    <tr><td>负债率</td><td>8.5%</td><td><30%优</td><td style="color:#00e676">低负债</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 风险维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#b71c1c44">⚠ 风险度量</div>
+            <div class="sixdim-body">
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>数值</th><th>说明</th></tr>
+                    <tr><td>VaR(95%)</td><td>+4.1%</td><td>95%置信度下日最大亏损比例</td></tr>
+                    <tr><td>CVaR(95%)</td><td>+0.0%</td><td>超出VaR的尾部平均亏损</td></tr>
+                    <tr><td>年化波动率</td><td>48.9%</td><td>>50%高风险, 30-50%中等, <30%低风险</td></tr>
+                    <tr><td colspan="3"><strong>情景压力测试:</strong></td></tr>
+                    <tr><td>乐观情景</td><td>10.80元</td><td>涨跌幅+26.6%</td></tr>
+                    <tr><td>中性情景</td><td>10.22元</td><td>涨跌幅+19.8%</td></tr>
+                    <tr><td>悲观情景</td><td>9.55元</td><td>涨跌幅+12.0%</td></tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="detail-block">
+        <h3>🎯 综合结论</h3>
+        <div class="conclusion-box">
+            <div class="conclusion-signals"><span class="conclusion-tag" style="background:#00e67622;color:#00e676;border:1px solid #00e67644">估值: 低估</span><span class="conclusion-tag" style="background:#69f0ae22;color:#69f0ae;border:1px solid #69f0ae44">技术: 做多</span></div>
+            <div class="conclusion-text">估值层面处于<span style='color:#00e676'>低估区间</span>（安全边际28%）；技术面<span style='color:#69f0ae'>做多</span></div>
+        </div>
+    </div>
+
+    <div class="detail-block" style="border-color:#ff5252">
+        <h3 style="color:#ff5252">⚠ 风险提示</h3>
+        <div class="block-content">
+            <p></p>
+            
+            
+            <p style="margin-top:16px;color:#8b949e;font-size:12px">
+                WACC: 6.9% |
+                Ke: 7.4% |
+                Beta: 0.71 |
+                数据日期: 20260729
+            </p>
+        </div>
+    </div>
+    </div>
+    <div class="detail-section" id="detail-300613">
+        <div class="detail-header">
+            <span class="detail-code">300613</span>
+            <span class="detail-name">富瀚微</span>
+            <span class="detail-sw2">半导体</span>
+            <span style="color:#8b949e">|</span>
+            <span style="font-size:18px;color:#ff5252">58.75</span>
+            <span style="color:#8b949e">| PE 63.5 | PB 4.73 | 市值 129亿</span>
+            <a href="#top" class="back-link">↑ 回顶部</a>
+        </div>
+        
+    <div class="exec-summary">
+        <div class="exec-left">
+            <div class="exec-verdict" style="color:#ff9100">适度高估</div>
+            <div class="exec-price">58.75<span style="font-size:14px;color:#8b949e"> 元</span></div>
+            <div class="exec-target">目标价: 47.53 元</div>
+        </div>
+        <div class="exec-right">
+            <div class="exec-conclusion">估值层面处于<span style='color:#ff5252'>高估区间</span>（安全边际-24%）；技术面<span style='color:#90a4ae'>观望</span></div>
+            <div class="dim-tags-container"><div class="dim-tags-row"><span class="dim-tag" style="border-color:#ff9100;color:#ff9100">估值: 安全边际-24%</span><span class="dim-tag" style="border-color:#ffd740;color:#ffd740">技术: 观望 46分</span><span class="dim-tag" style="border-color:#ffd740;color:#ffd740">资金: 主力0.0亿/20日</span><span class="dim-tag" style="border-color:#00e676;color:#00e676">成长: 利润环比加权+63.5%</span><span class="dim-tag" style="border-color:#00e676;color:#00e676">质量: 负债率24%</span><span class="dim-tag" style="border-color:#ff5252;color:#ff5252">风险: 年化波动55%</span></div></div>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🏭 公司业务深度</h3>
+        <div class="block-content">
+            <div class="biz-section">
+                <div class="biz-label">主营业务</div>
+                <div class="biz-text"></div>
+                <div class="biz-source">数据来源: 分析团队整理</div>
+            </div>
+            <div class="biz-section" style="margin-top:16px">
+                <div class="biz-label">最新年报</div>
+                <div class="biz-text"><div><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225077663" target="_blank" style="color:#58a6ff">2025年年度报告</a> <span style="color:#8b949e;font-size:12px">(2026-04-03)</span></div><div><a href="https://www.cninfo.com.cn/new/disclosure/detail?annoId=1225077662" target="_blank" style="color:#58a6ff">2025年年度报告摘要</a> <span style="color:#8b949e;font-size:12px">(2026-04-03)</span></div></div></div>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📊 财务健康诊断 <span style="font-size:12px;color:#8b949e;font-weight:normal">(最新报告期: 2026-03-31)</span></h3>
+        <p class="section-summary">低负债，<span style="color:#00e676">财务结构稳健</span> | 数据来源: 新浪财报三表</p>
+        <div class="fin-grid">
+            <div class="fin-card">
+                <div class="fin-card-title">收入规模</div>
+                <div class="fin-card-val">5.6亿</div>
+                <div class="fin-card-sub">营业收入</div>
+            </div>
+            <div class="fin-card">
+                <div class="fin-card-title">盈利能力</div>
+                <div class="fin-card-val">0.8亿</div>
+                <div class="fin-card-sub">归母净利润 | ROE 2.8%</div>
+            </div>
+            <div class="fin-card">
+                <div class="fin-card-title">资产规模</div>
+                <div class="fin-card-val">42.0亿</div>
+                <div class="fin-card-sub">总资产 | 净资产 30.1亿</div>
+            </div>
+            <div class="fin-card">
+                <div class="fin-card-title">偿债能力</div>
+                <div class="fin-card-val" style="color:#00e676">24.0%</div>
+                <div class="fin-card-sub">资产负债率 | 现金 21.6亿</div>
+            </div>
+        </div>
+        <p style="color:#8b949e;font-size:12px;margin-top:12px">数据来源: 新浪财报三表(利润表/资产负债表/现金流量表)，共 0 期</p>
+    </div>
+    <div class="detail-block">
+        <h3>💰 估值定价</h3>
+        <p class="section-summary">综合估值 <strong style="color:#ff9100">47.53 元</strong>，当前价 58.75 元，安全边际 <strong style="color:#ff9100">-23.6%</strong> — 适度高估</p>
+
+        <div class="val-grid">
+            <div class="val-card">
+                <div class="val-title">DCF 估值</div>
+                <div class="val-number">13.60 元</div>
+                <div class="val-sub">WACC 9.8%</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PE-PEG 估值</div>
+                <div class="val-number">91.61 元</div>
+                <div class="val-sub">合理</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PB-ROE 估值</div>
+                <div class="val-number">6.85 元</div>
+                <div class="val-sub">ROE 4.0% | 合理PB 0.5</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">机构一致目标价</div>
+                <div class="val-number">N/A 元</div>
+                <div class="val-sub">2家机构覆盖</div>
+            </div>
+        </div><div class="scenario-row">
+            <div class="scenario-card">
+                <div class="sc-title">乐观</div>
+                <div class="sc-value">37.48</div>
+                <div class="sc-upside">-36.2%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">中性</div>
+                <div class="sc-value">34.94</div>
+                <div class="sc-upside">-40.5%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">悲观</div>
+                <div class="sc-value">31.50</div>
+                <div class="sc-upside">-46.4%</div>
+            </div></div>
+        <div class="research-synthesis">
+            <div class="section-subtitle">📝 券商研报综合分析</div>
+            <div class="synth-narrative">2家机构覆盖，评级共识为「强烈看多」（买入2家/增持+持有0家）。综合目标价区间92.8～113.1元（均值102.9元）。（注：其中2篇目标价由EPS×合理PE推算）。共同关注的风险：行业周期波动。</div>
+            <div class="implied-target-box">
+                <div class="implied-target-main">
+                    <div>机构综合目标价</div>
+                    <div class="implied-big">102.91元</div>
+                    <div>区间 92.75～113.08元 （上涨空间+75.2%）</div>
+                </div>
+                <div class="implied-target-detail">
+                    <div>明确目标价: 0篇</div>
+                    <div>EPS推算: 2篇</div>
+                    <div>推算PE: 63.5x（当前TTM PE(63.5x)）</div>
+                </div>
+            </div>
+                <div class="viewpoint-group">
+                    <span class="viewpoint-group-name">关注风险</span>
+                    <div class="viewpoint-tags"><span class="viewpoint-tag">行业周期波动</span></div>
+                </div>
+            <div class="section-subtitle" style="margin-top:16px">📄 近期研报观点摘录</div>
+            <div class="synth-views">
+                <div class="synth-view-item">
+                    <div class="synth-view-header">
+                        <span class="synth-view-org">中邮证券</span>
+                        <span class="synth-view-date">2024-11-04</span>
+                        <span class="synth-view-rating">[买入]</span>
+                        
+                    </div>
+                    <div class="synth-view-title">"走出大客户库存周期，AI眼镜积极布局"</div>
+                    <div class="synth-view-drivers">AI/智能化布局</div>
+                </div></div></div>
+        <div class="section-subtitle" style="margin-top:20px">📄 研报原文摘录（PDF提取）</div>
+        <div class="pdf-extracts">
+                <div class="pdf-extract-item">
+                    <div class="pdf-extract-header">
+                        <span class="synth-view-org">中邮证券</span>
+                        <span class="synth-view-date">2025-04-17</span>
+                        <span class="synth-view-rating">逐步复苏</span>
+                    </div>
+                    <div class="pdf-extract-text">【证券研究报告：电子 | 公司点评报告】
+【个股表现 l 事件】
+公司发布2024年年报，公司2024年实现营业收入17.90亿元，
+134% 同比-1.76%，实现归母净利润2.58亿元，同比+2.04%。
+【106% l 投资要点】
+传统专业视频增速放缓叠加消费市场竞争加剧，业绩短期承压。
+64% 经历了宏观经济增速平缓、全球地缘局势变化等影响，传统专业视频
+36% 芯片下游市场需求增速放缓，从历史情况来看，该市场复苏在时间上
+明显滞后于消费电子市场，另一方面，消费电子对应的智慧物联芯片
+2024-04 2024-06 2024-09 2024-11 2025-02 2025-04 虽然总需求量复苏，但竞争局面加剧，主流公司之间产品差异化尚不
+明显，目前阶段更多体现为价格竞争，对产品毛利率带来一定影响。
+2024年公司实现销售芯片总量约1.6亿片，同比+13.89%；营业总收
+入17.9亿元，同比-1.76%；实现归属于上市公司股东的净利润2.58
+最新收盘价（元） 50.49 产品迭代技术升级，拥抱AI智能未来。公司在专业视频应用领
+总股本/流通股本（亿股）2.32/2.19 域技术持续迭代升级，多方向上开发新产品满足客户需求，实现更高
+总市值/流通市值（亿元）117/111 像素、更清晰、低功耗以及多功能集成与高性价比等。随着AI技术
+52周内最高/最低价 72.93/29.44 不断进步，AI功能的增强使得芯片既要满足高性能计算需求，又要保
+资产负债率(%) 23.4% 持低功耗，以延长设备续航时间和降低散热成本。公司面对新时代的
+市盈率 45.08 变化，有针对性地增强技术实力以应对，例如研发更高性能处理器内
+西藏东方企慧投资有限 核，优化传统芯片架构，升级制程工艺，创新低功耗设计方法等。
+【公司 l 投资建议：】
+我们预计公司2025/2026/2027年分别实现收入20.0/23.2/28.2
+亿元，归母净利润分别为2.6/3.4/4.8亿元，维持“买入”评级。
+【l 风险提示：】
+行业竞争格局加剧风险；新品进展不及预期；市场需求恢复不及
+SAC登记编号:S1340523050004
+Email:wuwenji@cnpsec.com 预期。
+【n 盈利预测和财务指标】
+[项ta目bl\e年_F度inchinaSimple] 2024A 2025E 2026E 2027E
+营业收入（百万元） 1790 2002 2319 2824</div>
+                </div>
+                <div class="pdf-extract-item">
+                    <div class="pdf-extract-header">
+                        <span class="synth-view-org">中邮证券</span>
+                        <span class="synth-view-date">2024-11-04</span>
+                        <span class="synth-view-rating">走出大客户库存周期，AI眼镜积极布局</span>
+                    </div>
+                    <div class="pdf-extract-text">【证券研究报告：电子 | 公司点评报告】
+买入|维持 走出大客户库存周期，AI 眼镜积极布局
+【个股表现 ⚫ 事件】
+10月29日，公司披露2024年三季度报告。公司在2024年三
+季度实现收入 5.02亿元，同比增长 7.7%，归属净利润为 0.81 亿
+【-18% ⚫ 投资要点】
+大客户去库存结束，专业视频迎来恢复。在专业视频处理领
+域，公司以先进技术和设计能力持续领航市场。跟进专业视频处理
+-48% 芯片行业趋势，为客户提供智能 安防算法支持与全套芯片解决方
+2023-11 2024-01 2024-03 2024-06 2024-08 2024-10
+案。三季度公司高端产品占比逐步上升，但由于经济背景，高端产
+品需求不高，所以速度不快。中低端产品是公司的基本盘，需要继
+续保持。抓住高端产品和新产品线的机会，如工业视觉产品，可以
+最新收盘价（元） 46.78 智慧物理积极布局，AI 眼镜期待下一个风口。在智慧物联领
+总股本/流通股本（亿股） 2.31 / 2.18 域，公司随市场需求不断迭代升级产品，落地于基于图像识别的智
+总市值/流通市值（亿元） 108 / 102 能门锁、家用监控摄像头等日用电子 产品中。公司同头部消费电
+52周内最高/最低价 51.92 / 25.90 子企业合作推出了一系列家用的视觉产品，以低功耗，超高清，高
+资产负债率(%) 24.3% 稳定性的优势领先市场。大客户的创新业务增长不慢，增速在20%
+市盈率 42.53 到60%之间。特别是在智能家居等领域，已经做到全球出货量第一，
+西藏东方企慧投资有限 显示出较强的竞争力。AI 眼镜可能成为下一个风口，市场空间非
+公司 常大。当前Meta方案使用高通芯片成本较高，未来可能需要更平
+价的方案。公司在高分辨率低功耗IPC芯片上有直接机会，由于技
+术要求较高，所以竞争主要集中在头部视觉芯片企业上。
+前装市场高速增长，多产品全面布局。在智慧车行领域，公司
+新一代车载 ISP 产品在接口速率和芯片性能有了进一步提升，更
+SAC登记编号:S1340523050004
+E mail:wuwenji@cnpsec.com 加适应新能源大屏车型清晰度、 精准度、响应速率的要求，另能
+覆盖倒车、环视、驾驶员监测、座舱监测和流媒体摄像头等多种车
+载摄像头应用。公司已通过 AEC-Q100 以及 ISO 26262 汽车功能
+安全认证，建立了完善的车规级芯片研发与质量管理体系，车载芯</div>
+                </div></div>
+        <div class="research-table-wrap">
+            <div class="section-subtitle">📋 近期券商研报明细</div>
+            <table class="research-table">
+                <thead><tr>
+                    <th>机构</th><th>日期</th><th>评级</th><th>目标价</th><th>2026E EPS</th><th>2027E EPS</th>
+                </tr></thead><tbody>
+                <tr>
+                    <td>中邮证券</td>
+                    <td style="color:#8b949e">2025-04-17</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>1.46</td>
+                    <td>2.07</td>
+                </tr>
+                <tr>
+                    <td>中邮证券</td>
+                    <td style="color:#8b949e">2024-11-04</td>
+                    <td style="color:#00e676">买入</td>
+                    <td>-</td>
+                    <td>1.78</td>
+                    <td>-</td>
+                </tr></tbody></table>
+            <div class="research-compare">
+                <span>📌 机构一致目标价均值: <strong>N/A 元</strong></span>
+                <span style="margin:0 16px">|</span>
+                <span>我们的估值: <strong style="color:#ff9100">47.53 元</strong></span>
+                <span style="margin:0 16px">|</span>
+                <span>偏差: N/A</span>
+            </div></div></div>
+    <div class="detail-block">
+        <h3>📈 技术面与资金面</h3>
+
+        <!-- 均线系统 -->
+        <div class="section-subtitle">均线形态</div>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val" style="color:#90a4ae">观望</span><span class="mm-label">综合信号</span></div>
+            <div class="mini-metric"><span class="mm-val">46/100</span><span class="mm-label">技术评分</span></div>
+            <div class="mini-metric"><span class="mm-val">40/100</span><span class="mm-label">均线评分</span></div>
+            <div class="mini-metric"><span class="mm-val">均线缠绕无方向</span><span class="mm-label">均线排列</span></div>
+        </div>
+        <div class="section-subtitle" style="margin-top:16px">VPA 量价分析（Anna Coulling 方法论）</div>
+        <div class="vpa-rating-card">
+            <div class="vpa-main-rating">
+                <div class="vpa-big-rating" style="color:#69f0ae">偏多</div>
+                <div class="vpa-score">59/100 分</div>
+            </div>
+            <div class="vpa-dims">
+                <div class="vpa-dim"><span>趋势</span><div class="vpa-dim-bar"><div style="width:50%;background:#58a6ff"></div></div><span>50</span></div>
+                <div class="vpa-dim"><span>量价</span><div class="vpa-dim-bar"><div style="width:80%;background:#3fb950"></div></div><span>80</span></div>
+                <div class="vpa-dim"><span>资金</span><div class="vpa-dim-bar"><div style="width:50%;background:#ffd740"></div></div><span>50</span></div>
+            </div>
+        </div>
+        <div class="vpa-detail-grid">
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">短期趋势</div>
+                <div class="vpa-detail-val">盘整 (强度30)</div>
+                <div class="vpa-detail-sub">短期盘整趋势，盘整阶段。均线交叉混乱，高位支点不再抬高。量价配合：量价关系中性。趋势强度30/100。</div>
+            </div>
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">中期趋势</div>
+                <div class="vpa-detail-val">下跌(转强) (强度49)</div>
+                <div class="vpa-detail-sub"></div>
+            </div>
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">趋势共振</div>
+                <div class="vpa-detail-val">方向不明确</div>
+                <div class="vpa-detail-sub">[观望]</div>
+            </div>
+            <div class="vpa-detail-item">
+                <div class="vpa-detail-label">威科夫阶段</div>
+                <div class="vpa-detail-val">盘整疑似吸筹</div>
+                <div class="vpa-detail-sub">支撑: - | 阻力: -</div>
+            </div>
+        </div><div class="vpa-signals-row"><span class="vpa-sig-tag vpa-sig-趋势">趋势反转×8: 价格创新低但成交量递减——下跌动能衰竭</span></div>
+        <div class="section-subtitle" style="margin-top:20px">风险度量</div>
+        <div class="metric-row">
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">5.2%</span>
+                <span class="mm-label">VaR日(95%)</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff5252">0.0%</span>
+                <span class="mm-label">CVaR日(95%)</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">55%</span>
+                <span class="mm-label">年化波动率(偏高)</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val">1.28</span>
+                <span class="mm-label">Beta系数</span>
+            </div>
+        </div>
+        <div class="risk-explain">
+            <strong>理解这些指标：</strong><br>
+            <strong>VaR 5.2%</strong> = 95%概率下，持有一股该股票，单日亏损不超过5.2%（约3.04元）。<br>
+            <strong>CVaR 0.0%</strong> = 当亏损已超过VaR时，平均会亏0.0%。代表"尾部风险"。<br>
+            <strong>波动率 55%</strong> = 年化标准差。A股科技股通常40-60%。<br>
+            <strong>Beta 1.28</strong> = 相对沪深300的波动倍数。
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📐 六维度深度分析</h3>
+
+        <!-- 估值维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#1a237e44">💰 估值定价</div>
+            <div class="sixdim-body">
+                <p><strong>综合估值:</strong> 47.53 元 | 现价 58.75 | 安全边际 -23.6% | <span style="color:#ff9100">适度高估</span></p>
+                <table class="sixdim-table">
+                    <tr><th>方法</th><th>估值(元)</th><th>权重</th><th>说明</th></tr><tr><td>DCF</td><td>13.60</td><td>10%</td><td>DCF终值纠偏已启用</td></tr><tr><td>PE-PEG</td><td>91.61</td><td>40%</td><td>CAGR×合理PE</td></tr><tr><td>PB-ROE</td><td>6.85</td><td>35%</td><td>ROE/Ke模型</td></tr>
+                </table>
+                <p style="font-size:12px;color:#8b949e;margin-top:8px">
+                DCF参数: WACC=0.0% | 永续g=0.0% | 终值占比=0.0%
+                
+                </p>
+            </div>
+        </div>
+
+        <!-- 技术维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#1b5e20 44">📈 技术分析</div>
+            <div class="sixdim-body">
+                <p><strong>综合信号:</strong> 观望 (评分46/100, 置信度中%) |
+                均线排列: 均线缠绕无方向</p>
+                <table class="sixdim-table">
+                    <tr><th>VPA维度</th><th>评分</th><th>权重</th><th>含义</th></tr>
+                    <tr><td>趋势分析</td><td>50/100</td><td>40%</td><td>短期+中期趋势方向与强度，威科夫阶段判断</td></tr>
+                    <tr><td>量价信号</td><td>80/100</td><td>30%</td><td>K线形态+成交量验证+序列信号(去重后1类)</td></tr>
+                    <tr><td>资金流</td><td>50/100</td><td>30%</td><td>连续资金流向+主力散户背离+趋势共振</td></tr>
+                    <tr><td><strong>综合</strong></td><td><strong>59/100</strong></td><td>100%</td><td><strong>偏多</strong></td></tr>
+                </table>
+                <p style="font-size:12px;color:#8b949e;margin-top:4px">趋势: 盘整 |
+                威科夫阶段: 盘整疑似吸筹
+                </p>
+            </div>
+        </div>
+
+        <!-- 资金维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#e6510044">💵 资金流向</div>
+            <div class="sixdim-body">
+                <p><strong>Tushare主力(统计期: 20260713~20260730):</strong></p>
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>数值</th><th>说明</th></tr>
+                    <tr><td>统计天数</td><td>14天</td><td>数据覆盖交易日数</td></tr>
+                    <tr><td>主力净流入天数</td><td style="color:#ff5252">7天</td><td>大单+特大单净买入>0的天数</td></tr>
+                    <tr><td>主力净流出天数</td><td>7天</td><td>主力净卖出>0的天数</td></tr>
+                    <tr><td>主力流入占比</td><td style="color:#ff5252">50%</td><td>流入天数/总天数</td></tr>
+                    <tr><td>主力累计净额</td><td style="color:#00e676">0万</td><td>统计期主力净买入总额</td></tr>
+                    <tr><td>近5日主力净额</td><td style="color:#00e676">1万</td><td>短期主力动向</td></tr>
+                    <tr><td>趋势一致性</td><td>一致</td><td>5日与20日主力方向是否一致</td></tr>
+                    <tr><td>主力流入强度</td><td>0.35%</td><td>主力净额/期间总成交</td></tr>
+                </table>
+                <p style="font-size:12px;color:#8b949e;margin-top:4px">东财5日: 大单-0万 特大单1万 散户-0万 | 资金-价格共振: neutral | 主力持续出逃</p>
+            </div>
+        </div>
+
+        <!-- 成长维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#1b5e2044">📈 成长趋势</div>
+            <div class="sixdim-body">
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>最新QoQ</th><th>前季QoQ</th><th>前前季QoQ</th><th>最早QoQ</th><th>加权均值</th><th>判断</th></tr>
+                    <tr><td>营收环比</td>
+                        <td style="color:#ff5252">-66.9%</td>
+                        <td style="color:#00e676">+48.1%</td>
+                        <td>+65.8%</td>
+                        <td>+116.0%</td>
+                        <td><strong>+12.4%</strong></td>
+                        <td>减速</td></tr>
+                    <tr><td>利润环比</td>
+                        <td style="color:#ff5252">-41.3%</td>
+                        <td style="color:#00e676">+76.7%</td>
+                        <td>+256.3%</td>
+                        <td>+57.3%</td>
+                        <td><strong>+63.5%</strong></td>
+                        <td>减速</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 质量维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#4a148c44">🏭 经营质量</div>
+            <div class="sixdim-body">
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>数值</th><th>行业参考</th><th>判断</th></tr>
+                    <tr><td>毛利率</td><td>14.9%</td><td>科技>30%优</td><td style="color:#ffd740">一般</td></tr>
+                    <tr><td>ROE</td><td>2.9%</td><td>>15%优</td><td style="color:#ffd740">一般</td></tr>
+                    <tr><td>现金比率</td><td>6.52</td><td>>0.5稳健</td><td style="color:#00e676">稳健</td></tr>
+                    <tr><td>负债率</td><td>24.0%</td><td><30%优</td><td style="color:#00e676">低负债</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 风险维度 -->
+        <div class="sixdim-card">
+            <div class="sixdim-header" style="background:#b71c1c44">⚠ 风险度量</div>
+            <div class="sixdim-body">
+                <table class="sixdim-table">
+                    <tr><th>指标</th><th>数值</th><th>说明</th></tr>
+                    <tr><td>VaR(95%)</td><td>+5.2%</td><td>95%置信度下日最大亏损比例</td></tr>
+                    <tr><td>CVaR(95%)</td><td>+0.0%</td><td>超出VaR的尾部平均亏损</td></tr>
+                    <tr><td>年化波动率</td><td>54.9%</td><td>>50%高风险, 30-50%中等, <30%低风险</td></tr>
+                    <tr><td colspan="3"><strong>情景压力测试:</strong></td></tr>
+                    <tr><td>乐观情景</td><td>37.48元</td><td>涨跌幅-36.2%</td></tr>
+                    <tr><td>中性情景</td><td>34.94元</td><td>涨跌幅-40.5%</td></tr>
+                    <tr><td>悲观情景</td><td>31.50元</td><td>涨跌幅-46.4%</td></tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="detail-block">
+        <h3>🎯 综合结论</h3>
+        <div class="conclusion-box">
+            <div class="conclusion-signals"><span class="conclusion-tag" style="background:#ff525222;color:#ff5252;border:1px solid #ff525244">估值: 高估</span><span class="conclusion-tag" style="background:#90a4ae22;color:#90a4ae;border:1px solid #90a4ae44">技术: 中性</span></div>
+            <div class="conclusion-text">估值层面处于<span style='color:#ff5252'>高估区间</span>（安全边际-24%）；技术面<span style='color:#90a4ae'>观望</span></div>
+        </div>
+    </div>
+
+    <div class="detail-block" style="border-color:#ff5252">
+        <h3 style="color:#ff5252">⚠ 风险提示</h3>
+        <div class="block-content">
+            <p></p>
+            
+            
+            <p style="margin-top:16px;color:#8b949e;font-size:12px">
+                WACC: 9.8% |
+                Ke: 11.1% |
+                Beta: 1.28 |
+                数据日期: 20260729
+            </p>
+        </div>
+    </div>
+    </div>
+
+<!-- ═══════════ 免责声明 ═══════════ -->
+<div class="detail-block" style="border-radius:12px;margin-top:30px;background:#161b22;">
+    <h3 style="color:#ff5252">📢 免责声明</h3>
+    <div class="block-content" style="color:#8b949e;font-size:13px;">
+        <p>本报告由 TG-trading-sys V4.0 系统自动生成，仅供研究参考，不构成任何投资建议。</p>
+        <p>数据来源：东财reportapi(研报评级/目标价)、同花顺(一致预期EPS)、Tushare/mootdx(K线行情)、新浪财经(财报三表)、腾讯财经(实时行情)、东财push2his(资金流)、mootdx F10(公司概况)、巨潮cninfo(年报信息)。</p>
+        <p>估值模型(DCF/PEG/PB-ROE)基于公开财务数据和市场参数假设，存在模型风险和参数不确定性。技术面与资金面分析基于历史数据，不保证未来走势。</p>
+        <p>投资有风险，入市需谨慎。请结合自身情况独立判断。</p>
+    </div>
+</div>
+
+<div class="page-footer">
+    TG-trading-sys V4.0 · V3深度分析报告 · 2026-07-30 18:15:53 ·
+    <a href="https://github.com/A-STOCK-DATA/a-stock-data">GitHub</a>
+</div>
+
+</div>
+<a href="#top" class="nav-top">↑</a>
+</body>
+</html>

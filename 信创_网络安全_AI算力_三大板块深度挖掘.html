@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>信创·网络安全·算力 三大板块深度挖掘</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif; background: #f0f2f5; color: #1a1a2e; line-height: 1.8; }
+
+.cover { background: linear-gradient(160deg, #0a1628 0%, #1a2a4a 40%, #0d2137 100%); color:#fff; padding:50px 50px 36px; }
+.cover h1 { font-size:30px; font-weight:800; margin-bottom:8px; }
+.cover .sub { font-size:15px; color:#8899aa; }
+.cover .meta { display:flex; gap:32px; margin-top:20px; font-size:12px; color:#667788; }
+
+.container { max-width:1200px; margin:0 auto; padding:0 20px; }
+
+/* Section */
+.section { background:#fff; border-radius:12px; padding:28px 32px; margin:18px 0; box-shadow:0 2px 10px rgba(0,0,0,0.04); }
+.section h2 { font-size:20px; font-weight:700; padding-bottom:10px; border-bottom:2px solid #1a1a2e; margin-bottom:14px; }
+.section h3 { font-size:16px; font-weight:700; margin:18px 0 10px; }
+
+/* Summary cards */
+.summary-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:14px 0; }
+.summary-card { padding:18px; border-radius:10px; text-align:center; }
+.summary-card .s-val { font-size:26px; font-weight:800; }
+.summary-card .s-label { font-size:12px; color:#666; margin-top:4px; }
+.summary-card .s-sub { font-size:11px; color:#999; margin-top:2px; }
+
+/* Insight */
+.insight { background:#f8f9fc; border-left:4px solid #1a1a2e; padding:14px 18px; margin:14px 0; border-radius:0 8px 8px 0; font-size:14px; }
+
+/* Stock cards */
+.stock-grid { display:grid; grid-template-columns:1fr; gap:18px; }
+.stock-card { background:#fff; border:1px solid #e8e8e8; border-radius:10px; overflow:hidden; }
+.sc-header { display:flex; justify-content:space-between; align-items:flex-start; padding:16px 20px; background:#fafbfc; border-bottom:1px solid #eee; }
+.sc-name { font-size:17px; font-weight:700; margin-right:8px; }
+.sc-code { font-size:11px; color:#999; margin-right:8px; }
+.sc-sector-tag { font-size:11px; color:#fff; padding:2px 10px; border-radius:10px; }
+.sc-body { padding:16px 20px; }
+.sc-grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:10px; }
+.sc-metric { background:#fafafa; padding:8px; border-radius:6px; }
+.sc-metric .lbl { font-size:10px; color:#999; display:block; }
+.sc-metric .val { font-size:14px; font-weight:600; display:block; margin-top:2px; }
+.sc-tech-row { display:flex; gap:16px; flex-wrap:wrap; font-size:12px; color:#666; padding:8px 0; }
+.tech-item { background:#f5f5f5; padding:3px 10px; border-radius:10px; }
+
+.sc-analysis { background:#f8f9fc; padding:14px 16px; border-radius:8px; margin:10px 0; }
+.analysis-title { font-size:13px; font-weight:700; color:#1a1a2e; margin-bottom:8px; }
+.analysis-item { font-size:12px; line-height:1.7; }
+.a-label { color:#999; margin-right:8px; }
+
+.sc-op { background:linear-gradient(90deg,#fff7e6 0%,#fffbe6 100%); padding:14px 16px; border-radius:8px; margin:10px 0; border-left:3px solid #fa8c16; }
+.op-title { font-size:13px; font-weight:700; color:#fa8c16; margin-bottom:4px; }
+.op-body { font-size:13px; color:#555; }
+
+.sc-reports { margin-top:8px; }
+.rpt-title { font-size:13px; font-weight:700; margin-bottom:4px; }
+
+/* Sector intro */
+.sector-intro { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:14px 0; }
+.si-card { padding:20px; border-radius:10px; }
+.si-card h4 { margin-bottom:8px; font-size:16px; }
+.si-card p { font-size:13px; color:#555; line-height:1.7; }
+
+/* Disclaimer */
+.disclaimer { background:#fff; border-radius:12px; padding:24px 28px; margin:18px 0; font-size:12px; color:#888; line-height:2; }
+
+@media (max-width:768px) {
+  .summary-grid,.sector-intro { grid-template-columns:1fr; }
+  .sc-grid-4 { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>信创 · 网络安全 · AI算力  三大板块深度挖掘</h1>
+  <div class="sub">底部放量信号已经出现——从行业地位、竞争格局、量价形态到持股操作的全景分析</div>
+  <div class="meta">
+    <span>分析标的: 17只</span><span>研报覆盖: 62篇</span><span>分析区间: 2026.03-07</span><span>生成时间: 2026-07-23 15:12</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ====== 总览 ====== -->
+<div class="section">
+  <h2>一、三大板块7月表现总览</h2>
+
+  <div class="summary-grid">
+    <div class="summary-card" style="background:#e6f7ff;border:2px solid #1890ff">
+      <div class="s-label">信创</div>
+      <div class="s-val" style="color:#f5222d">+14.6%</div>
+      <div class="s-sub">板块平均7月涨幅</div>
+      <div style="font-size:11px;color:#666;margin-top:4px">浪潮信息领涨 +34.5%</div>
+    </div>
+    <div class="summary-card" style="background:#f6ffed;border:2px solid #52c41a">
+      <div class="s-label">网络安全</div>
+      <div class="s-val" style="color:#f5222d">+11.5%</div>
+      <div class="s-sub">板块平均7月涨幅</div>
+      <div style="font-size:11px;color:#666;margin-top:4px">深信服/绿盟领涨 +22%+</div>
+    </div>
+    <div class="summary-card" style="background:#fff7e6;border:2px solid #fa8c16">
+      <div class="s-label">AI算力</div>
+      <div class="s-val" style="color:#52c41a">-11.7%</div>
+      <div class="s-sub">板块平均7月涨幅</div>
+      <div style="font-size:11px;color:#666;margin-top:4px">远跑赢科技平均(-24%)</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <strong>核心发现：</strong>在7月科技板块整体暴跌(-20%+)的背景下，<strong>信创和网络安全逆势上涨</strong>，算力板块也展现出远强于大盘的抗跌性（仅跌-11.7% vs 中小盘-19%）。这验证了我们上一份报告中"底部放量"信号的预判——<strong>政策驱动+业绩确定+产业趋势</strong>三重支撑下，这三个板块正在成为资金的新避风港。
+  </div>
+</div>
+
+<!-- ====== 三大板块逻辑 ====== -->
+<div class="section">
+  <h2>二、三大板块投资逻辑对比</h2>
+
+  <div class="sector-intro">
+    <div class="si-card" style="background:#e6f7ff;border-top:3px solid #1890ff">
+      <h4 style="color:#1890ff">[信创] 国产替代</h4>
+      <p>
+        <strong>核心驱动：</strong>2027年信创全面替换deadline + 政府IT采购加速<br>
+        <strong>业绩特征：</strong>订单驱动，2B/2G为主，现金流好<br>
+        <strong>估值水平：</strong>PE 30-80x，处于历史中位数<br>
+        <strong>代表标的：</strong>金山办公、海光信息、浪潮信息<br>
+        <strong>操作策略：</strong>中长期持有，逢低加仓
+      </p>
+    </div>
+    <div class="si-card" style="background:#f6ffed;border-top:3px solid #52c41a">
+      <h4 style="color:#52c41a">[网络安全] 需求刚性</h4>
+      <p>
+        <strong>核心驱动：</strong>数据安全法+关基保护+HW常态化+AI安全<br>
+        <strong>业绩特征：</strong>订阅制转型中，收入质量改善<br>
+        <strong>估值水平：</strong>多数亏损/PS估值，龙头PE 80x<br>
+        <strong>代表标的：</strong>深信服、绿盟科技、奇安信<br>
+        <strong>操作策略：</strong>关注盈利拐点，弹性配置
+      </p>
+    </div>
+    <div class="si-card" style="background:#fff7e6;border-top:3px solid #fa8c16">
+      <h4 style="color:#fa8c16">[AI算力] 产业趋势</h4>
+      <p>
+        <strong>核心驱动：</strong>海外CSP资本开支+AI应用爆发+国产GPU<br>
+        <strong>业绩特征：</strong>高增长确定，但短期估值已反映<br>
+        <strong>估值水平：</strong>PE 30-65x，光模块较合理<br>
+        <strong>代表标的：</strong>中际旭创、海光信息、工业富联<br>
+        <strong>操作策略：</strong>回调布局，中长线持有
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 信创 ====== -->
+<div class="section">
+  <h2>三、信创板块 <span style="font-size:14px;color:#1890ff">7月平均 +14.6% | 量价形态: 底部放量+价升量平</span></h2>
+
+  <h3>3.1 板块逻辑</h3>
+  <div class="insight">
+    信创是当前A股<strong>政策确定性最高</strong>的科技赛道。2027年是党政/央企信创全面替换的deadline，距离现在仅剩18个月。叠加2026年政府IT采购支出加速+国产CPU/OS生态趋于成熟，<strong>未来6-12个月是信创订单的集中释放期</strong>。与AI/半导体不同，信创不受全球科技周期影响，属于内需驱动的"独立行情"。
+  </div>
+
+  <div class="stock-grid">
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">海光信息</span>
+        <span class="sc-code">688041.SH</span>
+        <span class="sc-sector-tag" style="background:#1890ff">信创</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#52c41a">-5.23%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">312.00</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">266.0x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">31.33x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">7252亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">1.10%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#52c41a">-8.2%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#f5222d">+8%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#52c41a">下降</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#52c41a">死叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=30.7 D=28.1 J=35.9)</span>
+        <span class="tech-item">RSI14: <b>50.9</b></span>
+        <span class="tech-item">MA5: 324.31</span>
+        <span class="tech-item">MA20: 340.02</span>
+        <span class="tech-item">MA60: 317.93</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px">概念: 数字芯片设计</div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>国产CPU/DCU双龙头，信创算力底座</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>x86授权+自研DCU架构，国内唯一同时覆盖通用计算和AI加速的芯片厂商</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>海光CPU(7000/5000/3000系列)、深算DCU(AI加速卡)</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>绑定信创服务器生态(浪潮/曙光)，同步发力AI推理市场</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>信创CPU替换加速+AI推理国产化需求爆发</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>x86授权续期风险、先进制程受限</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">中长线持有，逢低加仓。信创CPU赛道确定性最高标的，PE 64x在芯片股中尚可接受。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-05-25 | 中银证券 | <span style="color:#f5222d">买入</span> | 双芯驱动，生态筑基，引领国产算力新纪元...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-05-07 | 诚通证券 | <span style="color:#f5222d">增持</span> | 海光信息2025年&2026年第一季度业绩点评：业绩高增，“双芯战略”加速落地，国产算力加速发展...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-04-22 | 华鑫证券 | <span style="color:#f5222d">买入</span> | 公司动态研究报告：业绩高速增长，受益Agent和超节点产业趋势...</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">金山办公</span>
+        <span class="sc-code">688111.SH</span>
+        <span class="sc-sector-tag" style="background:#1890ff">信创</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#f5222d">+8.27%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">238.39</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">30.5x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">7.55x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">1106亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">1.64%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#f5222d">+6.9%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#f5222d">+44%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#f5222d">上升</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#f5222d">金叉</b></span>
+        <span class="tech-item">KDJ: <b>强势</b>(K=79.0 D=75.4 J=86.3)</span>
+        <span class="tech-item">RSI14: <b>55.8</b></span>
+        <span class="tech-item">MA5: 238.67</span>
+        <span class="tech-item">MA20: 223.10</span>
+        <span class="tech-item">MA60: 235.32</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>国产办公软件绝对龙头，信创'卖铲人'</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>WPS月活5亿+，网络效应极强。政企替换MS Office的唯一成熟方案。</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>WPS Office(个人/企业/政企版)、金山文档(云协作)、金山AI</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>个人版AI化收费提升ARPU，政企版信创替换加速渗透</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>2027信创全面替换deadline+AI功能商业化</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>微软免费策略冲击、AI功能商业化进度不及预期</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">核心底仓配置。PE 30x在SaaS中偏低，7月+8.27%已显强势。持有为主，回调5-8%可加仓。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-04-14 | 群益证券 | <span style="color:#f5222d">增持</span> | AI推动营收持续提升，投资收益带动一季度高速增长...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-04-08 | 山西证券 | <span style="color:#f5222d">买入</span> | 全年营收稳健增长，AI转型进一步提速...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-04-07 | 国元证券 | <span style="color:#f5222d">买入</span> | 2025年年度报告点评：业绩实现稳健增长，深耕AI办公核心赛道...</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">浪潮信息</span>
+        <span class="sc-code">000977.SZ</span>
+        <span class="sc-sector-tag" style="background:#1890ff">信创</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#f5222d">+34.51%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">87.96</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">50.5x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">5.81x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">1290亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">10.86%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#f5222d">+14.4%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#f5222d">+117%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#f5222d">上升</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#f5222d">金叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=61.0 D=60.4 J=62.2)</span>
+        <span class="tech-item">RSI14: <b>66.7</b></span>
+        <span class="tech-item">MA5: 84.56</span>
+        <span class="tech-item">MA20: 76.90</span>
+        <span class="tech-item">MA60: 70.55</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>国内AI服务器龙头，市占率超40%</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>JDM模式深度绑定互联网大客户，定制化能力全球领先</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>AI服务器(NF5系列)、边缘服务器、液冷解决方案</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>从硬件组装向液冷/解决方案升级，提升毛利率</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>互联网大厂AI军备竞赛+信创服务器替换</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>毛利率偏低(5-8%)、GPU供应受制裁影响</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">短线强势标的。7月+34.51%领涨全板块，短期可能震荡整理。持有者可部分止盈，未持仓等回调至10日线再介入。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-07-09 | 中邮证券 | <span style="color:#f5222d">买入</span> | 深度布局国产算力生态，业绩表现大超市场预期...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-07-08 | 开源证券 | <span style="color:#f5222d">买入</span> | 公司信息更新报告：2026H1业绩超预期，算力需求持续景气...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-07-08 | 群益证券 | <span style="color:#f5222d">增持</span> | 二季度业绩超预期增长，AI服务器有望持续抬高盈利能力...</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">中科曙光</span>
+        <span class="sc-code">603019.SH</span>
+        <span class="sc-sector-tag" style="background:#1890ff">信创</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#52c41a">-0.29%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">97.82</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">64.5x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">6.51x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">1431亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">6.03%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#52c41a">-0.7%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#f5222d">+99%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#f5222d">上升</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#52c41a">死叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=40.5 D=35.8 J=50.0)</span>
+        <span class="tech-item">RSI14: <b>56.3</b></span>
+        <span class="tech-item">MA5: 95.32</span>
+        <span class="tech-item">MA20: 98.50</span>
+        <span class="tech-item">MA60: 93.35</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>国产HPC/服务器一线厂商，信创算力核心供应商</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>中科院背景+液冷技术领先+政府客户关系深厚</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>曙光服务器(信创/AI)、液冷数据中心、存储系统</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>液冷差异化+信创政府采购+AI算力租赁</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>政府信创大单+液冷渗透率提升</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>与浪潮竞争激烈、利润率受压制</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">信创中军，稳健配置。关注政府大单公告作为加仓信号。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-04-21 | 太平洋 | <span style="color:#f5222d">买入</span> | 业绩稳健增长，落地全国首个6万卡集群...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-04-16 | 开源证券 | <span style="color:#f5222d">买入</span> | 公司信息更新报告：扣非净利润高增，成功落地6万卡AI4S计算集群...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-04-12 | 东吴证券 | <span style="color:#f5222d">买入</span> | 海光加持赋能，乘算力国产化东风...</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">龙芯中科</span>
+        <span class="sc-code">688047.SH</span>
+        <span class="sc-sector-tag" style="background:#1890ff">信创</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#52c41a">-25.08%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">110.77</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">-106.3x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">18.52x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">444亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">1.23%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#52c41a">-19.0%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#52c41a">-4%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#52c41a">下降</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#52c41a">死叉</b></span>
+        <span class="tech-item">KDJ: <b>弱势</b>(K=16.3 D=17.9 J=13.0)</span>
+        <span class="tech-item">RSI14: <b>31.7</b></span>
+        <span class="tech-item">MA5: 117.28</span>
+        <span class="tech-item">MA20: 136.83</span>
+        <span class="tech-item">MA60: 148.17</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>自主指令集CPU唯一标的，信创'备胎'转正</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>LoongArch自主指令集，不受x86/ARM授权限制</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>龙芯3A6000(桌面)、3C6000(服务器)、2K3000(嵌入式)</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>从'可用'到'好用'，生态建设是关键战役</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>自主指令集生态突破+信创桌面替换</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>生态薄弱(应用适配慢)、商业化进度慢、持续亏损</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">高风险高弹性品种。7月-25%超跌，适合少量配置博弹性。等中报亏损收窄信号后再加仓。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-05-07 | 东海证券 | <span style="color:#f5222d">增持</span> | 公司简评报告：下游需求显著回暖，持续拓展开放市场...</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">东方中科</span>
+        <span class="sc-code">002819.SZ</span>
+        <span class="sc-sector-tag" style="background:#1890ff">信创</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#52c41a">-14.70%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">19.20</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">-39.1x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">1.47x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">46亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">0.86%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#52c41a">-6.2%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#52c41a">-22%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#52c41a">下降</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#52c41a">死叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=20.6 D=20.9 J=20.1)</span>
+        <span class="tech-item">RSI14: <b>33.3</b></span>
+        <span class="tech-item">MA5: 19.15</span>
+        <span class="tech-item">MA20: 20.47</span>
+        <span class="tech-item">MA60: 23.37</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>电子测试测量仪器龙头，信创测试设备进口替代</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>技术壁垒高(射频/高速信号测试)，国产替代空间大</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>示波器、频谱仪、射频源、矢量网络分析仪</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>从低端到高端突破，替代Keysight/R&S</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>科研仪器国产化政策+5G/6G测试需求</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>高端产品突破周期长、客户验证慢</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">信创细分小龙头，7月+9.31%逆势走强。小仓位配置，关注高端产品发布。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-05-17 | 太平洋 | <span style="color:#f5222d">买入</span> | 切入数智应用平台，需求不断增长...</div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- ====== 网络安全 ====== -->
+<div class="section">
+  <h2>四、网络安全板块 <span style="font-size:14px;color:#52c41a">7月平均 +11.5% | 量价形态: 放量突破+价升量平</span></h2>
+
+  <h3>4.1 板块逻辑</h3>
+  <div class="insight">
+    网络安全是<strong>"政策+事件"双驱动</strong>的典型赛道。2026年数据安全法实施细则落地、关基保护条例升级、以及7月重大安全事件催化，使得网安板块在科技股普跌中走出独立行情。<strong>更深层的逻辑是AI带来的安全需求升级</strong>——AI生成的攻击向量需要AI驱动的防御体系，网络安全市场正在从千亿向万亿扩容。
+  </div>
+
+  <div class="stock-grid">
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">深信服</span>
+        <span class="sc-code">300454.SZ</span>
+        <span class="sc-sector-tag" style="background:#52c41a">网络安全</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#f5222d">+22.88%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">110.77</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">82.7x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">4.42x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">319亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">7.31%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#f5222d">+8.1%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#f5222d">+54%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#f5222d">上升</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#f5222d">金叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=75.5 D=73.6 J=79.3)</span>
+        <span class="tech-item">RSI14: <b>63.7</b></span>
+        <span class="tech-item">MA5: 113.72</span>
+        <span class="tech-item">MA20: 102.45</span>
+        <span class="tech-item">MA60: 109.18</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>网络安全+云IT双轮驱动，企业安全龙头</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>渠道网络最广(3万+合作伙伴)，产品线最全(安全+云+基础架构)</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>深信服下一代防火墙、上网行为管理、超融合、桌面云</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>安全业务做深+云业务做广，SASE/XDR等新方向布局</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>数据安全法落地+AI安全需求爆发+超融合份额提升</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>估值偏高(PE 82x)、竞争加剧(华为/奇安信)</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">网安龙头，7月+22.88%已突破。基本面扎实但估值不便宜，持有为主，高位不建议追。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-04-09 | 信达证券 | <span style="color:#f5222d">买入</span> | 全面深化AI发展战略，盈利能力显著改善...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-04-06 | 太平洋 | <span style="color:#f5222d">买入</span> | 利润快速增长，AI驱动未来发展...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-04-01 | 国信证券 | <span style="color:#f5222d">增持</span> | 云业务增长较快，净现金流创新高...</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">绿盟科技</span>
+        <span class="sc-code">300369.SZ</span>
+        <span class="sc-sector-tag" style="background:#52c41a">网络安全</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#f5222d">+23.61%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">6.55</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">-127.7x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">2.07x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">53亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">9.07%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#f5222d">+6.2%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#f5222d">+97%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#f5222d">上升</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#f5222d">金叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=44.6 D=54.3 J=25.2)</span>
+        <span class="tech-item">RSI14: <b>58.4</b></span>
+        <span class="tech-item">MA5: 6.62</span>
+        <span class="tech-item">MA20: 6.17</span>
+        <span class="tech-item">MA60: 6.59</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>网络安全细分龙头，攻防+安全运营专家</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>攻防技术能力行业顶尖(国家级重保经验)，安全运营MSS模式先发优势</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>绿盟NIPS/WAF/抗DDoS、安全运营MSS、数据安全</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>从产品到服务转型(MSS订阅)，AI安全能力加持</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>HW行动+数据安全合规+AI安全检测需求</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>业绩波动大(项目制)、亏损状态</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">7月+23.61%领涨网安，量价突破形态。作为弹性品种配置，注意止损。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#999">近期无机构覆盖</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">奇安信</span>
+        <span class="sc-code">688561.SH</span>
+        <span class="sc-sector-tag" style="background:#52c41a">网络安全</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#f5222d">+10.93%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">25.94</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">-14.1x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">2.51x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">177亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">1.61%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#f5222d">+5.3%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#f5222d">+51%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#f5222d">上升</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#f5222d">金叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=73.1 D=70.9 J=77.5)</span>
+        <span class="tech-item">RSI14: <b>60.9</b></span>
+        <span class="tech-item">MA5: 25.74</span>
+        <span class="tech-item">MA20: 24.65</span>
+        <span class="tech-item">MA60: 26.81</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>企业安全龙头(科创板)，冬奥'零事故'背书</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>安全数据积累最深(威胁情报库)，国家队身份(中国电子控股)</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>奇安信天擎(终端安全)、天眼(威胁检测)、态势感知</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>从卖产品到卖服务，安全托管运营MDR模式</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>数据安全法+关基保护条例+国家队项目</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>持续亏损(研发投入巨大)、估值难锚定</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">亏损成长型标的，7月+10.93%温和走强。关注减亏进度，右侧确认盈利拐点后重点配置。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#999">近期无机构覆盖</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">启明星辰</span>
+        <span class="sc-code">002439.SZ</span>
+        <span class="sc-sector-tag" style="background:#52c41a">网络安全</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#f5222d">+9.31%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">14.08</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">-32.5x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">1.57x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">103亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">5.59%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#f5222d">+7.5%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#f5222d">+11%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#f5222d">上升</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#f5222d">金叉</b></span>
+        <span class="tech-item">KDJ: <b>超买</b>(K=84.9 D=73.7 J=107.5)</span>
+        <span class="tech-item">RSI14: <b>63.2</b></span>
+        <span class="tech-item">MA5: 13.53</span>
+        <span class="tech-item">MA20: 13.10</span>
+        <span class="tech-item">MA60: 14.17</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>老牌安全厂商，UTM/防火墙领先</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>客户基础深厚(政府+运营商)，产品成熟度高</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>启明星辰UTM/防火墙/IDS/IPS、安全管理平台</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>从传统安全向数据安全/云安全转型</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>安全服务化转型+数据安全新品类</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>增长放缓、新业务转型不确定性</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">估值便宜(PE-32x，亏损中)，7月+9.31%跟随板块反弹。作为网安板块二线配置。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#999">近期无机构覆盖</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">安恒信息</span>
+        <span class="sc-code">688023.SH</span>
+        <span class="sc-sector-tag" style="background:#52c41a">网络安全</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#52c41a">-0.42%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">36.43</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">-61.9x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">1.66x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">37亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">3.02%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#f5222d">+0.3%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#52c41a">-14%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#f5222d">上升</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#f5222d">金叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=50.5 D=47.0 J=57.5)</span>
+        <span class="tech-item">RSI14: <b>51.0</b></span>
+        <span class="tech-item">MA5: 36.44</span>
+        <span class="tech-item">MA20: 36.32</span>
+        <span class="tech-item">MA60: 40.46</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>数据安全/AI安全新锐</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>数据安全细分领域先发优势，数据库审计/加密领先</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>安恒AiGuard数据安全平台、数据库审计、Web防火墙</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>聚焦数据安全赛道差异化竞争</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>数据要素市场建设+AI安全合规</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>体量小、品牌力不足、亏损</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">数据安全纯正标的，7月-14.7%仍弱。关注数据安全订单落地，右侧信号出现后介入。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-04-02 | 信达证券 | <span style="color:#f5222d">买入</span> | AI赋能安全，助力公司经营质量改善...</div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- ====== 算力 ====== -->
+<div class="section">
+  <h2>五、AI算力板块 <span style="font-size:14px;color:#fa8c16">7月平均 -11.7% | 量价形态: 缩量回调(强势整理)</span></h2>
+
+  <h3>5.1 板块逻辑</h3>
+  <div class="insight">
+    算力板块7月虽然下跌，但<span style="background:#fffbe6;font-weight:700">-11.7%的跌幅远跑赢科技平均-24%</span>，本质上属于"前期涨幅过大后的获利回吐"，而非基本面恶化。海外CSP(Capital Spending)最新指引显示AI投资仍在加速，<strong>光模块/服务器/PCB的订单可见度普遍在6-12个月以上</strong>。当前回调提供了更好的入场价位，重点关注7月底-8月的中报验证。
+  </div>
+
+  <div class="stock-grid">
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">中际旭创</span>
+        <span class="sc-code">300308.SZ</span>
+        <span class="sc-sector-tag" style="background:#fa8c16">算力</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#52c41a">-13.27%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">1072.52</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">80.0x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">34.53x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">11904亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">2.46%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#52c41a">-6.5%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#f5222d">+23%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#52c41a">下降</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#52c41a">死叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=42.1 D=39.0 J=48.3)</span>
+        <span class="tech-item">RSI14: <b>44.8</b></span>
+        <span class="tech-item">MA5: 1058.76</span>
+        <span class="tech-item">MA20: 1147.13</span>
+        <span class="tech-item">MA60: 1112.22</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>全球光模块龙头，AI算力'卖铲人'</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>800G/1.6T光模块全球领先，深度绑定英伟达/谷歌/Meta</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>800G/1.6T光模块、相干光模块、硅光方案</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>产能持续扩张(泰国工厂)+技术迭代领先(硅光)</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>海外CSP资本开支指引+1.6T放量+硅光量产</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>客户集中度高(大客户依赖)、光模块价格年降</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">算力板块核心配置。7月-13%属跟随大盘调整而非基本面恶化。中报大概率超预期，回调即布局良机。重点关注800G→1.6T的迭代节奏。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-07-22 | 交银国际证券 | <span style="color:#f5222d">买入</span> | 要有光——光模块龙头增长动能或将持续；首予买入...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-06-24 | 太平洋 | <span style="color:#f5222d">买入</span> | 业绩持续超预期增长，光互连全栈布局成型...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-05-27 | 山西证券 | <span style="color:#f5222d">买入</span> | 龙头交付优势充分体现，Scaleup光连接产品有望继续保持领先...</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">新易盛</span>
+        <span class="sc-code">300502.SZ</span>
+        <span class="sc-sector-tag" style="background:#fa8c16">算力</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#52c41a">-11.60%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">497.30</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">64.6x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">35.72x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">6237亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">3.53%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#52c41a">-7.7%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#f5222d">+29%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#52c41a">下降</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#f5222d">金叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=52.4 D=50.6 J=56.1)</span>
+        <span class="tech-item">RSI14: <b>44.8</b></span>
+        <span class="tech-item">MA5: 519.21</span>
+        <span class="tech-item">MA20: 539.04</span>
+        <span class="tech-item">MA60: 591.36</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>光模块第二梯队，800G后发追赶</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>800G产品快速追赶，成本控制能力突出</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>800G/400G光模块、5G前传光模块</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>800G快速放量+北美大客户突破</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>北美云厂商800G采购放量+新客户导入</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>技术跟随者、客户拓展不确定</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">算力弹性标的，波动大于中际旭创。适合波段操作，急跌买急涨卖。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-07-20 | 群益证券 | <span style="color:#f5222d">增持</span> | 二季度利润回归高速增长轨道，高速光模块市场份额预计快速提升...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-05-27 | 山西证券 | <span style="color:#f5222d">买入</span> | 1.6T环比上量将加快，盈利能力继续维持行业领先水平...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-04-26 | 国金证券 | <span style="color:#f5222d">买入</span> | 1Q物料与汇兑承压，看好后续1.6T产能释放带来利润增长...</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">海光信息</span>
+        <span class="sc-code">688041.SH</span>
+        <span class="sc-sector-tag" style="background:#fa8c16">算力</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#52c41a">-5.23%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">312.00</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">266.0x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">31.33x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">7252亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">1.10%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#52c41a">-8.2%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#f5222d">+8%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#52c41a">下降</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#52c41a">死叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=30.7 D=28.1 J=35.9)</span>
+        <span class="tech-item">RSI14: <b>50.9</b></span>
+        <span class="tech-item">MA5: 324.31</span>
+        <span class="tech-item">MA20: 340.02</span>
+        <span class="tech-item">MA60: 317.93</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px">概念: 数字芯片设计</div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>国产CPU/DCU双龙头，信创算力底座</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>x86授权+自研DCU架构，国内唯一同时覆盖通用计算和AI加速的芯片厂商</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>海光CPU(7000/5000/3000系列)、深算DCU(AI加速卡)</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>绑定信创服务器生态(浪潮/曙光)，同步发力AI推理市场</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>信创CPU替换加速+AI推理国产化需求爆发</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>x86授权续期风险、先进制程受限</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">中长线持有，逢低加仓。信创CPU赛道确定性最高标的，PE 64x在芯片股中尚可接受。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-05-25 | 中银证券 | <span style="color:#f5222d">买入</span> | 双芯驱动，生态筑基，引领国产算力新纪元...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-05-07 | 诚通证券 | <span style="color:#f5222d">增持</span> | 海光信息2025年&2026年第一季度业绩点评：业绩高增，“双芯战略”加速落地，国产算力加速发展...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-04-22 | 华鑫证券 | <span style="color:#f5222d">买入</span> | 公司动态研究报告：业绩高速增长，受益Agent和超节点产业趋势...</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">寒武纪</span>
+        <span class="sc-code">688256.SH</span>
+        <span class="sc-sector-tag" style="background:#fa8c16">算力</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#52c41a">-11.80%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">1249.00</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">288.8x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">64.12x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">7847亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">1.73%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#52c41a">-10.3%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#f5222d">+20%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#52c41a">下降</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#52c41a">死叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=30.4 D=27.2 J=36.7)</span>
+        <span class="tech-item">RSI14: <b>47.1</b></span>
+        <span class="tech-item">MA5: 1267.76</span>
+        <span class="tech-item">MA20: 1392.22</span>
+        <span class="tech-item">MA60: 1368.28</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>国产AI芯片旗帜，'中国英伟达'预期</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>自研思元架构，国内AI训练芯片唯一量产玩家</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>思元370/590(AI训练+推理)、寒武纪AI软件栈</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>从云端到边缘全覆盖，构建自主AI软件生态</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>AI芯片国产化政策+互联网大厂适配+新品发布</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>持续巨亏、英伟达生态碾压、制裁风险</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">高波动高预期标的。PE无意义(亏损)，靠信仰估值。7月-11%相对温和。适合风险承受能力强的投资者小仓位配置，严格止损。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-04-28 | 第一上海证券 | <span style="color:#f5222d">买入</span> | AI Agent时代来临，国产算力支撑AI建设...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-03-19 | 东海证券 | <span style="color:#f5222d">增持</span> | 公司简评报告：全年业绩高增，关注下一代思元芯片商业化落地...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-02-27 | 群益证券 | <span style="color:#f5222d">增持</span> | 中国AI需求高速增长，国产芯片龙头受益...</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">工业富联</span>
+        <span class="sc-code">601138.SH</span>
+        <span class="sc-sector-tag" style="background:#fa8c16">算力</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#52c41a">-13.27%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">62.88</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">30.7x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">7.08x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">12478亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">0.81%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#52c41a">-3.9%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#52c41a">-28%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#52c41a">下降</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#52c41a">死叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=27.0 D=23.9 J=33.2)</span>
+        <span class="tech-item">RSI14: <b>42.0</b></span>
+        <span class="tech-item">MA5: 59.76</span>
+        <span class="tech-item">MA20: 65.40</span>
+        <span class="tech-item">MA60: 68.88</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>全球AI服务器代工龙头(富士康系)</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>超大规模制造能力+液冷/整机柜技术，绑定英伟达GPU</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>AI服务器整机/主板、液冷机柜、5G设备</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>从代工到解决方案，提升AI服务器附加值</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>AI服务器出货量持续高增+英伟达GB300系列发布</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>代工模式利润薄、地缘政治风险</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">稳健型算力配置。PE 30x在代工股中偏高但AI溢价合理。适合作为算力底仓，长期持有。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-06-18 | 金元证券 | <span style="color:#f5222d">增持</span> | AI服务器销售占比提升，毛利预期持续改善...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-04-30 | 信达证券 | <span style="color:#f5222d">买入</span> | 工业富联26Q1业绩点评：业绩实现翻倍增长，CPO交换机开始出货...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-04-29 | 国金证券 | <span style="color:#f5222d">买入</span> | 产品结构升级释放利润弹性，现金流激增验证景气度...</div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="stock-card">
+    <div class="sc-header">
+      <div>
+        <span class="sc-name">沪电股份</span>
+        <span class="sc-code">002463.SZ</span>
+        <span class="sc-sector-tag" style="background:#fa8c16">算力</span>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:22px;font-weight:800;color:#52c41a">-21.23%</div>
+        <div style="font-size:11px;color:#999">7月涨跌</div>
+      </div>
+    </div>
+
+    <div class="sc-body">
+      <!-- 行情概览 -->
+      <div class="sc-grid-4">
+        <div class="sc-metric"><span class="lbl">最新价</span><span class="val">115.74</span></div>
+        <div class="sc-metric"><span class="lbl">PE(TTM)</span><span class="val">51.8x</span></div>
+        <div class="sc-metric"><span class="lbl">PB</span><span class="val">14.07x</span></div>
+        <div class="sc-metric"><span class="lbl">市值</span><span class="val">2225亿</span></div>
+        <div class="sc-metric"><span class="lbl">换手率</span><span class="val">2.92%</span></div>
+        <div class="sc-metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#52c41a">-13.5%</span></div>
+        <div class="sc-metric"><span class="lbl">7月量变</span><span class="val" style="color:#52c41a">-7%</span></div>
+        <div class="sc-metric"><span class="lbl">OBV</span><span class="val" style="color:#52c41a">下降</span></div>
+      </div>
+
+      <!-- 技术指标 -->
+      <div class="sc-tech-row">
+        <span class="tech-item">MACD: <b style="color:#52c41a">死叉</b></span>
+        <span class="tech-item">KDJ: <b>中性</b>(K=32.4 D=36.0 J=25.4)</span>
+        <span class="tech-item">RSI14: <b>40.7</b></span>
+        <span class="tech-item">MA5: 123.27</span>
+        <span class="tech-item">MA20: 133.79</span>
+        <span class="tech-item">MA60: 125.71</span>
+      </div>
+
+      
+      <div style="font-size:12px;color:#888;margin-top:4px"></div>
+
+      <!-- 卖方分析 -->
+      <div class="sc-analysis">
+        <div class="analysis-title">[卖方研报视角] 行业地位 & 竞争格局</div>
+        <div class="analysis-item"><span class="a-label">行业地位</span>AI服务器PCB龙头，算力'PCB卖铲人'</div>
+        <div class="analysis-item"><span class="a-label">核心护城河</span>高端PCB(高层数/高速)技术壁垒，全球高端PCB产能稀缺</div>
+        <div class="analysis-item"><span class="a-label">主要产品</span>AI服务器PCB(20层+)、交换机PCB、汽车PCB</div>
+        <div class="analysis-item"><span class="a-label">经营策略</span>聚焦高端PCB产能扩张(泰国工厂)+汽车PCB多元化</div>
+        <div class="analysis-item"><span class="a-label">近期催化剂</span>AI服务器PCB需求爆发+800G交换机升级</div>
+        <div class="analysis-item"><span class="a-label">主要风险</span>PCB行业周期波动、产能爬坡风险</div>
+      </div>
+
+      <!-- 操作建议 -->
+      <div class="sc-op">
+        <div class="op-title">[持股操作建议]</div>
+        <div class="op-body">7月-21.23%是本板块最大跌幅，短期超跌。PCB产业链景气度确定，可在当前价位分批布局。</div>
+      </div>
+
+      <!-- 最新研报 -->
+      <div class="sc-reports">
+        <div class="rpt-title">[近期机构研报]</div>
+        <div style="font-size:12px;color:#666;margin:2px 0">2026-04-24 | 中邮证券 | <span style="color:#f5222d">买入</span> | 高速交换机业务高增，产能扩张蓄力长期成长...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-04-15 | 中银证券 | <span style="color:#f5222d">买入</span> | 乘AI与高速运算东风，业绩增长动能强劲...</div><div style="font-size:12px;color:#666;margin:2px 0">2026-04-15 | 信达证券 | <span style="color:#f5222d">买入</span> | 沪电股份26Q1业绩预告点评：AI算力景气度持续验证，高端产能释放在即...</div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- ====== 六、持仓策略 ====== -->
+<div class="section">
+  <h2>六、综合持仓策略与操作节奏</h2>
+
+  <h3>6.1 三维配置矩阵</h3>
+  <table style="width:100%;border-collapse:collapse;font-size:13px;margin:12px 0">
+    <thead>
+      <tr style="background:#1a1a2e;color:#fff">
+        <th style="padding:10px;text-align:left">配置角色</th>
+        <th style="padding:10px;text-align:left">标的</th>
+        <th style="padding:10px;text-align:left">仓位建议</th>
+        <th style="padding:10px;text-align:left">持有周期</th>
+        <th style="padding:10px;text-align:left">操作节奏</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid #eee">
+        <td style="padding:10px;font-weight:700;color:#f5222d">核心底仓</td>
+        <td style="padding:10px">金山办公、中际旭创、海光信息</td>
+        <td style="padding:10px">30-40%</td>
+        <td style="padding:10px">6-12个月</td>
+        <td style="padding:10px;font-size:12px">持有为主，回调5-8%加仓</td>
+      </tr>
+      <tr style="border-bottom:1px solid #eee">
+        <td style="padding:10px;font-weight:700;color:#fa8c16">弹性配置</td>
+        <td style="padding:10px">浪潮信息、深信服、新易盛</td>
+        <td style="padding:10px">20-30%</td>
+        <td style="padding:10px">1-3个月</td>
+        <td style="padding:10px;font-size:12px">波段操作，急涨止盈急跌加仓</td>
+      </tr>
+      <tr style="border-bottom:1px solid #eee">
+        <td style="padding:10px;font-weight:700;color:#1890ff">逆向布局</td>
+        <td style="padding:10px">奇安信、龙芯中科、沪电股份</td>
+        <td style="padding:10px">10-20%</td>
+        <td style="padding:10px">3-6个月</td>
+        <td style="padding:10px;font-size:12px">分批低吸，等右侧确认加仓</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;font-weight:700;color:#52c41a">观察待机</td>
+        <td style="padding:10px">寒武纪、安恒信息、东方中科</td>
+        <td style="padding:10px">0-10%</td>
+        <td style="padding:10px">--</td>
+        <td style="padding:10px;font-size:12px">等待催化剂或右侧信号</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>6.2 操作纪律</h3>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px 0">
+    <div style="background:#fff1f0;padding:16px;border-radius:8px">
+      <div style="font-weight:700;color:#f5222d;margin-bottom:6px">止损纪律</div>
+      <div style="font-size:13px;color:#555">
+        • 单票亏损超-8%，无条件减半仓<br>
+        • 单票亏损超-15%，清仓出局<br>
+        • 板块整体跌破7月低点，总仓位降至5成以下
+      </div>
+    </div>
+    <div style="background:#f6ffed;padding:16px;border-radius:8px">
+      <div style="font-weight:700;color:#52c41a;margin-bottom:6px">加仓纪律</div>
+      <div style="font-size:13px;color:#555">
+        • 中报业绩确认后，核心标的可加至目标仓位<br>
+        • MACD金叉+放量站上MA20为右侧加仓信号<br>
+        • 单日暴跌5%+但基本面未变：逆向加仓机会
+      </div>
+    </div>
+  </div>
+
+  <h3>6.3 关键时间节点</h3>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin:12px 0">
+    <div style="background:#f0f0f0;padding:10px 16px;border-radius:8px;font-size:13px"><b>7月底-8月中</b><br>中报密集披露期</div>
+    <div style="background:#f0f0f0;padding:10px 16px;border-radius:8px;font-size:13px"><b>8月下旬</b><br>华为/苹果秋季发布会</div>
+    <div style="background:#f0f0f0;padding:10px 16px;border-radius:8px;font-size:13px"><b>9月</b><br>信创采购招标旺季</div>
+    <div style="background:#f0f0f0;padding:10px 16px;border-radius:8px;font-size:13px"><b>Q4</b><br>GDP冲刺+财政支出加速</div>
+    <div style="background:#f0f0f0;padding:10px 16px;border-radius:8px;font-size:13px"><b>2027年</b><br>信创全面替换deadline</div>
+  </div>
+</div>
+
+<!-- ====== 风险提示 ====== -->
+<div class="disclaimer">
+  <h4>风险提示与免责声明</h4>
+  <p>
+  <strong>主要风险因素：</strong><br>
+  ① <strong>信创政策风险：</strong>2027年deadline若延期，板块逻辑将受到重大冲击。<br>
+  ② <strong>业绩不及预期：</strong>中报季（7-8月）为关键验证窗口。信创/网安多数公司Q2为淡季，单季波动不代表全年趋势。<br>
+  ③ <strong>AI投资降速：</strong>若海外CSP缩减AI资本开支，光模块/服务器产业链将直接承压。<br>
+  ④ <strong>制裁升级：</strong>美国若进一步收紧芯片出口管制，海光信息/寒武纪等将受到冲击。<br>
+  ⑤ <strong>估值风险：</strong>部分标的前期涨幅较大（浪潮信息+34%），短期存在技术性回调需要。<br>
+  ⑥ <strong>流动性风险：</strong>若整体市场继续下行，强势板块也可能补跌。<br><br>
+  <strong>免责声明：</strong>本报告基于公开数据和机构研报整理，行业地位/竞争格局分析参考券商研报观点，量价数据来自Tushare/东方财富/腾讯财经。所有分析仅供参考，不构成投资建议。投资有风险，入市需谨慎。
+  </p>
+</div>
+
+</div>
+</body>
+</html>

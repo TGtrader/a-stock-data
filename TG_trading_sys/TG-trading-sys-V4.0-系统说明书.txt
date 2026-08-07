@@ -1,0 +1,1181 @@
+================================================================================
+                    TG-trading-sys V4.0 系统说明书
+               A股综合投资决策·研究·管理系统
+================================================================================
+版本: V4.0.0  |  更新: 2026-07-28  |  文件数: 50+  |  代码量: ~13000行
+Python: 3.14  |  数据库: SQLite  |  平台: Windows/Linux/macOS
+
+================================================================================
+                              目    录
+================================================================================
+
+一、系统概述 ......................................................... 3
+二、架构总览 ......................................................... 4
+三、安装与初始化 ..................................................... 5
+四、核心模块 (core/) .................................................. 6
+五、数据层 (data/) .................................................... 7
+六、估值模块 (valuation/) ............................................. 9
+七、多因子选股 (factor/) .............................................. 11
+八、择时信号 (strategy/timing/) ....................................... 13
+九、组合管理 (portfolio/) ............................................. 15
+十、风控引擎 (risk/) .................................................. 17
+十一、大盘环境 (market/) .............................................. 19
+十二、CLI 命令行 ...................................................... 21
+十三、配置与调优 ...................................................... 24
+十四、数据源对照 ...................................................... 26
+十五、已知问题与限制 .................................................. 27
+十六、开发计划 ........................................................ 28
+
+================================================================================
+一、系统概述
+================================================================================
+
+TG-trading-sys 是一套完整的 A股投资决策系统，覆盖从数据获取、估值分析、
+因子筛选、择时信号、组合构建到风控监控的完整投资流程。
+
+【设计理念】
+  - 模块解耦：每个子系统独立可用，也可串联成完整管线
+  - 多源降级：Tushare(付费) → mootdx(免费TCP) → 腾讯(免费HTTP)
+  - 缓存优先：所有数据本地 SQLite 缓存，减少网络依赖
+  - 可配置化：因子权重、风控参数、信号阈值均可调
+
+【覆盖能力】
+  ├── 数据获取    K线(日/分钟) / 财报三表 / 资金流 / 研报 / 一致预期
+  ├── 估值分析    DCF两阶段 / PE-PEG / PB-ROE / 研报共识 / 情景分析
+  ├── 因子筛选    19因子×4大类 + 行业中性化 + 反转/跃进/加速增长
+  ├── 择时信号    均线系统 + 形态识别 + 资金面 + 事件驱动 → 聚合裁决
+  ├── 组合管理    6种权重方法 + 约束验证 + 回测 + 绩效 + 监控
+  ├── 风控引擎    规则链 + VaR/CVaR + 压力测试 + 绩效归因
+  └── 大盘环境    5维判定 + 板块轮动 + 情绪仪表盘 + 仓位中枢
+
+================================================================================
+二、架构总览
+================================================================================
+
+【目录结构】
+
+TG_trading_sys/
+├── __init__.py                    # 包入口
+├── core/
+│   ├── config.py                  # 全局配置 (Config 单例)
+│   └── database.py                # SQLite 数据访问层 (Database 单例)
+├── data/
+│   ├── cache.py                   # 统一数据缓存 (DataCache)
+│   └── sync.py                    # 批量同步管理 (SyncManager)
+├── valuation/
+│   ├── wacc.py                    # WACC 估算 (CAPM模型)
+│   ├── dcf.py                     # DCF 两阶段估值
+│   ├── relative_val.py            # PE-PEG / PB-ROE 相对估值
+│   ├── earnings_forecast.py       # 一致预期 EPS
+│   └── val_report.py              # 综合估值报告 + HTML生成
+├── factor/
+│   ├── factor_registry.py         # 因子注册中心
+│   ├── value_factors.py           # 价值因子 (PE/PB/PS/FCFyield)
+│   ├── growth_factors.py          # 成长因子 (EPS/营收增速/扭亏/跃进/加速)
+│   ├── quality_factors.py         # 质量因子 (ROE/毛利率/负债率/现金流)
+│   ├── momentum_factors.py        # 动量因子 (20/60日动量/量能/换手)
+│   ├── standardization.py         # 标准化管线 (缩尾/Z-score/行业中性化)
+│   ├── composite.py               # 复合因子打分
+│   └── screener.py                # 筛选器 (全因子/反转/价值成长/质动)
+├── strategy/timing/
+│   ├── ma_signals.py              # 均线系统 (排列/金叉死叉/乖离)
+│   ├── pattern_signals.py         # 形态识别 (箱体/W底/三角/旗形)
+│   ├── fund_signals.py            # 资金面信号
+│   ├── event_signals.py           # 事件驱动信号
+│   ├── signal_aggregator.py       # 多信号聚合裁决引擎
+│   └── trade_plan.py              # 交易计划生成
+├── portfolio/
+│   ├── builder.py                 # 组合构建 (6种权重方法)
+│   ├── constraints.py             # 约束验证
+│   ├── backtest_bridge.py         # 回测桥接
+│   ├── perf_metrics.py            # 绩效指标体系
+│   └── monitor.py                 # 持仓监控
+├── risk/
+│   ├── rules_engine.py            # 风控规则链
+│   ├── var.py                     # VaR/CVaR 风险度量
+│   ├── stress_test.py             # 压力测试
+│   └── perf_attribution.py        # 绩效归因 (Brinson/因子)
+├── market/
+│   ├── regime.py                  # 大盘状态判定 (5维)
+│   ├── rotation.py                # 板块轮动分析
+│   └── position_guide.py          # 仓位中枢建议
+├── cli/
+│   ├── __init__.py                # CLI 主入口 (argparse)
+│   └── __main__.py                # python -m TG_trading_sys.cli
+├── smoke_test_val.py              # Phase 1 冒烟测试
+├── smoke_test_factor.py           # Phase 2 冒烟测试
+├── smoke_test_strategy.py         # Phase 3 冒烟测试
+├── smoke_test_portfolio.py        # Phase 4 冒烟测试
+├── smoke_test_risk.py             # Phase 5 冒烟测试
+└── smoke_test_market.py           # Phase 6 冒烟测试
+
+【数据库表结构 (SQLite)】
+
+  stock_basic       — 股票基本信息 (code, name, market, industry, list_date)
+  daily_kline       — 日K线缓存 (code, date, OHLCV, source)
+  financials        — 财务三表 (code, report_date, report_type, data_json)
+  moneyflow         — 资金流向 (code, date, 主力/超大单/大单/小单)
+  earnings_forecast — 一致预期 (code, org, year, eps)
+  valuation_cache   — 估值缓存 (code, date, dcf_value, pe_peg_value, ...)
+  holdings          — 持仓记录 (portfolio_name, code, shares, cost, ...)
+  trade_log         — 交易日志 (portfolio_name, code, action, price, ...)
+  factor_snapshot   — 因子快照 (code, date, category, factor_values)
+
+================================================================================
+三、安装与初始化
+================================================================================
+
+【环境要求】
+  - Python >= 3.10
+  - SQLite3 (内置)
+  - 推荐虚拟环境 venv
+
+【依赖安装】
+
+  pip install pandas numpy
+  pip install tushare           # 付费会员首选数据源
+  pip install mootdx            # 免费TCP备选数据源 (通达信协议)
+  pip install requests          # HTTP请求
+  pip install scipy             # 统计计算 (VaR参数法)
+
+【快速启动】
+
+  # 1. 配置 Tushare Token (可选但推荐)
+  set TUSHARE_TOKEN=your_token_here        # Windows
+  export TUSHARE_TOKEN=your_token_here     # Linux/Mac
+
+  # 2. 查看数据库状态
+  python -m TG_trading_sys.cli sync stats
+
+  # 3. 同步自选股K线
+  python -m TG_trading_sys.cli sync kline --codes 600519,000858,300750
+
+  # 4. 估值分析
+  python -m TG_trading_sys.cli val 600519
+
+  # 5. 多因子筛选
+  python -m TG_trading_sys.cli screen --top 10
+
+  # 6. 择时信号
+  python -m TG_trading_sys.cli signal 600519
+
+【冒烟测试】
+
+  cd TG_trading_sys
+  python smoke_test_val.py        # 估值模块
+  python smoke_test_factor.py     # 因子模块
+  python smoke_test_strategy.py   # 择时模块
+  python smoke_test_portfolio.py  # 组合模块
+  python smoke_test_risk.py       # 风控模块
+  python smoke_test_market.py     # 大盘模块
+
+================================================================================
+四、核心模块 (core/)
+================================================================================
+
+4.1 Config — 全局配置单例
+
+  文件: TG_trading_sys/core/config.py
+
+  支持三层加载: 环境变量 → 配置文件 → 内置默认值
+
+  【核心参数】
+
+    # 估值
+    RISK_FREE_RATE          = 0.028        # 无风险利率 2.8% (10年国债)
+    EQUITY_RISK_PREMIUM     = 0.065        # 股权风险溢价 6.5%
+    PERPETUAL_GROWTH_RATE   = 0.03         # 永续增长率 3%
+    EXPLICIT_FORECAST_YEARS = 5            # 显式预测期
+    TERMINAL_VALUE_MAX_RATIO= 0.80         # 终值占比上限
+
+    # 因子权重
+    FACTOR_WEIGHTS = {
+        "value":     0.20,    # 价值
+        "growth":    0.25,    # 成长 (含反转/超预期)
+        "quality":   0.20,    # 质量
+        "momentum":  0.15,    # 动量
+        "fund":      0.10,    # 资金
+        "sentiment": 0.10,    # 情绪/研报
+    }
+
+    # 风控
+    MAX_SINGLE_WEIGHT       = 0.10         # 单票上限 10%
+    MAX_SECTOR_WEIGHT       = 0.30         # 单行业上限 30%
+    MAX_TOTAL_POSITION      = {            # 总仓位上限 (按大盘状态)
+        "bull":         0.80,
+        "neutral_bull": 0.60,
+        "neutral":      0.50,
+        "neutral_bear": 0.30,
+        "bear":         0.20,
+    }
+    DEFAULT_STOP_LOSS       = 0.08         # 默认止损 8%
+    MIN_RISK_REWARD_RATIO   = 2.0          # 最低风险回报比
+
+    # 筛选
+    MIN_DAILY_AMOUNT        = 10_000_000   # 最低日均成交额 1000万
+    MIN_MARKET_CAP          = 1_000_000_000 # 最低市值 10亿
+
+  【方法】
+    Config.get_tushare_token() → str|None   从环境变量或 .env 文件读取
+
+4.2 Database — SQLite 数据访问层 (单例)
+
+  文件: TG_trading_sys/core/database.py
+
+  Database.get_instance() → Database  获取全局数据库实例
+
+  【核心方法】
+    fetchone(sql, params)  → sqlite3.Row|None
+    fetchall(sql, params)  → list[sqlite3.Row]
+    execute(sql, params)   → None
+    count(table)           → int
+    upsert_kline(code, rows, source)  → None
+
+  数据库文件位置: data/tg_trading.db (由 Config.DB_PATH 指定)
+
+================================================================================
+五、数据层 (data/)
+================================================================================
+
+5.1 DataCache — 统一数据缓存
+
+  文件: TG_trading_sys/data/cache.py
+
+  cache = DataCache()
+
+  【K线数据】
+
+    cache.get_kline(code, start_date=None, end_date=None, lookback=250, force_refresh=False) → DataFrame
+
+    三源降级策略:
+      Level 1: Tushare daily()/index_daily()  — 付费会员，数据最准
+      Level 2: mootdx Quotes.bars()            — 免费TCP，指数有缩放问题
+      Level 3: 腾讯 qtimg.cn                   — 仅实时，无历史K线
+
+    价格校验: 入库前用腾讯实时价交叉校验，偏差 >3x 自动降级数据源
+
+    指数识别: 已知指数白名单 (000001上证/000300沪深300/399001深证成指/000688科创50...)
+              深市主板 000001-004999 不会被误判为指数
+
+    mootdx 指数缩放修正: 自动与腾讯实时价比对，偏差 >2% 时自动缩放修正
+
+  【财务数据】
+
+    cache.get_financials(code, report_type="lrb", force_refresh=False) → list[dict]
+
+    report_type: "lrb"(利润表) / "fzb"(资产负债表) / "llb"(现金流量表)
+
+    数据源: 新浪财经 CompanyFinanceService.getFinanceReport2022 API
+    返回: 按报告期倒序的 list[dict]，每期包含所有科目的值和同比
+
+  【一致预期】
+
+    cache.get_consensus_eps(code) → dict | None
+
+    返回:
+      {
+        "eps_2026": 68.70,          # 2026年一致预期 EPS
+        "eps_2027": 72.45,          # 2027年一致预期 EPS
+        "num_analysts": 1,          # 覆盖机构数
+        "historical": [             # 历史实际 EPS
+          {"year": "2025", "eps": 65.66},
+          {"year": "2024", "eps": 68.64}, ...
+        ]
+      }
+
+    数据源: 同花顺 basic.10jqka.com.cn worth.html (yjycData JSON)
+
+  【研报数据】
+
+    cache.get_research_targets(code, limit=20) → list[dict]
+
+    返回: [{org, date, rating, target_price, eps_2025, eps_2026, eps_2027}, ...]
+    数据源: 东财 reportapi.eastmoney.com
+
+  【股票基本信息】
+
+    cache.get_stock_basic(code, force_refresh=False) → dict | None
+
+    返回:
+      {
+        "name": "贵州茅台",          # 股票名称
+        "price": 1320.00,            # 腾讯实时价 (动态获取)
+        "last_close": 1289.50,       # 昨日收盘价
+        "pe_ttm": 19.95,             # PE(TTM)
+        "pb": 7.09,                  # PB
+        "mcap_yi": 16501.08,         # 总市值 (亿元)
+        "float_mcap_yi": 16501.08,   # 流通市值 (亿元)
+        "total_shares": 125008.18,   # 总股本 (万股)
+        "float_shares": 125008.18,   # 流通股本 (万股)
+        "turnover_pct": 0.43,        # 换手率 %
+        "vol_ratio": 1.09,           # 量比
+      }
+
+    数据源: 腾讯 qtimg.cn 实时行情
+    策略: 优先返回缓存 + 合并实时价格 (价格每日变动，不依赖旧缓存)
+
+  【价格校验】
+
+    cache._validate_kline_price(code, df, max_ratio=3.0) → bool
+
+    在K线数据入库前，用腾讯实时价交叉校验最新收盘价。
+    偏差超过 max_ratio 倍时拒绝入库，自动降级到下一数据源。
+
+5.2 SyncManager — 批量数据同步
+
+  文件: TG_trading_sys/data/sync.py
+
+  mgr = SyncManager()
+
+  【核心方法】
+    mgr.sync_kline_batch(codes, lookback=250)         # 批量同步K线
+    mgr.sync_financials_batch(codes)                  # 批量同步财务数据
+    mgr.get_db_stats() → dict                         # 数据库统计
+    mgr.print_stats()                                 # 打印统计报告
+
+================================================================================
+六、估值模块 (valuation/)
+================================================================================
+
+6.1 综合估值报告
+
+  入口函数: val_report(code, wacc=None, terminal_growth=None) → dict
+
+  >>> from TG_trading_sys.valuation.val_report import val_report, print_val_report
+  >>> report = val_report("600519")
+  >>> print_val_report(report)
+
+  报告结构:
+    {
+      "code": "600519",
+      "name": "贵州茅台",
+      "date": "2026-07-28",
+      "current_price": 1320.0,
+      "final_value": 1029.68,           # 综合估值 (加权)
+      "margin_of_safety_pct": -28.2,    # 安全边际 %
+      "margin_of_safety_verdict": "适度高估",
+      "estimate_components": [          # 分项估值
+        {"method": "DCF",     "value": 375.60,  "weight": "40%"},
+        {"method": "PE-PEG",  "value": 176.63,  "weight": "25%"},
+        {"method": "PB-ROE",  "value": 4195.67, "weight": "15%"},
+        {"method": "研报均价", "value": None,    "weight": "20%"},
+      ],
+      "dcf": {...},           # DCF 明细
+      "relative": {...},      # 相对估值明细
+      "earnings": {...},      # 一致预期
+      "scenarios": {...},     # 情景分析
+      "key_ratios": {         # 关键比率
+        "pe_ttm": 19.95,
+        "pb": 7.09,
+        "market_cap_yi": 16501.08,
+      }
+    }
+
+  HTML 报告生成:
+    from TG_trading_sys.valuation.val_report import generate_html_report
+    generate_html_report(report, "valuation_600519.html")
+
+6.2 DCF 两阶段估值
+
+  函数: dcf_value(code, wacc=None, growth_rates=None, fcf_base=None, ...) → dict
+
+  模型: 企业价值 = Σ(FCF_t / (1+WACC)^t) + 终值/(1+WACC)^n
+        股权价值 = 企业价值 - 净债务
+        每股价值 = 股权价值 / 总股本
+
+  FCF 估算优先级:
+    1. 经营活动现金流净额 - 资本支出 (从现金流量表)
+    2. 净利润 × (1 - 20%再投资率) (从利润表)
+    3. EPS × 总股本 × 0.7 (兜底)
+
+  安全机制:
+    - WACC 与永续增长率利差不足 2% 时自动调整 WACC
+    - FCF 基准异常大 (> EPS × 总股本 × 20) 时使用兜底估算
+    - 终值占比 > 80% 时发出警告
+    - 所有财务值统一归一化到万元
+
+6.3 WACC 估算
+
+  函数: estimate_wacc(code) → dict
+
+  模型: WACC = Ke × E/(E+D) + Kd × (1-T) × D/(E+D)
+  Ke = Rf + β × ERP (CAPM)
+
+  返回: {wacc, ke, kd, beta, rf, erp, tax_rate, d_e_ratio, ...}
+
+  股权成本 (Ke):
+    - 从 stock_basic 获取市场数据
+    - β 通过历史回归估算
+    - 默认参数: Rf=2.8%, ERP=6.5%, 默认β=0.25
+
+6.4 相对估值
+
+  PE-PEG:
+    —— 合理PE = EPS增速(%) × 1.0 (PEG=1标准)
+    —— 合理价 = 合理PE × TTM EPS
+
+  PB-ROE:
+    —— 合理PB = (ROE - g) / (Ke - g)
+    —— 合理价 = 合理PB × 每股净资产
+
+    ROE 计算: 优先使用同花顺历史实际EPS × 总股本 / 股东权益
+              (避免新浪财报累计值叠加问题)
+
+6.5 一致预期
+
+  函数: get_earnings_forecast(code) → dict
+
+  优先级:
+    1. 同花顺 yjycData JSON (一致预期 EPS)
+    2. 东财研报 EPS 均值 (如果有的话)
+    3. 历史增长率 (作为兜底)
+
+  返回: {eps_forecast, growth_rates, cagr_3y, trailing_eps, source}
+
+6.6 情景分析
+
+  三档情景:
+    乐观: 增长 ×1.2, 利润率 ×1.1 → 调整 WACC 降低
+    中性: 基准
+    悲观: 增长 ×0.8, 利润率 ×0.9 → 调整 WACC 升高
+
+================================================================================
+七、多因子选股 (factor/)
+================================================================================
+
+7.1 因子注册中心
+
+  文件: TG_trading_sys/factor/factor_registry.py
+
+  已注册: 19 个因子, 4 大类
+
+  【价值因子 (value) — 4个】
+    PE(TTM)         — 市盈率 (负向: 越低越好)
+    PB              — 市净率 (负向)
+    PS(TTM)         — 市销率 (负向)
+    FCF 收益率       — 自由现金流/市值 (正向)
+
+  【成长因子 (growth) — 6个】
+    EPS 增速 (YoY)   — 每股收益同比增长率 (正向)
+    营收增速 (YoY)    — 营业收入同比增长率 (正向)
+    盈利加速度        — EPS增速的变化率 (正向)
+    扭亏反转          — 上期亏损→本期盈利 (正向)
+    营收跃进          — Q1营收 > 去年全年 × 30% (正向)
+    加速增长          — 本期增速 > 上期增速 + 20pp (正向)
+
+  【质量因子 (quality) — 5个】
+    ROE              — 净资产收益率 (正向)
+    毛利率            — 毛利率 (正向)
+    资产负债率         — 负债率 (负向)
+    现金流质量         — 经营现金流/净利润 (正向)
+    ROE 稳定性        — ROE 5年标准差 (负向: 越稳定越好)
+
+  【动量因子 (momentum) — 4个】
+    20日动量          — 20日涨跌幅 (正向)
+    60日动量          — 60日涨跌幅 (正向)
+    量能动量          — 成交量变化趋势 (正向)
+    换手率            — 日均换手率 (正向，适度)
+
+7.2 标准化管线
+
+  文件: TG_trading_sys/factor/standardization.py
+
+  三阶段处理:
+    1. 缩尾 (Winsorize)       — 默认 1%/99% 分位截断
+    2. Z-score 标准化         — (x - mean) / std
+    3. 行业中性化 (可选)       — 在每个行业内分别标准化，消除行业偏差
+
+7.3 复合打分
+
+  文件: TG_trading_sys/factor/composite.py
+
+  综合评分 = Σ(标准化因子值 × 因子方向 × 大类权重 × 单因子权重)
+
+  - 因子方向: positive → +1, negative → -1
+  - 大类权重: 来自 Config.FACTOR_WEIGHTS
+  - 单因子权重: 来自因子注册的 default_weight
+
+7.4 筛选器
+
+  文件: TG_trading_sys/factor/screener.py
+
+  【预设标的池】
+    csi300       — 沪深300成分股 (50只模拟)
+    csi500       — 中证500成分股 (30只模拟)
+    csi300_csi500 — 合计 (默认)
+
+  【筛选模式】
+    screen(universe, top_n, categories, neutralize_industry)  — 全因子筛选
+    screen_value_growth(top_n)                                — 价值+成长双维
+    screen_turnaround(top_n)                                  — 反转信号精选
+    screen_quality_momentum(top_n)                            — 质量+动量精选
+
+================================================================================
+八、择时信号 (strategy/timing/)
+================================================================================
+
+8.1 均线系统
+
+  函数: analyze_ma_system(df) → dict
+
+  需要 df 包含: open, high, low, close, volume
+
+  分析内容:
+    - 均线排列: 多头排列 / 空头排列 / 缠绕无方向
+    - 金叉/死叉: MA5×MA10 / MA10×MA20 / MA20×MA60
+    - 均线斜率: 加速上扬 / 走平 / 拐头向下
+    - 乖离率: 价格偏离 MA20 的程度
+
+  返回:
+    {
+      "ma_alignment": {           # 均线排列
+        "state": "多头排列",        # 当前状态
+        "ma_values": {             # 各均线当前值
+          "MA5": 1290.5, "MA10": 1285.3, "MA20": 1280.1,
+          "MA60": 1320.7, "MA120": 1400.2, "MA250": 1500.0
+        }
+      },
+      "cross_signals": [...],     # 近期金叉/死叉信号列表
+      "slope_signals": [...],     # 均线斜率变化信号
+      "deviation": {...},         # 乖离率
+      "signals": [...],           # 综合信号 (带 priority)
+      "score": 40,                # 0-100 评分
+      "verdict": "均线偏空",       # 一句话判定
+    }
+
+8.2 形态识别
+
+  函数: detect_patterns(df) → dict
+
+  识别形态:
+    - 箱体整理 (振幅 >10%, 横盘 >30天) → 等待突破
+    - W底/双重底 → 看涨反转
+    - M头/双重顶 → 看跌反转
+    - 三角整理 (对称/上升/下降) → 方向待定
+    - 旗形整理 → 中继形态
+
+  返回:
+    {
+      "box_breakout": "箱体整理中",
+      "triangle": None,
+      "double_pattern": None,
+      "flag_pattern": None,
+      "signals": [...],
+      "verdict": "箱体整理"
+    }
+
+8.3 信号聚合裁决引擎
+
+  函数: aggregate_signals(ma_result, vpa_result, fund_result, pattern_result, event_result) → SignalVerdict
+
+  信号源权重 (可配置):
+    trend (趋势/均线):  40%
+    vpa   (量价VPA):   25%
+    fund  (资金面):     20%
+    pattern (形态):     10%
+    event  (事件驱动):   5%
+
+  裁决规则:
+    - 趋势和量价同时看多 + 资金面不反对 → 强烈做多
+    - 趋势看多但量价背离 → 降级到观望
+    - 资金面强烈看多但趋势向下 → 限制在"关注"级别 (不可对抗趋势)
+    - 多信号同方向 → 提升强度
+    - 趋势为王: 趋势评分 ≥70 底线观望, 趋势评分 ≤30 上限观望
+
+  返回 SignalVerdict:
+    - verdict:        强烈做多 / 做多 / 偏多 / 观望 / 偏空 / 做空 / 强烈做空
+    - score:          0-100 综合评分
+    - confidence:     高 / 中 / 低
+    - signal_scores:  {"trend": 80, "vpa": 50, "fund": 50, ...}
+    - conflicts:      冲突信号说明列表
+    - position_advice: 仓位建议
+
+8.4 交易计划生成
+
+  函数: generate_trade_plan(df, verdict) → dict
+
+  基于裁决结果和K线数据生成具体交易计划:
+    - 入场价: 基于支撑位/突破位
+    - 止损价: 基于ATR或形态低点
+    - 目标价: 目标1 (箱体/形态目标), 目标2 (趋势目标)
+    - 风险回报比: 目标/止损比
+    - 仓位建议: 凯利公式变体
+
+  返回:
+    {
+      "plan_valid": True/False,
+      "detail": "策略执行详情文本",
+      "entry_price": 59.75,
+      "stop_loss": 56.24,
+      "targets": [{"price": 63.45, "rr": 1.1}, {"price": 73.25, "rr": 3.8}],
+      "position_pct": 6.0,
+    }
+
+================================================================================
+九、组合管理 (portfolio/)
+================================================================================
+
+9.1 组合构建
+
+  函数: build_portfolio(codes, method="equal_weight", ...) → dict
+
+  【6种权重方法】
+
+    1. equal_weight         — 等权分配 (1/n)
+    2. market_cap           — 市值加权 (市值大的权重高)
+    3. inv_volatility       — 波动率倒数加权 (低波高配)
+    4. risk_parity          — 风险平价 (每只标的贡献相同风险)
+       算法: 迭代法 → w_i ∝ 1/σ_i → 调整至各标的 RC 均等
+    5. min_variance         — 最小方差组合
+       算法: 闭式解 w = Σ⁻¹1 / (1ᵀΣ⁻¹1) → 约束截断
+    6. max_diversification  — 最大分散度
+       算法: w ∝ (1/σ) × 去相关因子 (1/平均相关性)
+
+  【约束验证】
+    支持: 单票上限 / 行业上限 / 流动性下限 / 集中度上限
+
+  返回:
+    {
+      "name": "portfolio_20260728_1642",
+      "method": "risk_parity",
+      "holdings": [{code, name, weight, price, market_cap_yi, sector, pe_ttm, pb}, ...],
+      "weights": pd.Series,
+      "validation": {"passed": True/False, "violations": [...], "warnings": [...]},
+      "stats": {"n_stocks": 10, "n_sectors": 5, "max_weight": 0.15, "top3_weight": 0.35},
+    }
+
+  【独立函数】
+    optimize_weights(returns, method) → pd.Series
+    不依赖完整构建流程，直接优化权重。
+
+9.2 回测桥接
+
+  函数: simple_backtest(codes, weights, start_date, capital, rebalance) → dict
+
+  简化回测引擎:
+    - 支持按月/按季再平衡
+    - 计算组合净值序列
+    - 输出绩效指标
+
+9.3 绩效指标
+
+  函数: compute_metrics(equity_curve, benchmark) → dict
+
+  指标:
+    - 总收益 / 年化收益
+    - 年化波动率
+    - 夏普比率 (Sharpe)
+    - 索提诺比率 (Sortino)
+    - 卡玛比率 (Calmar)
+    - 最大回撤 / 回撤持续天数
+    - Beta / Alpha / 信息比率 (Information Ratio)
+    - 月度收益分布
+
+  函数: summary_table(metrics) → str
+    生成格式化文本摘要。
+
+9.4 持仓监控
+
+  【核心函数】
+    record_holding(pf_name, code, name, weight, shares, cost)  — 记录持仓
+    close_holding(pf_name, code, sell_price, date)             — 平仓
+    get_snapshot(pf_name) → dict                               — 持仓快照
+    save_portfolio_snapshot(portfolio)                          — 保存组合
+    list_portfolios() → list[dict]                             — 列出组合
+    check_rebalance(pf_name, target_weights) → dict             — 再平衡检查
+    log_trade(pf_name, code, action, price, shares, reason)    — 交易日志
+
+  快照返回:
+    {
+      "date": "2026-07-28",
+      "n_holdings": 5,
+      "total_cost": 500000,
+      "total_current_value": 520000,
+      "total_pnl": 20000,
+      "total_pnl_pct": 4.0,
+      "holdings": [{code, name, shares, cost, current_price, pnl, weight}, ...],
+      "alerts": [{code, level, message}, ...]
+    }
+
+================================================================================
+十、风控引擎 (risk/)
+================================================================================
+
+10.1 风控规则链
+
+  文件: TG_trading_sys/risk/rules_engine.py
+
+  engine = RiskEngine(market_regime="neutral")
+
+  【内置规则】
+
+    硬阻止 (block):
+      - ST股票禁止买入
+      - 单票超限 (默认 >10%)
+      - 行业超限 (默认 >30%)
+      - 总仓位超限 (根据大盘状态)
+      - 亏损达到止损线 (默认 -8%)
+      - 最低日均成交额不达标
+
+    软预警 (warn):
+      - 接近仓位上限 (>80% 限值)
+      - 行业集中度过高 (Herfindahl >0.15)
+      - 组合 Beta 过高
+      - 流动性风险 (换手率过低)
+
+  【大盘状态自适应】
+
+    牛市中仓位上限更宽松，熊市中更严格:
+      bull:          总仓位 ≤ 80%
+      neutral_bull: 总仓位 ≤ 60%
+      neutral:       总仓位 ≤ 50%
+      neutral_bear: 总仓位 ≤ 30%
+      bear:          总仓位 ≤ 20%
+
+  engine.check(context) → RiskCheckResult
+    - passed: True/False
+    - violations: [{rule, level, message}, ...]
+    - warnings: [{rule, level, message}, ...]
+
+10.2 VaR / CVaR 风险度量
+
+  文件: TG_trading_sys/risk/var.py
+
+  【三种方法】
+
+    1. 历史模拟法 (Historical VaR)
+       — 直接用历史收益率的百分位
+
+    2. 参数法 (Parametric VaR)
+       — 假设正态分布，VaR = μ + σ × z_α
+
+    3. 蒙特卡洛法 (Monte Carlo VaR)
+       — 基于协方差矩阵的 Cholesky 分解模拟
+
+  【核心函数】
+
+    calc_var(returns, method="historical", confidence=0.95) → dict
+      返回: {var, cvar, confidence, var_pct, detail}
+
+    calc_cvar(returns, confidence=0.95) → float
+      CVaR = 超过 VaR 的平均损失
+
+    portfolio_var_report(returns, weights, confidence=0.95) → dict
+      组合级别: 各方法 VaR + 边际 VaR + 成分 VaR
+
+    var_backtest(returns, var_values, confidence=0.95) → dict
+      Kupiec 检验: 实际突破率 vs 预期突破率
+
+10.3 压力测试
+
+  文件: TG_trading_sys/risk/stress_test.py
+
+  【10种历史情景】
+    2008 全球金融危机、2015 股灾、2016 熔断、2018 贸易战、
+    2020 疫情冲击、2024 量化危机...
+
+  【因子冲击情景】
+    流动性枯竭、信用违约、地缘政治、汇率冲击、商品暴涨
+
+  run_stress_test(holdings, total_value) → dict
+    返回:
+      {
+        "total_value": 550000,
+        "worst_scenario": "2015股灾",
+        "worst_impact_pct": -80.0,
+        "scenario_results": [...]
+      }
+
+10.4 绩效归因
+
+  文件: TG_trading_sys/risk/perf_attribution.py
+
+  【Brinson 归因】— 超额收益分解为配置贡献 + 选股贡献
+    brinson_attribution(pf_weights, bm_weights, pf_returns, bm_returns, sectors) → dict
+
+  【因子归因】— 用因子模型解释组合收益
+    factor_attribution(returns, factors_df) → dict
+    返回: {alpha_annual, r_squared, factor_contributions}
+
+================================================================================
+十一、大盘环境 (market/)
+================================================================================
+
+11.1 大盘状态判定 (5维模型)
+
+  文件: TG_trading_sys/market/regime.py
+
+  覆盖六大指数: 上证/深证/沪深300/创业板/科创50/中证500
+
+  detect_regime(df) → dict
+
+  【5个判定维度 (各25分，共125→归一化100)】
+
+    1. 均线排列 (多头/空头/缠绕)              25分
+    2. 价格动量 (涨跌幅 + 均线斜率)             25分
+    3. 波动率环境 (低波稳健/高波异常)           25分
+    4. 成交量趋势 (放量进攻/缩量防守)           25分
+    5. 极端事件/反转信号 (V型反转/假突破)        25分
+
+  【状态分类】
+    - 牛市 (≥70分): 多头排列 + 正动量 + 放量
+    - 震荡偏多 (55-69): 小多头或横盘偏强
+    - 震荡 (40-54): 均线缠绕 + 方向不明
+    - 震荡偏空 (25-39): 小空头或横盘偏弱
+    - 熊市 (<25分): 空头排列 + 负动量 + 缩量
+
+  【转换信号】
+    - 震荡→牛市确认: 价格突破MA20 + 放量
+    - 牛市→震荡衰竭: 动能减弱 + 评分下降
+    - 震荡→熊市确认: 价格跌破MA20 + 死叉确认
+
+11.2 情绪仪表盘 (7维)
+
+  综合衡量市场情绪:
+    1. 涨跌家数比 (AD Ratio)
+    2. 涨停/跌停比 (Limit Ratio)
+    3. 北向资金净流入 (Northbound Flow)
+    4. 两融余额变化 (Margin Balance)
+    5. 成交量/20日均量比 (Volume Ratio)
+    6. 新高/新低比 (NHNL Ratio)
+    7. VIX 类波动率指数 (Implied Vol)
+
+  评分范围: 0-100
+    - 0-25: 恐惧 (逆向买入信号)
+    - 25-45: 偏恐惧
+    - 45-55: 中性
+    - 55-75: 偏贪婪
+    - 75-100: 贪婪 (逆向卖出信号)
+
+11.3 板块轮动
+
+  文件: TG_trading_sys/market/rotation.py
+
+  sector_rotation() → dict
+
+  按东财行业分类分析板块强弱:
+    - 最强/最弱板块识别
+    - 四类风格: 周期型 / 成长型 / 防守型 / 题材型
+    - 轮动阶段判断:
+        • 成长领涨 → 风险偏好提升，进攻阶段
+        • 防守领涨 → 避险情绪，防御阶段
+        • 周期领涨 → 经济复苏预期
+        • 题材轮动 → 结构性行情
+
+  注意: 依赖东财 get_sector_ranking，大陆住宅IP可能被风控
+
+11.4 仓位中枢建议
+
+  文件: TG_trading_sys/market/position_guide.py
+
+  综合大盘状态 + 市场情绪 → 仓位建议:
+    - 牛市 + 贪婪:  总仓位 70% (进攻42% + 防守21%)
+    - 熊市 + 恐惧:  总仓位 12% (进攻2% + 防守9%)
+    - 牛市 + 恐慌:  总仓位 76% (逆向加仓)
+    - 震荡 + 中性:  总仓位 30% (均衡)
+
+================================================================================
+十二、CLI 命令行
+================================================================================
+
+入口: python -m TG_trading_sys.cli <command> [args]
+
+12.1 val — 个股估值分析
+
+  python -m TG_trading_sys.cli val CODE [OPTIONS]
+
+  参数:
+    CODE                  股票代码 (6位数字)
+    --wacc FLOAT          自定义折现率 (如 9.5 表示 9.5%)
+    --terminal-growth FLOAT 自定义永续增长率 (如 3.0 表示 3%)
+    --html                生成 HTML 报告
+    --output, -o PATH     HTML 输出路径
+
+  示例:
+    python -m TG_trading_sys.cli val 600519
+    python -m TG_trading_sys.cli val 600519 --html
+    python -m TG_trading_sys.cli val 688017 --wacc 10.5 --terminal-growth 2.5
+
+12.2 signal — 多策略择时信号
+
+  python -m TG_trading_sys.cli signal CODE
+
+  示例:
+    python -m TG_trading_sys.cli signal 600519
+    python -m TG_trading_sys.cli signal 688017
+
+  输出:
+    - 综合裁决 (强烈做多→强烈做空)
+    - 各信号源评分 (均线/VPA/资金面/形态/事件)
+    - 冲突警告
+    - 活跃信号列表
+    - 交易计划 (入场/止损/目标/仓位)
+
+12.3 screen — 多因子筛选
+
+  python -m TG_trading_sys.cli screen [OPTIONS]
+
+  参数:
+    --mode MODE           筛选模式: all / value_growth / turnaround / quality_momentum
+    --universe UNIVERSE   标的池: csi300 / csi500 / csi300_csi500 (默认)
+    --categories CATS     限定因子大类 (逗号分隔: value,growth,quality,momentum)
+    --top-n N             返回前 N 只 (默认 20)
+    --no-neutralize       不做行业中性化
+    --list-factors        列出所有已注册因子
+    --factor-category CAT 限定查看的因子大类
+    --csv PATH            CSV 输出路径
+    --html                生成 HTML 报告
+
+  示例:
+    python -m TG_trading_sys.cli screen --top 10
+    python -m TG_trading_sys.cli screen --mode turnaround --top 20
+    python -m TG_trading_sys.cli screen --mode value_growth --csv picks.csv
+    python -m TG_trading_sys.cli screen --list-factors
+    python -m TG_trading_sys.cli screen --list-factors --factor-category growth
+
+12.4 portfolio — 组合管理
+
+  python -m TG_trading_sys.cli portfolio ACTION [OPTIONS]
+
+  操作:
+    build     构建组合
+    backtest  回测组合
+    monitor   监控持仓
+    list      列出已保存组合
+
+  build 参数:
+    --method METHOD       权重方法: equal_weight / market_cap / inv_volatility /
+                          risk_parity / min_variance / max_diversification
+    --universe UNIVERSE  标的池 (默认 csi300_csi500)
+    --top-n N            选股数量 (默认 15)
+    --no-neutralize      不做行业中性化
+    --save               保存到数据库
+    --name NAME          组合名称
+
+  backtest 参数:
+    --codes CODES        手动指定标的 (逗号分隔)
+    --start DATE         起始日期 (默认 2024-01-01)
+    --capital AMOUNT     初始资金 (默认 1,000,000)
+    --rebalance FREQ     再平衡频率: daily / monthly / quarterly
+
+  monitor 参数:
+    --name NAME          指定组合名称
+
+  示例:
+    python -m TG_trading_sys.cli portfolio build --top 10 --save
+    python -m TG_trading_sys.cli portfolio build --method risk_parity --top 15
+    python -m TG_trading_sys.cli portfolio backtest --codes 600519,000858,300750
+    python -m TG_trading_sys.cli portfolio monitor
+    python -m TG_trading_sys.cli portfolio list
+
+12.5 sync — 数据同步
+
+  python -m TG_trading_sys.cli sync ACTION [OPTIONS]
+
+  操作:
+    stats       查看数据库统计
+    kline       同步K线数据
+    financials  同步财务数据
+
+  参数:
+    --codes CODES    股票代码 (逗号分隔)
+    --lookback N     K线回溯天数 (默认 250)
+
+  示例:
+    python -m TG_trading_sys.cli sync stats
+    python -m TG_trading_sys.cli sync kline --codes 600519,000858,300750,002230
+    python -m TG_trading_sys.cli sync financials --codes 600519,000858
+
+================================================================================
+十三、配置与调优
+================================================================================
+
+13.1 环境变量
+
+  TUSHARE_TOKEN        Tushare Pro API Token (付费会员)
+  PYTHONIOENCODING     设为 utf-8 避免 Windows 控制台乱码
+
+13.2 关键调优参数
+
+  【估值参数】
+    Config.RISK_FREE_RATE         = 0.028    # 无风险利率 (10年国债)
+    Config.EQUITY_RISK_PREMIUM    = 0.065    # 股权风险溢价
+    Config.PERPETUAL_GROWTH_RATE  = 0.03     # 永续增长率
+    Config.EXPLICIT_FORECAST_YEARS= 5        # 显式预测期
+    Config.TERMINAL_VALUE_MAX_RATIO=0.80     # 终值占比警告线
+
+  【因子权重】
+    Config.FACTOR_WEIGHTS = {
+      "value": 0.20, "growth": 0.25, "quality": 0.20,
+      "momentum": 0.15, "fund": 0.10, "sentiment": 0.10
+    }
+    —— 成长偏重型：适合成长股/科技股市场环境
+    —— 价值偏重型：将 value/growth 权重对调
+
+  【择时信号权重】 (signal_aggregator.py DEFAULT_WEIGHTS)
+    {"trend": 0.40, "vpa": 0.25, "fund": 0.20, "pattern": 0.10, "event": 0.05}
+    —— 趋势跟随型：当前配置以均线为核心
+    —— 如果要增强 VPA 权重：调高 vpa 至 0.30
+
+  【风控参数】
+    Config.MAX_SINGLE_WEIGHT      = 0.10     # 单票上限
+    Config.MAX_SECTOR_WEIGHT      = 0.30     # 行业上限
+    Config.DEFAULT_STOP_LOSS      = 0.08     # 止损线
+
+  【DCF 安全机制】 (dcf.py)
+    min_spread = 0.02  # WACC - g 最小利差 (防止终值爆炸)
+    —— 如果终值占比持续 >90%，考虑增大此值或降低永续增长率
+
+13.3 因子调优建议
+
+  【牛市环境】
+    momentum + growth 调高: {"value": 0.10, "growth": 0.30,
+                              "quality": 0.15, "momentum": 0.30, ...}
+  【熊市环境】
+    value + quality 调高:  {"value": 0.30, "growth": 0.10,
+                              "quality": 0.30, "momentum": 0.10, ...}
+  【震荡市】
+    均衡配置 (默认权重)
+
+================================================================================
+十四、数据源对照
+================================================================================
+
+| 层级 | 数据源    | 协议   | 频率限制 | 用途                     | 状态 |
+|------|----------|--------|---------|--------------------------|------|
+| 1    | Tushare  | HTTP   | Pro会员  | K线/财务/资金流/指数      | ✅   |
+| 2    | mootdx   | TCP    | 免费无限制 | K线 (通达信协议)          | ✅   |
+| 3    | 腾讯财经  | HTTP   | 免费     | 实时行情/基本信息/价格校验 | ✅   |
+| 4    | 新浪财经  | HTTP   | 免费     | 财报三表 (利润/负债/现金)  | ✅   |
+| 5    | 同花顺    | HTTP   | 免费     | 一致预期 EPS              | ✅   |
+| 6    | 东财      | HTTP   | 免费有限制 | 研报/涨停池/资金流/板块   | ⚠️  |
+| 7    | 巨潮      | HTTP   | 免费     | 公告                     | -    |
+
+降级策略:
+  1. Tushare (付费，数据最准) → 首选
+  2. mootdx (免费TCP) → 备选K线
+  3. 腾讯 (免费HTTP) → 实时行情 + 价格校验
+
+指数代码白名单 (不会被误判为股票):
+  000001 上证指数、000016 上证50、000300 沪深300、000688 科创50、
+  000852 中证1000、000905 中证500、399001 深证成指、399005 创业板指、
+  399006 创业板指、899001 中证系列...
+
+================================================================================
+十五、已知问题与限制
+================================================================================
+
+1. 【东财API风控】 涨停池/跌停池/涨跌家数/北向资金/两融余额等实时数据
+   在大陆住宅IP下间歇被风控 (HTTP 000)，情绪仪表盘依赖默认值。
+   影响: 板块轮动、情绪仪表盘、研报目标价
+
+2. 【DCF 终值占比偏高】 茅台终值占比 ~90%，超过80%警告线。
+   原因: WACC偏低 (3.95%→已调整至5.26%) + FCF基数需要调优。
+   影响: DCF每股估值偏低 (375 vs 预期 ~1500)
+
+3. 【东财研报API静默失败】 get_research_targets 当前返回0条记录。
+   端点可能已变更或本地IP被限。影响: 估值报告中"研报均价"权重无法使用
+
+4. 【VPA模块数据源】 已升级为 Tushare-first，指数K线已正常。
+   但资金流数据对指数不可用 (无 moneyflow 接口)
+
+5. 【分钟K线】 仅 mootdx 支持，Tushare Pro 不支持分钟级 index_daily
+
+6. 【回测引擎】 vibe-trading-repo 桥接可用但需完整安装依赖 (pyfolio/zipline等)
+
+7. 【单因子计算】 需要 DataCache 实例初始化 (当前仅smoke test中报warning)
+
+8. 【stock_basic 表结构】 缺少 price/pe_ttm/pb/mcap_yi 列，
+   实时价格在 get_stock_basic 时动态获取腾讯行情合并 (临时方案)
+
+================================================================================
+十六、开发计划
+================================================================================
+
+【短期 (1-2周)】
+  □ 修复东财研报API端点
+  □ DCF模型 FCF 基数推算调优
+  □ stock_basic 表结构升级 (增加实时价格字段)
+  □ 真实标的回测验证 (5-10只股票组合)
+
+【中期 (1-2月)】
+  □ 统一 VPA 和 TG-trading-sys 的数据源实例 (避免重复连接)
+  □ 东财API风控绕过方案 (代理/IP池)
+  □ 分钟K线的 Tushare Pro 支持 (如果有的话)
+  □ 全市场因子扫描 (当前仅支持预设标的池)
+
+【远期 (3-6月)】
+  □ Web前端 (FastAPI + React/Vue)
+  □ 实盘组合跟踪和自动化交易接口
+  □ 量化策略回测平台 (集成 zipline/backtrader)
+  □ 机器学习因子挖掘 (XGBoost/LightGBM 因子重要性)
+
+================================================================================
+                            附录A: 快速参考卡片
+================================================================================
+
+【安装】
+  pip install pandas numpy tushare mootdx requests scipy
+
+【配置】
+  set TUSHARE_TOKEN=your_token    # Windows
+  export TUSHARE_TOKEN=your_token # Linux/Mac
+
+【常用命令】
+  python -m TG_trading_sys.cli sync stats                    查看数据统计
+  python -m TG_trading_sys.cli sync kline --codes CODE1,CODE2 同步K线
+  python -m TG_trading_sys.cli val 600519                    估值分析
+  python -m TG_trading_sys.cli signal 600519                 择时信号
+  python -m TG_trading_sys.cli screen --top 10               因子筛选Top10
+  python -m TG_trading_sys.cli screen --mode turnaround      反转信号精选
+  python -m TG_trading_sys.cli portfolio build --top 10      构建组合
+  python -m TG_trading_sys.cli portfolio backtest            回测
+  python -m TG_trading_sys.cli portfolio monitor             持仓监控
+
+【编程接口】
+  from TG_trading_sys.data.cache import DataCache
+  cache = DataCache()
+  df = cache.get_kline("600519")
+  info = cache.get_stock_basic("600519")
+  financials = cache.get_financials("600519", "lrb")
+  eps = cache.get_consensus_eps("600519")
+
+  from TG_trading_sys.valuation.val_report import val_report
+  report = val_report("600519")
+
+  from TG_trading_sys.strategy.timing.signal_aggregator import aggregate_signals
+  from TG_trading_sys.strategy.timing.ma_signals import analyze_ma_system
+  from TG_trading_sys.portfolio.builder import build_portfolio
+  from TG_trading_sys.risk.var import calc_var
+  from TG_trading_sys.market.regime import detect_regime
+
+【冒烟测试】
+  cd TG_trading_sys
+  python smoke_test_val.py && python smoke_test_factor.py &&
+  python smoke_test_strategy.py && python smoke_test_portfolio.py &&
+  python smoke_test_risk.py && python smoke_test_market.py
+
+================================================================================
+                            附录B: 600519 贵州茅台 估值示例
+================================================================================
+日期: 2026-07-28
+现价: 1320.00  |  PE(TTM): 19.95  |  PB: 7.09  |  市值: 16501.08亿
+
+综合估值: 1029.68 元 (安全边际 -28.2%, 适度高估)
+  ├── DCF:       375.60  (权重40%) — WACC 5.26%, g 3.0%, 终值占比 90.1%
+  ├── PE-PEG:    176.63  (权重25%) — PEG 7.42, EPS CAGR 2.7%
+  ├── PB-ROE:   4195.67  (权重15%) — ROE 30.3%, 合理PB 19.36
+  └── 研报均价:   N/A     (权重20%) — 东财研报API未获取到数据
+
+一致预期 (同花顺): 2026E EPS 68.70, 2027E EPS 72.45, 3年CAGR 2.7%
+
+择时信号: 观望 (47/100)
+  ├── 均线: 40/100 (均线缠绕无方向)
+  ├── VPA:  50/100 (数据不可用)
+  ├── 资金:  50/100 (数据不可用)
+  ├── 形态:  65/100
+  └── 事件:  50/100 (数据不可用)
+
+================================================================================
+                      文件结束 — TG-trading-sys V4.0
+================================================================================

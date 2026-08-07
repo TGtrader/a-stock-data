@@ -1,0 +1,3 @@
+[submodule "vibe-trading-repo"]
+	path = vibe-trading-repo
+	url = https://github.com/TGtrader/Vibe-Trading.git

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>中报业绩快报量化筛选工具</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f6fa;color:#1a1a2e;line-height:1.6}
+.header{background:#1a1a2e;color:#fff;padding:24px 32px;display:flex;justify-content:space-between;align-items:center}
+.header h1{font-size:20px;font-weight:700}
+.header .stats{display:flex;gap:20px;font-size:12px}
+.header .stats span{background:rgba(255,255,255,0.1);padding:6px 12px;border-radius:6px}
+.container{max-width:100%;margin:0 auto;padding:16px}
+.controls{background:#fff;padding:12px 16px;margin-bottom:12px;border-radius:8px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:12px;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.controls select,.controls input{padding:4px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:11px;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+th{background:#1a1a2e;color:#fff;padding:8px 6px;text-align:left;font-weight:500;white-space:nowrap;position:sticky;top:0;z-index:1}
+td{padding:7px 6px;border-bottom:1px solid #eee}
+tr:hover{background:#fafafa}
+.col-score{text-align:center;font-weight:700;color:#fff;border-radius:4px}
+.footer{font-size:10px;color:#999;padding:12px;text-align:center}
+@media(max-width:1200px){table{font-size:10px}th,td{padding:4px 3px}}
+</style></head><body>
+<div class="header">
+  <div><h1>A股2026年中报业绩快报量化筛选</h1><div style="font-size:11px;color:#8899aa;margin-top:4px">12只已披露标的 · 同比+环比+估值+技术+量价 18维评分</div></div>
+  <div class="stats"><span>平均PE:33x</span><span>平均YOY:20%</span><span>数据截止:2026.07.22</span></div>
+</div>
+<div class="container">
+<div style="overflow-x:auto">
+<table>
+<thead><tr>
+  <th>#</th><th>名称代码</th><th>行业</th><th>评分</th><th>同比(YOY)</th><th>环比(QOQ)</th><th>PE(TTM)</th><th>PB</th><th>市值</th>
+  <th>EPS</th><th>ROE</th><th>长期趋势</th><th>MACD</th><th>RSI14</th><th>7月涨跌</th><th>3月涨跌</th><th>量价形态</th>
+</tr></thead>
+<tbody>
+        <tr>
+          <td>1</td>
+          <td><b>亚联机械</b><br><span style="font-size:10px;color:#999">001395.SZ</span></td>
+          <td><span style="background:#f5222d;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">机械设备</span></td>
+          <td style="background:#f5222d;color:#fff;text-align:center;font-weight:700;border-radius:4px">100</td>
+          <td style="color:#f5222d;font-weight:700">+60%</td>
+          <td style="color:#f5222d;font-weight:700">+135%</td>
+          <td style="color:#52c41a;font-weight:700">13x</td>
+          <td>2.6x</td>
+          <td>15亿</td>
+          <td>1.39</td>
+          <td>12.3%</td>
+          <td style="color:#52c41a;font-weight:700">下降</td>
+          <td style="color:#f5222d">金叉</td>
+          <td style="color:#666">50</td>
+          <td style="color:#f5222d">+26.2%</td>
+          <td style="color:#52c41a">-26.1%</td>
+          <td><span style="background:#f6ffed;padding:2px 6px;border-radius:8px;font-size:11px">放量突破</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><b>深圳燃气</b><br><span style="font-size:10px;color:#999">601139.SH</span></td>
+          <td><span style="background:#52c41a;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">公用事业</span></td>
+          <td style="background:#f5222d;color:#fff;text-align:center;font-weight:700;border-radius:4px">94</td>
+          <td style="color:#f5222d;font-weight:700">+22%</td>
+          <td style="color:#f5222d;font-weight:700">+66%</td>
+          <td style="color:#52c41a;font-weight:700">12x</td>
+          <td>1.1x</td>
+          <td>187亿</td>
+          <td>0.27</td>
+          <td>4.6%</td>
+          <td style="color:#999;font-weight:700">横盘</td>
+          <td style="color:#f5222d">金叉</td>
+          <td style="color:#666">65</td>
+          <td style="color:#f5222d">+11.1%</td>
+          <td style="color:#52c41a">-9.2%</td>
+          <td><span style="background:#f6ffed;padding:2px 6px;border-radius:8px;font-size:11px">放量突破</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><b>佛燃能源</b><br><span style="font-size:10px;color:#999">002911.SZ</span></td>
+          <td><span style="background:#52c41a;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">公用事业</span></td>
+          <td style="background:#f5222d;color:#fff;text-align:center;font-weight:700;border-radius:4px">90</td>
+          <td style="color:#f5222d;font-weight:700">+7%</td>
+          <td style="color:#f5222d;font-weight:700">+201%</td>
+          <td style="color:#52c41a;font-weight:700">14x</td>
+          <td>1.7x</td>
+          <td>141亿</td>
+          <td>0.21</td>
+          <td>5.5%</td>
+          <td style="color:#52c41a;font-weight:700">下降</td>
+          <td style="color:#f5222d">金叉</td>
+          <td style="color:#666">58</td>
+          <td style="color:#f5222d">+8.0%</td>
+          <td style="color:#52c41a">-20.0%</td>
+          <td><span style="background:#f6ffed;padding:2px 6px;border-radius:8px;font-size:11px">放量突破</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><b>陕国投A</b><br><span style="font-size:10px;color:#999">000563.SZ</span></td>
+          <td><span style="background:#597ef7;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">金融</span></td>
+          <td style="background:#f5222d;color:#fff;text-align:center;font-weight:700;border-radius:4px">87</td>
+          <td style="color:#f5222d;font-weight:700">+0%</td>
+          <td style="color:#f5222d;font-weight:700">+51%</td>
+          <td style="color:#52c41a;font-weight:700">11x</td>
+          <td>0.8x</td>
+          <td>155亿</td>
+          <td>0.14</td>
+          <td>3.9%</td>
+          <td style="color:#999;font-weight:700">横盘</td>
+          <td style="color:#f5222d">金叉</td>
+          <td style="color:#666">56</td>
+          <td style="color:#f5222d">+5.2%</td>
+          <td style="color:#52c41a">-10.7%</td>
+          <td><span style="background:#fafafa;padding:2px 6px;border-radius:8px;font-size:11px">正常波动</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><b>厦钨新能</b><br><span style="font-size:10px;color:#999">688778.SH</span></td>
+          <td><span style="background:#666;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">电气设备</span></td>
+          <td style="background:#fa8c16;color:#fff;text-align:center;font-weight:700;border-radius:4px">83</td>
+          <td style="color:#f5222d;font-weight:700">+60%</td>
+          <td style="color:#f5222d;font-weight:700">+15%</td>
+          <td style="color:#1890ff;font-weight:700">24x</td>
+          <td>2.4x</td>
+          <td>230亿</td>
+          <td>0.98</td>
+          <td>5.2%</td>
+          <td style="color:#52c41a;font-weight:700">下降</td>
+          <td style="color:#52c41a">死叉</td>
+          <td style="color:#52c41a">27</td>
+          <td style="color:#52c41a">-19.8%</td>
+          <td style="color:#52c41a">-46.5%</td>
+          <td><span style="background:#fff1f0;padding:2px 6px;border-radius:8px;font-size:11px">放量杀跌</span></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><b>思源电气</b><br><span style="font-size:10px;color:#999">002028.SZ</span></td>
+          <td><span style="background:#1890ff;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">电力设备</span></td>
+          <td style="background:#fa8c16;color:#fff;text-align:center;font-weight:700;border-radius:4px">81</td>
+          <td style="color:#f5222d;font-weight:700">+15%</td>
+          <td style="color:#f5222d;font-weight:700">+60%</td>
+          <td style="color:#fa8c16;font-weight:700">39x</td>
+          <td>7.8x</td>
+          <td>1005亿</td>
+          <td>1.90</td>
+          <td>9.2%</td>
+          <td style="color:#f5222d;font-weight:700">上升</td>
+          <td style="color:#f5222d">金叉</td>
+          <td style="color:#666">42</td>
+          <td style="color:#52c41a">-6.9%</td>
+          <td style="color:#52c41a">-30.5%</td>
+          <td><span style="background:#fafafa;padding:2px 6px;border-radius:8px;font-size:11px">缩量回调</span></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><b>江铃汽车</b><br><span style="font-size:10px;color:#999">000550.SZ</span></td>
+          <td><span style="background:#fa8c16;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">汽车</span></td>
+          <td style="background:#fa8c16;color:#fff;text-align:center;font-weight:700;border-radius:4px">78</td>
+          <td style="color:#f5222d;font-weight:700">+1%</td>
+          <td style="color:#f5222d;font-weight:700">+18%</td>
+          <td style="color:#52c41a;font-weight:700">12x</td>
+          <td>1.2x</td>
+          <td>86亿</td>
+          <td>0.86</td>
+          <td>6.1%</td>
+          <td style="color:#52c41a;font-weight:700">下降</td>
+          <td style="color:#f5222d">金叉</td>
+          <td style="color:#666">45</td>
+          <td style="color:#f5222d">+0.1%</td>
+          <td style="color:#52c41a">-14.0%</td>
+          <td><span style="background:#fafafa;padding:2px 6px;border-radius:8px;font-size:11px">正常波动</span></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td><b>苏美达</b><br><span style="font-size:10px;color:#999">600710.SH</span></td>
+          <td><span style="background:#666;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">商贸代理</span></td>
+          <td style="background:#fa8c16;color:#fff;text-align:center;font-weight:700;border-radius:4px">77</td>
+          <td style="color:#f5222d;font-weight:700">+7%</td>
+          <td style="color:#52c41a;font-weight:700">-109%</td>
+          <td style="color:#52c41a;font-weight:700">10x</td>
+          <td>1.7x</td>
+          <td>142亿</td>
+          <td>0.53</td>
+          <td>7.9%</td>
+          <td style="color:#999;font-weight:700">横盘</td>
+          <td style="color:#f5222d">金叉</td>
+          <td style="color:#666">55</td>
+          <td style="color:#f5222d">+9.4%</td>
+          <td style="color:#52c41a">-15.5%</td>
+          <td><span style="background:#fafafa;padding:2px 6px;border-radius:8px;font-size:11px">正常波动</span></td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td><b>环旭电子</b><br><span style="font-size:10px;color:#999">601231.SH</span></td>
+          <td><span style="background:#666;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">元器件</span></td>
+          <td style="background:#1890ff;color:#fff;text-align:center;font-weight:700;border-radius:4px">68</td>
+          <td style="color:#f5222d;font-weight:700">+nan%</td>
+          <td style="color:#999;font-weight:700">+nan%</td>
+          <td style="color:#1890ff;font-weight:700">30x</td>
+          <td>2.6x</td>
+          <td>585亿</td>
+          <td>nan</td>
+          <td>nan%</td>
+          <td style="color:#f5222d;font-weight:700">上升</td>
+          <td style="color:#52c41a">死叉</td>
+          <td style="color:#666">34</td>
+          <td style="color:#52c41a">-21.6%</td>
+          <td style="color:#52c41a">-38.4%</td>
+          <td><span style="background:#fff1f0;padding:2px 6px;border-radius:8px;font-size:11px">放量杀跌</span></td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td><b>中国中免</b><br><span style="font-size:10px;color:#999">601888.SH</span></td>
+          <td><span style="background:#666;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">旅游服务</span></td>
+          <td style="background:#1890ff;color:#fff;text-align:center;font-weight:700;border-radius:4px">66</td>
+          <td style="color:#f5222d;font-weight:700">+20%</td>
+          <td style="color:#52c41a;font-weight:700">-69%</td>
+          <td style="color:#1890ff;font-weight:700">28x</td>
+          <td>2.0x</td>
+          <td>1079亿</td>
+          <td>1.50</td>
+          <td>5.5%</td>
+          <td style="color:#52c41a;font-weight:700">下降</td>
+          <td style="color:#f5222d">金叉</td>
+          <td style="color:#666">54</td>
+          <td style="color:#f5222d">+1.3%</td>
+          <td style="color:#52c41a">-14.9%</td>
+          <td><span style="background:#fafafa;padding:2px 6px;border-radius:8px;font-size:11px">正常波动</span></td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td><b>中科三环</b><br><span style="font-size:10px;color:#999">000970.SZ</span></td>
+          <td><span style="background:#faad14;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">有色金属</span></td>
+          <td style="background:#1890ff;color:#fff;text-align:center;font-weight:700;border-radius:4px">64</td>
+          <td style="color:#f5222d;font-weight:700">+12%</td>
+          <td style="color:#f5222d;font-weight:700">+30%</td>
+          <td style="color:#f5222d;font-weight:700">167x</td>
+          <td>2.5x</td>
+          <td>162亿</td>
+          <td>0.04</td>
+          <td>0.8%</td>
+          <td style="color:#999;font-weight:700">横盘</td>
+          <td style="color:#52c41a">死叉</td>
+          <td style="color:#666">43</td>
+          <td style="color:#52c41a">-16.0%</td>
+          <td style="color:#f5222d">+9.4%</td>
+          <td><span style="background:#fff1f0;padding:2px 6px;border-radius:8px;font-size:11px">放量杀跌</span></td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td><b>合富中国</b><br><span style="font-size:10px;color:#999">603122.SH</span></td>
+          <td><span style="background:#666;color:#fff;padding:2px 8px;border-radius:10px;font-size:10px">医药商业</span></td>
+          <td style="background:#999;color:#fff;text-align:center;font-weight:700;border-radius:4px">50</td>
+          <td style="color:#f5222d;font-weight:700">+nan%</td>
+          <td style="color:#999;font-weight:700">N/A</td>
+          <td style="color:#999;font-weight:700">-111x</td>
+          <td>3.8x</td>
+          <td>40亿</td>
+          <td>nan</td>
+          <td>nan%</td>
+          <td style="color:#52c41a;font-weight:700">下降</td>
+          <td style="color:#52c41a">死叉</td>
+          <td style="color:#666">34</td>
+          <td style="color:#52c41a">-15.4%</td>
+          <td style="color:#52c41a">-36.8%</td>
+          <td><span style="background:#fff1f0;padding:2px 6px;border-radius:8px;font-size:11px">放量杀跌</span></td>
+        </tr></tbody>
+</table>
+</div>
+<div class="footer" style="margin-top:16px">
+  <b>评分维度权重：</b>增长25%(同比+环比+收入) | 估值20%(PE+PB) | 技术20%(趋势+MACD+RSI+KDJ+MA偏离) | 资金15%(主力流入+融资变化) | ROE 10% | 量价10%<br>
+  <b>数据来源：</b>Tushare Pro(业绩快报+日K线) · 腾讯财经(实时估值) · 东方财富(融资融券)。技术指标基于12个月日K线数据计算。环比QoQ基于Q1财报与H1快报推算(Q2=H1-Q1)。<br>
+  <b>免责声明：</b>本工具基于公开数据自动生成，仅供参考筛选，不构成投资建议。投资有风险，入市需谨慎。生成时间：2026-07-23 16:57
+</div>
+</div></body></html>

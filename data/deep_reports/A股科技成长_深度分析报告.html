@@ -1,0 +1,1904 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股科技成长板块 — 超跌/低估精选深度分析</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background:#0d1117; color:#c9d1d9; line-height:1.6; }
+.container { max-width:1200px; margin:0 auto; padding:20px; }
+
+/* Header */
+.page-header { background: linear-gradient(135deg, #161b22, #1a2332); border-radius:16px; padding:40px; margin-bottom:30px; text-align:center; border:1px solid #30363d; }
+.page-header h1 { font-size:32px; background: linear-gradient(90deg, #58a6ff, #3fb950); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:10px; }
+.page-header .subtitle { color:#8b949e; font-size:16px; }
+.page-header .stats { display:flex; justify-content:center; gap:30px; margin-top:20px; }
+.page-header .stat { text-align:center; }
+.page-header .stat-num { font-size: 28px; font-weight:bold; color:#58a6ff; }
+.page-header .stat-label { font-size:13px; color:#8b949e; }
+
+/* Section titles */
+.section-title { font-size:22px; color:#58a6ff; margin:40px 0 20px 0; padding-bottom:10px; border-bottom:1px solid #30363d; }
+
+/* Stock cards grid */
+.cards-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap:18px; margin-bottom:30px; }
+.stock-card { background:#161b22; border:1px solid #30363d; border-radius:12px; overflow:hidden; transition: transform .15s, border-color .15s; }
+.stock-card:hover { transform:translateY(-2px); border-color:#58a6ff; }
+.card-header { background:#1a2332; padding:14px 18px; display:flex; align-items:center; gap:12px; }
+.stock-code { font-family:'SF Mono','Consolas',monospace; font-size:14px; color:#58a6ff; font-weight:bold; }
+.stock-name { font-size:16px; font-weight:600; }
+.stock-sw2 { font-size:12px; color:#8b949e; background:#21262d; padding:2px 8px; border-radius:10px; margin-left:auto; }
+.card-body { padding:18px; }
+.card-metrics { display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin-bottom:14px; }
+.metric { text-align:center; }
+.metric-value { font-size:20px; font-weight:bold; }
+.metric-label { font-size:11px; color:#8b949e; margin-top:2px; }
+.card-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+.tag { font-size:11px; background:#21262d; color:#8b949e; padding:3px 10px; border-radius:10px; }
+.tag-verdict { background:#1a3a2a; color:#3fb950; }
+.card-link { display:block; text-align:center; color:#58a6ff; text-decoration:none; font-size:13px; padding:6px; border-top:1px solid #21262d; }
+.card-link:hover { color:#79c0ff; }
+
+/* Detail sections */
+.detail-section { background:#161b22; border:1px solid #30363d; border-radius:16px; margin-bottom:30px; overflow:hidden; }
+.detail-header { background:#1a2332; padding:18px 24px; display:flex; align-items:center; gap:10px; font-size:14px; flex-wrap:wrap; }
+.detail-code { font-family:'SF Mono','Consolas',monospace; font-size:15px; color:#58a6ff; font-weight:bold; }
+.detail-name { font-size:18px; font-weight:600; }
+.detail-sw2 { font-size:12px; color:#8b949e; background:#21262d; padding:2px 10px; border-radius:10px; }
+.back-link { margin-left:auto; color:#58a6ff; text-decoration:none; font-size:13px; }
+
+.detail-block { padding:20px 24px; border-bottom:1px solid #21262d; }
+.detail-block:last-child { border-bottom:none; }
+.detail-block h3 { font-size:16px; color:#c9d1d9; margin-bottom:12px; }
+.block-content { color:#8b949e; font-size:14px; }
+.block-content p { margin-bottom:6px; }
+.block-content ol { padding-left:20px; }
+.block-content li { margin-bottom:4px; color:#c9d1d9; }
+
+.metric-row { display:flex; gap:16px; flex-wrap:wrap; }
+.mini-metric { flex:1; min-width:120px; background:#0d1117; border-radius:8px; padding:14px; text-align:center; border:1px solid #21262d; }
+.mm-val { display:block; font-size:20px; font-weight:bold; color:#58a6ff; }
+.mm-label { display:block; font-size:11px; color:#8b949e; margin-top:4px; }
+
+.val-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:12px; margin-bottom:16px; }
+.val-card { background:#0d1117; border-radius:8px; padding:16px; text-align:center; border:1px solid #21262d; }
+.val-title { font-size:12px; color:#8b949e; margin-bottom:6px; }
+.val-number { font-size:24px; font-weight:bold; }
+.val-sub { font-size:11px; color:#8b949e; margin-top:4px; }
+
+.scenario-row { display:flex; gap:12px; }
+.scenario-card { flex:1; background:#0d1117; border-radius:8px; padding:14px; text-align:center; border:1px solid #21262d; }
+.sc-title { font-size:12px; color:#8b949e; }
+.sc-value { font-size:20px; font-weight:bold; color:#ffd740; margin:6px 0; }
+.sc-upside { font-size:13px; }
+
+/* Footer */
+.page-footer { text-align:center; color:#484f58; font-size:12px; padding:40px 0; }
+.page-footer a { color:#58a6ff; }
+
+/* Nav */
+.nav-top { position:fixed; bottom:30px; right:30px; background:#238636; color:#fff; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:20px; box-shadow:0 4px 12px rgba(0,0,0,.4); z-index:100; }
+.nav-top:hover { background:#2ea043; }
+
+@media (max-width:768px) {
+    .cards-grid { grid-template-columns:1fr; }
+    .val-grid { grid-template-columns:1fr 1fr; }
+    .metric-row { flex-direction:column; }
+    .scenario-row { flex-direction:column; }
+}
+</style>
+</head>
+<body id="top">
+<div class="container">
+
+<!-- ═══════════ HEADER ═══════════ -->
+<div class="page-header">
+    <h1>A股科技成长板块 · 超跌/低估精选</h1>
+    <div class="subtitle">基于 TG-trading-sys V4.0 全模块深度分析 | 2026-07-28</div>
+    <div class="stats">
+        <div class="stat"><div class="stat-num">9</div><div class="stat-label">A类精选标的</div></div>
+        <div class="stat"><div class="stat-num">7</div><div class="stat-label">子行业覆盖</div></div>
+        <div class="stat"><div class="stat-num">8</div><div class="stat-label">分析模块</div></div>
+        <div class="stat"><div class="stat-num">5533→9</div><div class="stat-label">全市场筛选</div></div>
+    </div>
+</div>
+
+<!-- ═══════════ 筛选说明 ═══════════ -->
+<div class="detail-block" style="border-radius:12px;margin-bottom:30px">
+    <h3>🔬 筛选流程</h3>
+    <div class="block-content">
+        <p><strong>第一轮</strong>：全市场5533只股票 → 选取12个科技相关行业(半导体/软件服务/通信设备/IT设备/互联网/元器件/电气设备/专用机械/电器仪表/医疗保健/化学制药/航空) → <strong>2293只</strong></p>
+        <p><strong>第二轮</strong>：行业中性化PE/PB排名 + 市值>10亿 + PE>0 + 流动性过滤 → <strong>1510只 → 80只候选</strong></p>
+        <p><strong>第三轮</strong>：120日K线技术分析(RSI/均线/回撤/量能) + 综合评分(价值50%+超跌35%+流动15%) → <strong>9只A/A+级精选</strong></p>
+        <p><strong>第四轮（本报告）</strong>：全模块深度分析(估值DCF+PEG+PBROE+情景/择时信号/财务三表/WACC/一致预期/VaR风控/行业竞争格局)</p>
+    </div>
+</div>
+
+<!-- ═══════════ 快速概览卡片 ═══════════ -->
+<h2 class="section-title">📊 9只A类精选 — 快速概览</h2>
+<div class="cards-grid">
+
+    <div class="stock-card" id="card-300456">
+        <div class="card-header">
+            <span class="stock-code">300456</span>
+            <span class="stock-name">赛微电子</span>
+            <span class="stock-sw2">半导体-制造</span>
+        </div>
+        <div class="card-body">
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">28.55</div>
+                    <div class="metric-label">现价</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">14.7</div>
+                    <div class="metric-label">PE(TTM)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">3.29</div>
+                    <div class="metric-label">PB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">171亿</div>
+                    <div class="metric-label">市值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff9100">偏空</div>
+                    <div class="metric-label">择时信号</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">+26.7%</div>
+                    <div class="metric-label">安全边际</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                <span class="tag">2026E EPS 0.04</span>
+                <span class="tag">VaR95 5.7%</span>
+                <span class="tag">波动率 73%</span>
+                <span class="tag tag-verdict">适度低估</span>
+            </div>
+            <a href="#detail-300456" class="card-link">查看深度分析 →</a>
+        </div>
+    </div>
+    <div class="stock-card" id="card-600288">
+        <div class="card-header">
+            <span class="stock-code">600288</span>
+            <span class="stock-name">大恒科技</span>
+            <span class="stock-sw2">元件-光学</span>
+        </div>
+        <div class="card-body">
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value" style="color:#ffd740">9.90</div>
+                    <div class="metric-label">现价</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ffd740">26.4</div>
+                    <div class="metric-label">PE(TTM)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">2.17</div>
+                    <div class="metric-label">PB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">43亿</div>
+                    <div class="metric-label">市值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff9100">偏空</div>
+                    <div class="metric-label">择时信号</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#69f0ae">+6.3%</div>
+                    <div class="metric-label">安全边际</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                
+                <span class="tag">VaR95 3.6%</span>
+                <span class="tag">波动率 46%</span>
+                <span class="tag tag-verdict">合理估值</span>
+            </div>
+            <a href="#detail-600288" class="card-link">查看深度分析 →</a>
+        </div>
+    </div>
+    <div class="stock-card" id="card-688636">
+        <div class="card-header">
+            <span class="stock-code">688636</span>
+            <span class="stock-name">智明达</span>
+            <span class="stock-sw2">元件-军工电子</span>
+        </div>
+        <div class="card-body">
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value" style="color:#ffd740">17.29</div>
+                    <div class="metric-label">现价</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ffd740">26.9</div>
+                    <div class="metric-label">PE(TTM)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">2.15</div>
+                    <div class="metric-label">PB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">30亿</div>
+                    <div class="metric-label">市值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff9100">偏空</div>
+                    <div class="metric-label">择时信号</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">+26.4%</div>
+                    <div class="metric-label">安全边际</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                <span class="tag">2026E EPS 0.87</span>
+                <span class="tag">VaR95 5.4%</span>
+                <span class="tag">波动率 65%</span>
+                <span class="tag tag-verdict">适度低估</span>
+            </div>
+            <a href="#detail-688636" class="card-link">查看深度分析 →</a>
+        </div>
+    </div>
+    <div class="stock-card" id="card-000733">
+        <div class="card-header">
+            <span class="stock-code">000733</span>
+            <span class="stock-name">振华科技</span>
+            <span class="stock-sw2">元件-被动元件</span>
+        </div>
+        <div class="card-body">
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value" style="color:#69f0ae">39.03</div>
+                    <div class="metric-label">现价</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#69f0ae">22.0</div>
+                    <div class="metric-label">PE(TTM)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">1.39</div>
+                    <div class="metric-label">PB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">216亿</div>
+                    <div class="metric-label">市值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff9100">偏空</div>
+                    <div class="metric-label">择时信号</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff5252">-51.7%</div>
+                    <div class="metric-label">安全边际</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                <span class="tag">2026E EPS 2.02</span>
+                <span class="tag">VaR95 5.1%</span>
+                <span class="tag">波动率 45%</span>
+                <span class="tag tag-verdict">显著高估</span>
+            </div>
+            <a href="#detail-000733" class="card-link">查看深度分析 →</a>
+        </div>
+    </div>
+    <div class="stock-card" id="card-688332">
+        <div class="card-header">
+            <span class="stock-code">688332</span>
+            <span class="stock-name">中科蓝讯</span>
+            <span class="stock-sw2">半导体-数字IC</span>
+        </div>
+        <div class="card-body">
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">78.07</div>
+                    <div class="metric-label">现价</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">10.2</div>
+                    <div class="metric-label">PE(TTM)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">2.77</div>
+                    <div class="metric-label">PB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">139亿</div>
+                    <div class="metric-label">市值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff9100">偏空</div>
+                    <div class="metric-label">择时信号</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">+29.5%</div>
+                    <div class="metric-label">安全边际</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                <span class="tag">2026E EPS 1.97</span>
+                <span class="tag">VaR95 6.3%</span>
+                <span class="tag">波动率 68%</span>
+                <span class="tag tag-verdict">适度低估</span>
+            </div>
+            <a href="#detail-688332" class="card-link">查看深度分析 →</a>
+        </div>
+    </div>
+    <div class="stock-card" id="card-301631">
+        <div class="card-header">
+            <span class="stock-code">301631</span>
+            <span class="stock-name">壹连科技</span>
+            <span class="stock-sw2">元件-连接器</span>
+        </div>
+        <div class="card-body">
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value" style="color:#69f0ae">57.30</div>
+                    <div class="metric-label">现价</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#69f0ae">24.1</div>
+                    <div class="metric-label">PE(TTM)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">2.85</div>
+                    <div class="metric-label">PB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">25亿</div>
+                    <div class="metric-label">市值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff9100">偏空</div>
+                    <div class="metric-label">择时信号</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff5252">-44.4%</div>
+                    <div class="metric-label">安全边际</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                <span class="tag">2026E EPS 3.02</span>
+                <span class="tag">VaR95 4.4%</span>
+                <span class="tag">波动率 62%</span>
+                <span class="tag tag-verdict">显著高估</span>
+            </div>
+            <a href="#detail-301631" class="card-link">查看深度分析 →</a>
+        </div>
+    </div>
+    <div class="stock-card" id="card-301195">
+        <div class="card-header">
+            <span class="stock-code">301195</span>
+            <span class="stock-name">北路智控</span>
+            <span class="stock-sw2">软件-工业</span>
+        </div>
+        <div class="card-body">
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value" style="color:#69f0ae">24.26</div>
+                    <div class="metric-label">现价</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#69f0ae">23.6</div>
+                    <div class="metric-label">PE(TTM)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">1.34</div>
+                    <div class="metric-label">PB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">21亿</div>
+                    <div class="metric-label">市值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff9100">偏空</div>
+                    <div class="metric-label">择时信号</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#00e676">+35.1%</div>
+                    <div class="metric-label">安全边际</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                <span class="tag">2026E EPS 1.39</span>
+                <span class="tag">VaR95 4.1%</span>
+                <span class="tag">波动率 41%</span>
+                <span class="tag tag-verdict">显著低估</span>
+            </div>
+            <a href="#detail-301195" class="card-link">查看深度分析 →</a>
+        </div>
+    </div>
+    <div class="stock-card" id="card-003019">
+        <div class="card-header">
+            <span class="stock-code">003019</span>
+            <span class="stock-name">宸展光电</span>
+            <span class="stock-sw2">元件-显示模组</span>
+        </div>
+        <div class="card-body">
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value" style="color:#69f0ae">22.08</div>
+                    <div class="metric-label">现价</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#69f0ae">22.7</div>
+                    <div class="metric-label">PE(TTM)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">2.39</div>
+                    <div class="metric-label">PB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">38亿</div>
+                    <div class="metric-label">市值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff9100">偏空</div>
+                    <div class="metric-label">择时信号</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff5252">-150.6%</div>
+                    <div class="metric-label">安全边际</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                <span class="tag">2026E EPS 1.22</span>
+                <span class="tag">VaR95 5.7%</span>
+                <span class="tag">波动率 52%</span>
+                <span class="tag tag-verdict">显著高估</span>
+            </div>
+            <a href="#detail-003019" class="card-link">查看深度分析 →</a>
+        </div>
+    </div>
+    <div class="stock-card" id="card-000551">
+        <div class="card-header">
+            <span class="stock-code">000551</span>
+            <span class="stock-name">创元科技</span>
+            <span class="stock-sw2">机械-环保</span>
+        </div>
+        <div class="card-body">
+            <div class="card-metrics">
+                <div class="metric">
+                    <div class="metric-value" style="color:#69f0ae">12.79</div>
+                    <div class="metric-label">现价</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#69f0ae">18.2</div>
+                    <div class="metric-label">PE(TTM)</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">2.06</div>
+                    <div class="metric-label">PB</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">62亿</div>
+                    <div class="metric-label">市值</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ff9100">偏空</div>
+                    <div class="metric-label">择时信号</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" style="color:#ffd740">-7.1%</div>
+                    <div class="metric-label">安全边际</div>
+                </div>
+            </div>
+            <div class="card-tags">
+                <span class="tag">2026E EPS 0.76</span>
+                <span class="tag">VaR95 4.5%</span>
+                <span class="tag">波动率 49%</span>
+                <span class="tag tag-verdict">合理估值</span>
+            </div>
+            <a href="#detail-000551" class="card-link">查看深度分析 →</a>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ 深度分析 ═══════════ -->
+<h2 class="section-title">📋 逐只深度分析</h2>
+
+    <div class="detail-section" id="detail-300456">
+        <div class="detail-header">
+            <span class="detail-code">300456</span>
+            <span class="detail-name">赛微电子</span>
+            <span class="detail-sw2">半导体-制造</span>
+            <span style="color:#888">|</span>
+            <span style="font-size:18px;color:#00e676">28.55</span>
+            <span style="color:#888">| PE 14.7 | PB 3.29 | 市值 171亿</span>
+            <a href="#top" class="back-link">↑ 回顶部</a>
+        </div>
+        
+    <div class="detail-block">
+        <h3>📋 公司概览</h3>
+        <div class="block-content">
+            <p><strong>主营业务：</strong>MEMS微机电系统芯片制造，全球领先的纯MEMS代工厂，覆盖加速度计/陀螺仪/压力传感器/硅麦克风等，客户包括意法半导体/博世/惠普等。瑞典产线(FAB1+2)+北京产线(FAB3)，8英寸MEMS量产线。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🏭 行业竞争格局</h3>
+        <div class="block-content">
+            <p>全球MEMS代工CR3>70%（博世/意法半导体/Teledyne），公司通过并购Silex进入第一梯队，纯代工模式差异化竞争。国内竞争对手包括美泰科技/微电子所，公司在MEMS纯代工领域国内绝对龙头。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⭐ 核心竞争优势</h3>
+        <div class="block-content">
+            <ol><li>1</li><li>全球稀缺的MEMS纯代工产能 2</li><li>瑞典Silex技术+中国产能双轮驱动 3</li><li>北京FAB3量产爬坡打开成长天花板 4</li><li>客户粘性极高（认证周期2-3年）</li></ol>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🎯 发展计划</h3>
+        <div class="block-content">
+            <p>北京FAB3产能从3000片/月→30000片/月，布局硅光子/生物医疗MEMS新品类，瑞典产线向12英寸升级</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📊 财务概览 (最新一期)</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">1.0亿</span><span class="mm-label">营业收入</span></div>
+            <div class="mini-metric"><span class="mm-val">-0.6亿</span><span class="mm-label">归母净利润</span></div>
+            <div class="mini-metric"><span class="mm-val">87.7亿</span><span class="mm-label">总资产</span></div>
+            <div class="mini-metric"><span class="mm-val">24.4%</span><span class="mm-label">资产负债率</span></div>
+        </div>
+        <p style="color:#888;font-size:13px;margin-top:8px">数据来源: 新浪财报三表(利润表/资产负债表/现金流量表)，共 8 期</p>
+    </div>
+    <div class="detail-block">
+        <h3>💰 估值分析</h3>
+        <div class="val-grid">
+            <div class="val-card">
+                <div class="val-title">综合估值</div>
+                <div class="val-number" style="color:#00e676">38.93 元</div>
+                <div class="val-sub">安全边际 +26.7% · 适度低估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">DCF 估值</div>
+                <div class="val-number">8.66 元</div>
+                <div class="val-sub">WACC 10.8% · g 3.0% · 终值占比 87%</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PE-PEG 估值</div>
+                <div class="val-number">100.50 元</div>
+                <div class="val-sub">PE=14.7, EPS CAGR=50.0%, PEG=0.29 · 极度低估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PB-ROE 估值</div>
+                <div class="val-number">17.05 元</div>
+                <div class="val-sub">ROE 18.1% · 合理PB 1.5</div>
+            </div>
+        </div>
+        <div class="scenario-row">
+            <div class="scenario-card">
+                <div class="sc-title">乐观</div>
+                <div class="sc-value">41.64</div>
+                <div class="sc-upside">+45.8%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">中性</div>
+                <div class="sc-value">37.20</div>
+                <div class="sc-upside">+30.3%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">悲观</div>
+                <div class="sc-value">33.17</div>
+                <div class="sc-upside">+16.2%</div>
+            </div></div></div>
+        <div class="detail-block">
+            <h3>🔮 一致预期 (同花顺)</h3>
+            <div class="metric-row">
+                <div class="mini-metric"><span class="mm-val">0.04</span><span class="mm-label">2026E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">0.09</span><span class="mm-label">2027E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">4264.2x</span><span class="mm-label">2026E PE</span></div>
+                <div class="mini-metric"><span class="mm-val">2023: 0.14 → 2024: -0.23 → 2025: 2.01</span><span class="mm-label">历史EPS</span></div>
+            </div>
+        </div>
+    <div class="detail-block">
+        <h3>📈 技术分析</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val" style="color:#ff9100">偏空</span><span class="mm-label">择时信号</span></div>
+            <div class="mini-metric"><span class="mm-val">30/100</span><span class="mm-label">综合评分</span></div>
+            <div class="mini-metric"><span class="mm-val">0/100</span><span class="mm-label">均线评分</span></div>
+            <div class="mini-metric"><span class="mm-val">强势空头排列</span><span class="mm-label">均线排列</span></div>
+        </div>
+        
+        <p style="color:#888;margin-top:4px">置信度: 中 · 仓位建议: 减仓至轻仓</p>
+    </div>
+    <div class="detail-block">
+        <h3>🛡 风险度量（基于历史日收益率的统计模型）</h3>
+        <div class="metric-row">
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">5.7%</span>
+                <span class="mm-label">VaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">每日最大亏损率</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff5252">10.2%</span>
+                <span class="mm-label">CVaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">超出VaR的平均亏损</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">73%</span>
+                <span class="mm-label">年化波动率 (极高)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">日波动×√252</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val">1.54</span>
+                <span class="mm-label">Beta 系数</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">相对大盘波动倍数</span>
+            </div>
+        </div>
+        <div style="background:#1a2332;border-radius:8px;padding:12px;margin-top:12px;font-size:13px;color:#8b949e;line-height:1.8">
+            <strong style="color:#c9d1d9">📖 如何理解这些指标：</strong><br>
+            <strong>VaR (风险价值)</strong>：基于过去一年日收益率分布，在95%置信度下，<span style="color:#ff9100">持有一股该股票，一天内亏损超过 <strong>5.7%</strong>（约1.63元）的概率仅为5%</span>。换句话说，100个交易日中约有5天亏损会超过这个比例。<br>
+            <strong>CVaR (条件风险价值)</strong>：当亏损已经超过VaR阈值时，<span style="color:#ff5252">平均会亏 <strong>10.2%</strong></span>。CVaR总是大于等于VaR，代表"尾部风险"的严重程度。<br>
+            <strong>年化波动率 73%</strong>：股价年化标准差。<span style="color:#ff9100">波动率越高，股价涨跌越剧烈</span>。一般A股科技股年化波动在40-60%属于常态，>60%偏高，反映近期剧烈波动。<br>
+            <strong>Beta 1.54</strong>：相对沪深300的波动倍数。Beta=1表示与大盘同步，Beta>1表示弹性更大（涨跌都更猛），Beta<1表示防御性更强。
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⚙ WACC 参数</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">10.8%</span><span class="mm-label">WACC</span></div>
+            <div class="mini-metric"><span class="mm-val">12.8%</span><span class="mm-label">Ke (股权成本)</span></div>
+            <div class="mini-metric"><span class="mm-val">3.3%</span><span class="mm-label">Kd (税后)</span></div>
+            <div class="mini-metric"><span class="mm-val">0.28</span><span class="mm-label">D/E 比率</span></div>
+        </div>
+    </div>
+    <div class="detail-block" style="border-color:#ff5252">
+        <h3 style="color:#ff5252">⚠ 风险提示</h3>
+        <div class="block-content">
+            <p>{'var_95_pct': 5.6938, 'cvar_95_pct': 10.1687, 'annual_vol': 73.1}</p>
+            <p style="margin-top:8px;color:#888">大盘环境:  (评分39/100) · 【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭</p>
+        </div>
+    </div>
+    </div>
+    <div class="detail-section" id="detail-600288">
+        <div class="detail-header">
+            <span class="detail-code">600288</span>
+            <span class="detail-name">大恒科技</span>
+            <span class="detail-sw2">元件-光学</span>
+            <span style="color:#888">|</span>
+            <span style="font-size:18px;color:#ffd740">9.90</span>
+            <span style="color:#888">| PE 26.4 | PB 2.17 | 市值 43亿</span>
+            <a href="#top" class="back-link">↑ 回顶部</a>
+        </div>
+        
+    <div class="detail-block">
+        <h3>📋 公司概览</h3>
+        <div class="block-content">
+            <p><strong>主营业务：</strong>精密光学元件及系统，覆盖机器视觉/激光光学/太赫兹安检/数字放映等。子公司大恒光电在激光晶体和非线性晶体领域行业领先，太赫兹安检仪应用于轨道交通/法院等场景。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🏭 行业竞争格局</h3>
+        <div class="block-content">
+            <p>光学元件行业格局分散，高端市场由舜宇光学/凤凰光学/日本腾龙主导。大恒在激光光学和太赫兹领域有差异化优势，太赫兹安检为稀缺A股标的。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⭐ 核心竞争优势</h3>
+        <div class="block-content">
+            <ol><li>1</li><li>太赫兹技术稀缺性（A股唯一太赫兹安检标的）2</li><li>中科院光机所技术背景 3</li><li>机器视觉行业高景气（>20%增速）</li></ol>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🎯 发展计划</h3>
+        <div class="block-content">
+            <p>太赫兹安检仪从轨道交通向法院/医院拓展，激光光学向半导体设备配套延伸，机器视觉向3D检测升级</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📊 财务概览 (最新一期)</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">3.7亿</span><span class="mm-label">营业收入</span></div>
+            <div class="mini-metric"><span class="mm-val">0.7亿</span><span class="mm-label">归母净利润</span></div>
+            <div class="mini-metric"><span class="mm-val">32.6亿</span><span class="mm-label">总资产</span></div>
+            <div class="mini-metric"><span class="mm-val">39.0%</span><span class="mm-label">资产负债率</span></div>
+        </div>
+        <p style="color:#888;font-size:13px;margin-top:8px">数据来源: 新浪财报三表(利润表/资产负债表/现金流量表)，共 8 期</p>
+    </div>
+    <div class="detail-block">
+        <h3>💰 估值分析</h3>
+        <div class="val-grid">
+            <div class="val-card">
+                <div class="val-title">综合估值</div>
+                <div class="val-number" style="color:#69f0ae">10.57 元</div>
+                <div class="val-sub">安全边际 +6.3% · 合理估值</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">DCF 估值</div>
+                <div class="val-number">13.29 元</div>
+                <div class="val-sub">WACC 5.7% · g 3.0% · 终值占比 87%</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PE-PEG 估值</div>
+                <div class="val-number">N/A 元</div>
+                <div class="val-sub"> · 数据不足</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PB-ROE 估值</div>
+                <div class="val-number">3.32 元</div>
+                <div class="val-sub">ROE 6.6% · 合理PB 0.7</div>
+            </div>
+        </div>
+        <div class="scenario-row">
+            <div class="scenario-card">
+                <div class="sc-title">乐观</div>
+                <div class="sc-value">10.23</div>
+                <div class="sc-upside">+3.3%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">中性</div>
+                <div class="sc-value">8.30</div>
+                <div class="sc-upside">-16.2%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">悲观</div>
+                <div class="sc-value">6.60</div>
+                <div class="sc-upside">-33.3%</div>
+            </div></div></div>
+    <div class="detail-block">
+        <h3>📈 技术分析</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val" style="color:#ff9100">偏空</span><span class="mm-label">择时信号</span></div>
+            <div class="mini-metric"><span class="mm-val">30/100</span><span class="mm-label">综合评分</span></div>
+            <div class="mini-metric"><span class="mm-val">0/100</span><span class="mm-label">均线评分</span></div>
+            <div class="mini-metric"><span class="mm-val">强势空头排列</span><span class="mm-label">均线排列</span></div>
+        </div>
+        
+        <p style="color:#888;margin-top:4px">置信度: 中 · 仓位建议: 减仓至轻仓</p>
+    </div>
+    <div class="detail-block">
+        <h3>🛡 风险度量（基于历史日收益率的统计模型）</h3>
+        <div class="metric-row">
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">3.6%</span>
+                <span class="mm-label">VaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">每日最大亏损率</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff5252">6.7%</span>
+                <span class="mm-label">CVaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">超出VaR的平均亏损</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">46%</span>
+                <span class="mm-label">年化波动率 (偏高)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">日波动×√252</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val">0.78</span>
+                <span class="mm-label">Beta 系数</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">相对大盘波动倍数</span>
+            </div>
+        </div>
+        <div style="background:#1a2332;border-radius:8px;padding:12px;margin-top:12px;font-size:13px;color:#8b949e;line-height:1.8">
+            <strong style="color:#c9d1d9">📖 如何理解这些指标：</strong><br>
+            <strong>VaR (风险价值)</strong>：基于过去一年日收益率分布，在95%置信度下，<span style="color:#ff9100">持有一股该股票，一天内亏损超过 <strong>3.6%</strong>（约0.35元）的概率仅为5%</span>。换句话说，100个交易日中约有5天亏损会超过这个比例。<br>
+            <strong>CVaR (条件风险价值)</strong>：当亏损已经超过VaR阈值时，<span style="color:#ff5252">平均会亏 <strong>6.7%</strong></span>。CVaR总是大于等于VaR，代表"尾部风险"的严重程度。<br>
+            <strong>年化波动率 46%</strong>：股价年化标准差。<span style="color:#ff9100">波动率越高，股价涨跌越剧烈</span>。一般A股科技股年化波动在40-60%属于常态，40-60%正常范围。<br>
+            <strong>Beta 0.78</strong>：相对沪深300的波动倍数。Beta=1表示与大盘同步，Beta>1表示弹性更大（涨跌都更猛），Beta<1表示防御性更强。
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⚙ WACC 参数</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">5.7%</span><span class="mm-label">WACC</span></div>
+            <div class="mini-metric"><span class="mm-val">7.9%</span><span class="mm-label">Ke (股权成本)</span></div>
+            <div class="mini-metric"><span class="mm-val">0.9%</span><span class="mm-label">Kd (税后)</span></div>
+            <div class="mini-metric"><span class="mm-val">0.45</span><span class="mm-label">D/E 比率</span></div>
+        </div>
+    </div>
+    <div class="detail-block" style="border-color:#ff5252">
+        <h3 style="color:#ff5252">⚠ 风险提示</h3>
+        <div class="block-content">
+            <p>{'var_95_pct': 3.5827, 'cvar_95_pct': 6.6608, 'annual_vol': 45.6}</p>
+            <p style="margin-top:8px;color:#888">大盘环境:  (评分39/100) · 【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭</p>
+        </div>
+    </div>
+    </div>
+    <div class="detail-section" id="detail-688636">
+        <div class="detail-header">
+            <span class="detail-code">688636</span>
+            <span class="detail-name">智明达</span>
+            <span class="detail-sw2">元件-军工电子</span>
+            <span style="color:#888">|</span>
+            <span style="font-size:18px;color:#ffd740">17.29</span>
+            <span style="color:#888">| PE 26.9 | PB 2.15 | 市值 30亿</span>
+            <a href="#top" class="back-link">↑ 回顶部</a>
+        </div>
+        
+    <div class="detail-block">
+        <h3>📋 公司概览</h3>
+        <div class="block-content">
+            <p><strong>主营业务：</strong>军用嵌入式计算机系统，产品覆盖机载/弹载/舰载/车载嵌入式计算机及信号处理模块，核心客户为中航工业/中国电科/兵器集团等军工央企。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🏭 行业竞争格局</h3>
+        <div class="block-content">
+            <p>军用嵌入式计算机行业进入壁垒极高（军工四证+型号定型周期5-10年），格局稳定。主要竞争对手包括雷科防务/景嘉微/中科海讯等。公司营收体量较小但绑定核心型号。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⭐ 核心竞争优势</h3>
+        <div class="block-content">
+            <ol><li>1</li><li>军工嵌入式计算机完整资质 2</li><li>绑定多型重点型号（歼-XX/运-XX等）3</li><li>国产化率100%要求下的替代逻辑 4</li><li>型号定型后收入高度可预期</li></ol>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🎯 发展计划</h3>
+        <div class="block-content">
+            <p>从嵌入式计算机向综合任务系统升级，拓展无人机/智能弹药新领域，研发新一代VPX架构产品</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📊 财务概览 (最新一期)</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">1.1亿</span><span class="mm-label">营业收入</span></div>
+            <div class="mini-metric"><span class="mm-val">0.2亿</span><span class="mm-label">归母净利润</span></div>
+            <div class="mini-metric"><span class="mm-val">20.3亿</span><span class="mm-label">总资产</span></div>
+            <div class="mini-metric"><span class="mm-val">30.4%</span><span class="mm-label">资产负债率</span></div>
+        </div>
+        <p style="color:#888;font-size:13px;margin-top:8px">数据来源: 新浪财报三表(利润表/资产负债表/现金流量表)，共 8 期</p>
+    </div>
+    <div class="detail-block">
+        <h3>💰 估值分析</h3>
+        <div class="val-grid">
+            <div class="val-card">
+                <div class="val-title">综合估值</div>
+                <div class="val-number" style="color:#00e676">23.50 元</div>
+                <div class="val-sub">安全边际 +26.4% · 适度低估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">DCF 估值</div>
+                <div class="val-number">39.81 元</div>
+                <div class="val-sub">WACC 6.9% · g 3.0% · 终值占比 88%</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PE-PEG 估值</div>
+                <div class="val-number">8.21 元</div>
+                <div class="val-sub">PE=26.9, EPS CAGR=13.5%, PEG=2.00 · 严重高估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PB-ROE 估值</div>
+                <div class="val-number">5.50 元</div>
+                <div class="val-sub">ROE 7.5% · 合理PB 0.7</div>
+            </div>
+        </div>
+        <div class="scenario-row">
+            <div class="scenario-card">
+                <div class="sc-title">乐观</div>
+                <div class="sc-value">33.63</div>
+                <div class="sc-upside">+94.5%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">中性</div>
+                <div class="sc-value">23.44</div>
+                <div class="sc-upside">+35.6%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">悲观</div>
+                <div class="sc-value">18.11</div>
+                <div class="sc-upside">+4.7%</div>
+            </div></div></div>
+        <div class="detail-block">
+            <h3>🔮 一致预期 (同花顺)</h3>
+            <div class="metric-row">
+                <div class="mini-metric"><span class="mm-val">0.87</span><span class="mm-label">2026E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">1.12</span><span class="mm-label">2027E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">34.6x</span><span class="mm-label">2026E PE</span></div>
+                <div class="mini-metric"><span class="mm-val">2023: 0.86 → 2024: 0.12 → 2025: 0.61</span><span class="mm-label">历史EPS</span></div>
+            </div>
+        </div>
+    <div class="detail-block">
+        <h3>📈 技术分析</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val" style="color:#ff9100">偏空</span><span class="mm-label">择时信号</span></div>
+            <div class="mini-metric"><span class="mm-val">30/100</span><span class="mm-label">综合评分</span></div>
+            <div class="mini-metric"><span class="mm-val">0/100</span><span class="mm-label">均线评分</span></div>
+            <div class="mini-metric"><span class="mm-val">强势空头排列</span><span class="mm-label">均线排列</span></div>
+        </div>
+        
+        <p style="color:#888;margin-top:4px">置信度: 中 · 仓位建议: 减仓至轻仓</p>
+    </div>
+    <div class="detail-block">
+        <h3>🛡 风险度量（基于历史日收益率的统计模型）</h3>
+        <div class="metric-row">
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">5.4%</span>
+                <span class="mm-label">VaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">每日最大亏损率</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff5252">9.9%</span>
+                <span class="mm-label">CVaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">超出VaR的平均亏损</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">65%</span>
+                <span class="mm-label">年化波动率 (极高)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">日波动×√252</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val">1.05</span>
+                <span class="mm-label">Beta 系数</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">相对大盘波动倍数</span>
+            </div>
+        </div>
+        <div style="background:#1a2332;border-radius:8px;padding:12px;margin-top:12px;font-size:13px;color:#8b949e;line-height:1.8">
+            <strong style="color:#c9d1d9">📖 如何理解这些指标：</strong><br>
+            <strong>VaR (风险价值)</strong>：基于过去一年日收益率分布，在95%置信度下，<span style="color:#ff9100">持有一股该股票，一天内亏损超过 <strong>5.4%</strong>（约0.94元）的概率仅为5%</span>。换句话说，100个交易日中约有5天亏损会超过这个比例。<br>
+            <strong>CVaR (条件风险价值)</strong>：当亏损已经超过VaR阈值时，<span style="color:#ff5252">平均会亏 <strong>9.9%</strong></span>。CVaR总是大于等于VaR，代表"尾部风险"的严重程度。<br>
+            <strong>年化波动率 65%</strong>：股价年化标准差。<span style="color:#ff9100">波动率越高，股价涨跌越剧烈</span>。一般A股科技股年化波动在40-60%属于常态，>60%偏高，反映近期剧烈波动。<br>
+            <strong>Beta 1.05</strong>：相对沪深300的波动倍数。Beta=1表示与大盘同步，Beta>1表示弹性更大（涨跌都更猛），Beta<1表示防御性更强。
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⚙ WACC 参数</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">6.9%</span><span class="mm-label">WACC</span></div>
+            <div class="mini-metric"><span class="mm-val">9.7%</span><span class="mm-label">Ke (股权成本)</span></div>
+            <div class="mini-metric"><span class="mm-val">0.8%</span><span class="mm-label">Kd (税后)</span></div>
+            <div class="mini-metric"><span class="mm-val">0.44</span><span class="mm-label">D/E 比率</span></div>
+        </div>
+    </div>
+    <div class="detail-block" style="border-color:#ff5252">
+        <h3 style="color:#ff5252">⚠ 风险提示</h3>
+        <div class="block-content">
+            <p>{'var_95_pct': 5.4145, 'cvar_95_pct': 9.9387, 'annual_vol': 65.0}</p>
+            <p style="margin-top:8px;color:#888">大盘环境:  (评分39/100) · 【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭</p>
+        </div>
+    </div>
+    </div>
+    <div class="detail-section" id="detail-000733">
+        <div class="detail-header">
+            <span class="detail-code">000733</span>
+            <span class="detail-name">振华科技</span>
+            <span class="detail-sw2">元件-被动元件</span>
+            <span style="color:#888">|</span>
+            <span style="font-size:18px;color:#69f0ae">39.03</span>
+            <span style="color:#888">| PE 22.0 | PB 1.39 | 市值 216亿</span>
+            <a href="#top" class="back-link">↑ 回顶部</a>
+        </div>
+        
+    <div class="detail-block">
+        <h3>📋 公司概览</h3>
+        <div class="block-content">
+            <p><strong>主营业务：</strong>军用电子元器件龙头，产品覆盖电阻/电容/电感/半导体分立器件/电源模块等，旗下振华新云（钽电容龙头）、振华微（厚膜混合IC）、振华富（MLCC）等子公司均为军工电子核心供应商。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🏭 行业竞争格局</h3>
+        <div class="block-content">
+            <p>军工被动元件行业双寡头（振华科技+宏达电子），CR2>60%。民品市场格局分散但公司军工占比>80%，受民品周期影响小。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⭐ 核心竞争优势</h3>
+        <div class="block-content">
+            <ol><li>1</li><li>军工电子元器件平台型公司 2</li><li>钽电容国内垄断地位(市占率>70%</li><li>3</li><li>国产替代主 beneficiary 4</li><li>产品覆盖面最广的军工电子标的</li></ol>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🎯 发展计划</h3>
+        <div class="block-content">
+            <p>新型钽电容/高分子电容扩产，厚膜混合IC向系统级封装(SiP)升级，MLCC向高压/高频方向拓展</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📊 财务概览 (最新一期)</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">8.4亿</span><span class="mm-label">营业收入</span></div>
+            <div class="mini-metric"><span class="mm-val">0.2亿</span><span class="mm-label">归母净利润</span></div>
+            <div class="mini-metric"><span class="mm-val">189.8亿</span><span class="mm-label">总资产</span></div>
+            <div class="mini-metric"><span class="mm-val">17.0%</span><span class="mm-label">资产负债率</span></div>
+        </div>
+        <p style="color:#888;font-size:13px;margin-top:8px">数据来源: 新浪财报三表(利润表/资产负债表/现金流量表)，共 8 期</p>
+    </div>
+    <div class="detail-block">
+        <h3>💰 估值分析</h3>
+        <div class="val-grid">
+            <div class="val-card">
+                <div class="val-title">综合估值</div>
+                <div class="val-number" style="color:#ff5252">25.72 元</div>
+                <div class="val-sub">安全边际 -51.7% · 显著高估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">DCF 估值</div>
+                <div class="val-number">38.09 元</div>
+                <div class="val-sub">WACC 10.1% · g 3.0% · 终值占比 76%</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PE-PEG 估值</div>
+                <div class="val-number">12.84 元</div>
+                <div class="val-sub">PE=22.0, EPS CAGR=6.9%, PEG=3.17 · 严重高估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PB-ROE 估值</div>
+                <div class="val-number">14.22 元</div>
+                <div class="val-sub">ROE 6.5% · 合理PB 0.5</div>
+            </div>
+        </div>
+        <div class="scenario-row">
+            <div class="scenario-card">
+                <div class="sc-title">乐观</div>
+                <div class="sc-value">31.05</div>
+                <div class="sc-upside">-20.4%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">中性</div>
+                <div class="sc-value">25.76</div>
+                <div class="sc-upside">-34.0%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">悲观</div>
+                <div class="sc-value">22.16</div>
+                <div class="sc-upside">-43.2%</div>
+            </div></div></div>
+        <div class="detail-block">
+            <h3>🔮 一致预期 (同花顺)</h3>
+            <div class="metric-row">
+                <div class="mini-metric"><span class="mm-val">2.02</span><span class="mm-label">2026E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">2.31</span><span class="mm-label">2027E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">107.1x</span><span class="mm-label">2026E PE</span></div>
+                <div class="mini-metric"><span class="mm-val">2023: 5.13 → 2024: 1.75 → 2025: 1.85</span><span class="mm-label">历史EPS</span></div>
+            </div>
+        </div>
+    <div class="detail-block">
+        <h3>📈 技术分析</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val" style="color:#ff9100">偏空</span><span class="mm-label">择时信号</span></div>
+            <div class="mini-metric"><span class="mm-val">30/100</span><span class="mm-label">综合评分</span></div>
+            <div class="mini-metric"><span class="mm-val">0/100</span><span class="mm-label">均线评分</span></div>
+            <div class="mini-metric"><span class="mm-val">强势空头排列</span><span class="mm-label">均线排列</span></div>
+        </div>
+        
+        <p style="color:#888;margin-top:4px">置信度: 中 · 仓位建议: 减仓至轻仓</p>
+    </div>
+    <div class="detail-block">
+        <h3>🛡 风险度量（基于历史日收益率的统计模型）</h3>
+        <div class="metric-row">
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">5.1%</span>
+                <span class="mm-label">VaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">每日最大亏损率</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff5252">6.6%</span>
+                <span class="mm-label">CVaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">超出VaR的平均亏损</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">45%</span>
+                <span class="mm-label">年化波动率 (偏高)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">日波动×√252</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val">1.39</span>
+                <span class="mm-label">Beta 系数</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">相对大盘波动倍数</span>
+            </div>
+        </div>
+        <div style="background:#1a2332;border-radius:8px;padding:12px;margin-top:12px;font-size:13px;color:#8b949e;line-height:1.8">
+            <strong style="color:#c9d1d9">📖 如何理解这些指标：</strong><br>
+            <strong>VaR (风险价值)</strong>：基于过去一年日收益率分布，在95%置信度下，<span style="color:#ff9100">持有一股该股票，一天内亏损超过 <strong>5.1%</strong>（约1.98元）的概率仅为5%</span>。换句话说，100个交易日中约有5天亏损会超过这个比例。<br>
+            <strong>CVaR (条件风险价值)</strong>：当亏损已经超过VaR阈值时，<span style="color:#ff5252">平均会亏 <strong>6.6%</strong></span>。CVaR总是大于等于VaR，代表"尾部风险"的严重程度。<br>
+            <strong>年化波动率 45%</strong>：股价年化标准差。<span style="color:#ff9100">波动率越高，股价涨跌越剧烈</span>。一般A股科技股年化波动在40-60%属于常态，40-60%正常范围。<br>
+            <strong>Beta 1.39</strong>：相对沪深300的波动倍数。Beta=1表示与大盘同步，Beta>1表示弹性更大（涨跌都更猛），Beta<1表示防御性更强。
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⚙ WACC 参数</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">10.1%</span><span class="mm-label">WACC</span></div>
+            <div class="mini-metric"><span class="mm-val">11.8%</span><span class="mm-label">Ke (股权成本)</span></div>
+            <div class="mini-metric"><span class="mm-val">1.4%</span><span class="mm-label">Kd (税后)</span></div>
+            <div class="mini-metric"><span class="mm-val">0.20</span><span class="mm-label">D/E 比率</span></div>
+        </div>
+    </div>
+    <div class="detail-block" style="border-color:#ff5252">
+        <h3 style="color:#ff5252">⚠ 风险提示</h3>
+        <div class="block-content">
+            <p>{'var_95_pct': 5.0625, 'cvar_95_pct': 6.5682, 'annual_vol': 44.7}</p>
+            <p style="margin-top:8px;color:#888">大盘环境:  (评分39/100) · 【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭</p>
+        </div>
+    </div>
+    </div>
+    <div class="detail-section" id="detail-688332">
+        <div class="detail-header">
+            <span class="detail-code">688332</span>
+            <span class="detail-name">中科蓝讯</span>
+            <span class="detail-sw2">半导体-数字IC</span>
+            <span style="color:#888">|</span>
+            <span style="font-size:18px;color:#00e676">78.07</span>
+            <span style="color:#888">| PE 10.2 | PB 2.77 | 市值 139亿</span>
+            <a href="#top" class="back-link">↑ 回顶部</a>
+        </div>
+        
+    <div class="detail-block">
+        <h3>📋 公司概览</h3>
+        <div class="block-content">
+            <p><strong>主营业务：</strong>无线音频SoC芯片设计公司，产品覆盖TWS耳机/蓝牙音箱/智能手表/车载音频等。RISC-V架构芯片出货量国内第一，客户包括传音/QCY/漫步者/realme等品牌及白牌市场。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🏭 行业竞争格局</h3>
+        <div class="block-content">
+            <p>TWS SoC市场格局：恒玄科技(中高端)/中科蓝讯(中低端放量)/杰理科技(白牌)。公司以性价比+快速放量策略抢占份额，2024年出货量超10亿颗。RISC-V路线差异化于ARM阵营。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⭐ 核心竞争优势</h3>
+        <div class="block-content">
+            <ol><li>1</li><li>RISC-V架构先发优势(免ARM授权费</li><li>2</li><li>出货量国内第一形成规模效应 3</li><li>从白牌向品牌升级(传音/realme等</li><li>4</li><li>22nm→12nm制程演进降低功耗</li></ol>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🎯 发展计划</h3>
+        <div class="block-content">
+            <p>品牌客户渗透率提升(从30%→60%)，AI降噪/语音唤醒新功能迭代，智能手表/车载新品类拓展</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📊 财务概览 (最新一期)</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">4.1亿</span><span class="mm-label">营业收入</span></div>
+            <div class="mini-metric"><span class="mm-val">-0.1亿</span><span class="mm-label">归母净利润</span></div>
+            <div class="mini-metric"><span class="mm-val">57.0亿</span><span class="mm-label">总资产</span></div>
+            <div class="mini-metric"><span class="mm-val">7.3%</span><span class="mm-label">资产负债率</span></div>
+        </div>
+        <p style="color:#888;font-size:13px;margin-top:8px">数据来源: 新浪财报三表(利润表/资产负债表/现金流量表)，共 8 期</p>
+    </div>
+    <div class="detail-block">
+        <h3>💰 估值分析</h3>
+        <div class="val-grid">
+            <div class="val-card">
+                <div class="val-title">综合估值</div>
+                <div class="val-number" style="color:#00e676">110.74 元</div>
+                <div class="val-sub">安全边际 +29.5% · 适度低估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">DCF 估值</div>
+                <div class="val-number">52.16 元</div>
+                <div class="val-sub">WACC 12.0% · g 3.0% · 终值占比 77%</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PE-PEG 估值</div>
+                <div class="val-number">203.16 元</div>
+                <div class="val-sub">PE=10.2, EPS CAGR=17.3%, PEG=0.59 · 低估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PB-ROE 估值</div>
+                <div class="val-number">112.92 元</div>
+                <div class="val-sub">ROE 39.7% · 合理PB 3.8</div>
+            </div>
+        </div>
+        <div class="scenario-row">
+            <div class="scenario-card">
+                <div class="sc-title">乐观</div>
+                <div class="sc-value">123.38</div>
+                <div class="sc-upside">+58.0%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">中性</div>
+                <div class="sc-value">108.86</div>
+                <div class="sc-upside">+39.4%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">悲观</div>
+                <div class="sc-value">96.43</div>
+                <div class="sc-upside">+23.5%</div>
+            </div></div></div>
+        <div class="detail-block">
+            <h3>🔮 一致预期 (同花顺)</h3>
+            <div class="metric-row">
+                <div class="mini-metric"><span class="mm-val">1.97</span><span class="mm-label">2026E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">2.71</span><span class="mm-label">2027E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">70.7x</span><span class="mm-label">2026E PE</span></div>
+                <div class="mini-metric"><span class="mm-val">2023: 2.1 → 2024: 2.5 → 2025: 11.75</span><span class="mm-label">历史EPS</span></div>
+            </div>
+        </div>
+    <div class="detail-block">
+        <h3>📈 技术分析</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val" style="color:#ff9100">偏空</span><span class="mm-label">择时信号</span></div>
+            <div class="mini-metric"><span class="mm-val">35/100</span><span class="mm-label">综合评分</span></div>
+            <div class="mini-metric"><span class="mm-val">13/100</span><span class="mm-label">均线评分</span></div>
+            <div class="mini-metric"><span class="mm-val">均线缠绕无方向</span><span class="mm-label">均线排列</span></div>
+        </div>
+        
+        <p style="color:#888;margin-top:4px">置信度: 中 · 仓位建议: 减仓至轻仓</p>
+    </div>
+    <div class="detail-block">
+        <h3>🛡 风险度量（基于历史日收益率的统计模型）</h3>
+        <div class="metric-row">
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">6.3%</span>
+                <span class="mm-label">VaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">每日最大亏损率</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff5252">10.8%</span>
+                <span class="mm-label">CVaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">超出VaR的平均亏损</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">68%</span>
+                <span class="mm-label">年化波动率 (极高)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">日波动×√252</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val">1.51</span>
+                <span class="mm-label">Beta 系数</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">相对大盘波动倍数</span>
+            </div>
+        </div>
+        <div style="background:#1a2332;border-radius:8px;padding:12px;margin-top:12px;font-size:13px;color:#8b949e;line-height:1.8">
+            <strong style="color:#c9d1d9">📖 如何理解这些指标：</strong><br>
+            <strong>VaR (风险价值)</strong>：基于过去一年日收益率分布，在95%置信度下，<span style="color:#ff9100">持有一股该股票，一天内亏损超过 <strong>6.3%</strong>（约4.96元）的概率仅为5%</span>。换句话说，100个交易日中约有5天亏损会超过这个比例。<br>
+            <strong>CVaR (条件风险价值)</strong>：当亏损已经超过VaR阈值时，<span style="color:#ff5252">平均会亏 <strong>10.8%</strong></span>。CVaR总是大于等于VaR，代表"尾部风险"的严重程度。<br>
+            <strong>年化波动率 68%</strong>：股价年化标准差。<span style="color:#ff9100">波动率越高，股价涨跌越剧烈</span>。一般A股科技股年化波动在40-60%属于常态，>60%偏高，反映近期剧烈波动。<br>
+            <strong>Beta 1.51</strong>：相对沪深300的波动倍数。Beta=1表示与大盘同步，Beta>1表示弹性更大（涨跌都更猛），Beta<1表示防御性更强。
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⚙ WACC 参数</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">12.0%</span><span class="mm-label">WACC</span></div>
+            <div class="mini-metric"><span class="mm-val">12.6%</span><span class="mm-label">Ke (股权成本)</span></div>
+            <div class="mini-metric"><span class="mm-val">3.5%</span><span class="mm-label">Kd (税后)</span></div>
+            <div class="mini-metric"><span class="mm-val">0.08</span><span class="mm-label">D/E 比率</span></div>
+        </div>
+    </div>
+    <div class="detail-block" style="border-color:#ff5252">
+        <h3 style="color:#ff5252">⚠ 风险提示</h3>
+        <div class="block-content">
+            <p>{'var_95_pct': 6.347, 'cvar_95_pct': 10.7897, 'annual_vol': 67.9}</p>
+            <p style="margin-top:8px;color:#888">大盘环境:  (评分39/100) · 【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭</p>
+        </div>
+    </div>
+    </div>
+    <div class="detail-section" id="detail-301631">
+        <div class="detail-header">
+            <span class="detail-code">301631</span>
+            <span class="detail-name">壹连科技</span>
+            <span class="detail-sw2">元件-连接器</span>
+            <span style="color:#888">|</span>
+            <span style="font-size:18px;color:#69f0ae">57.30</span>
+            <span style="color:#888">| PE 24.1 | PB 2.85 | 市值 25亿</span>
+            <a href="#top" class="back-link">↑ 回顶部</a>
+        </div>
+        
+    <div class="detail-block">
+        <h3>📋 公司概览</h3>
+        <div class="block-content">
+            <p><strong>主营业务：</strong>电连接器及线束组件制造商，产品应用于新能源汽车(高压连接器)/储能/工业控制/医疗设备等。新能源汽车连接器市场份额快速提升，进入比亚迪/宁德时代/特斯拉供应链。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🏭 行业竞争格局</h3>
+        <div class="block-content">
+            <p>国内连接器市场格局：立讯精密(消费电子连接器龙头)/瑞可达(新能源连接器)/中航光电(军工连接器)。壹连科技聚焦新能源高压连接器细分赛道，成长性突出。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⭐ 核心竞争优势</h3>
+        <div class="block-content">
+            <ol><li>1</li><li>新能源汽车高压连接器高景气(行业增速>30%</li><li>2</li><li>进入头部客户(比亚迪/宁德/特斯拉</li><li>3</li><li>从连接器向线束组件延伸提升单车价值 4</li><li>储能连接器第二增长曲线</li></ol>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🎯 发展计划</h3>
+        <div class="block-content">
+            <p>高压连接器产品线从400V向800V升级，储能连接器产能翻倍，工业/医疗连接器横向拓展</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📊 财务概览 (最新一期)</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">13.2亿</span><span class="mm-label">营业收入</span></div>
+            <div class="mini-metric"><span class="mm-val">0.7亿</span><span class="mm-label">归母净利润</span></div>
+            <div class="mini-metric"><span class="mm-val">58.5亿</span><span class="mm-label">总资产</span></div>
+            <div class="mini-metric"><span class="mm-val">54.4%</span><span class="mm-label">资产负债率</span></div>
+        </div>
+        <p style="color:#888;font-size:13px;margin-top:8px">数据来源: 新浪财报三表(利润表/资产负债表/现金流量表)，共 8 期</p>
+    </div>
+    <div class="detail-block">
+        <h3>💰 估值分析</h3>
+        <div class="val-grid">
+            <div class="val-card">
+                <div class="val-title">综合估值</div>
+                <div class="val-number" style="color:#ff5252">39.68 元</div>
+                <div class="val-sub">安全边际 -44.4% · 显著高估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">DCF 估值</div>
+                <div class="val-number">34.18 元</div>
+                <div class="val-sub">WACC 5.7% · g 3.0% · 终值占比 92%</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PE-PEG 估值</div>
+                <div class="val-number">53.93 元</div>
+                <div class="val-sub">PE=24.1, EPS CAGR=16.8%, PEG=1.44 · 高估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PB-ROE 估值</div>
+                <div class="val-number">30.58 元</div>
+                <div class="val-sub">ROE 5.2% · 合理PB 0.5</div>
+            </div>
+        </div>
+        <div class="scenario-row">
+            <div class="scenario-card">
+                <div class="sc-title">乐观</div>
+                <div class="sc-value">45.18</div>
+                <div class="sc-upside">-21.2%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">中性</div>
+                <div class="sc-value">39.19</div>
+                <div class="sc-upside">-31.6%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">悲观</div>
+                <div class="sc-value">33.30</div>
+                <div class="sc-upside">-41.9%</div>
+            </div></div></div>
+        <div class="detail-block">
+            <h3>🔮 一致预期 (同花顺)</h3>
+            <div class="metric-row">
+                <div class="mini-metric"><span class="mm-val">3.02</span><span class="mm-label">2026E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">4.12</span><span class="mm-label">2027E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">8.3x</span><span class="mm-label">2026E PE</span></div>
+                <div class="mini-metric"><span class="mm-val">2023: 5.31 → 2024: 3.31 → 2025: 3.21</span><span class="mm-label">历史EPS</span></div>
+            </div>
+        </div>
+    <div class="detail-block">
+        <h3>📈 技术分析</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val" style="color:#ff9100">偏空</span><span class="mm-label">择时信号</span></div>
+            <div class="mini-metric"><span class="mm-val">30/100</span><span class="mm-label">综合评分</span></div>
+            <div class="mini-metric"><span class="mm-val">0/100</span><span class="mm-label">均线评分</span></div>
+            <div class="mini-metric"><span class="mm-val">强势空头排列</span><span class="mm-label">均线排列</span></div>
+        </div>
+        
+        <p style="color:#888;margin-top:4px">置信度: 中 · 仓位建议: 减仓至轻仓</p>
+    </div>
+    <div class="detail-block">
+        <h3>🛡 风险度量（基于历史日收益率的统计模型）</h3>
+        <div class="metric-row">
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">4.4%</span>
+                <span class="mm-label">VaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">每日最大亏损率</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff5252">9.8%</span>
+                <span class="mm-label">CVaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">超出VaR的平均亏损</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">62%</span>
+                <span class="mm-label">年化波动率 (极高)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">日波动×√252</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val">1.33</span>
+                <span class="mm-label">Beta 系数</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">相对大盘波动倍数</span>
+            </div>
+        </div>
+        <div style="background:#1a2332;border-radius:8px;padding:12px;margin-top:12px;font-size:13px;color:#8b949e;line-height:1.8">
+            <strong style="color:#c9d1d9">📖 如何理解这些指标：</strong><br>
+            <strong>VaR (风险价值)</strong>：基于过去一年日收益率分布，在95%置信度下，<span style="color:#ff9100">持有一股该股票，一天内亏损超过 <strong>4.4%</strong>（约2.53元）的概率仅为5%</span>。换句话说，100个交易日中约有5天亏损会超过这个比例。<br>
+            <strong>CVaR (条件风险价值)</strong>：当亏损已经超过VaR阈值时，<span style="color:#ff5252">平均会亏 <strong>9.8%</strong></span>。CVaR总是大于等于VaR，代表"尾部风险"的严重程度。<br>
+            <strong>年化波动率 62%</strong>：股价年化标准差。<span style="color:#ff9100">波动率越高，股价涨跌越剧烈</span>。一般A股科技股年化波动在40-60%属于常态，>60%偏高，反映近期剧烈波动。<br>
+            <strong>Beta 1.33</strong>：相对沪深300的波动倍数。Beta=1表示与大盘同步，Beta>1表示弹性更大（涨跌都更猛），Beta<1表示防御性更强。
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⚙ WACC 参数</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">5.7%</span><span class="mm-label">WACC</span></div>
+            <div class="mini-metric"><span class="mm-val">11.5%</span><span class="mm-label">Ke (股权成本)</span></div>
+            <div class="mini-metric"><span class="mm-val">0.8%</span><span class="mm-label">Kd (税后)</span></div>
+            <div class="mini-metric"><span class="mm-val">1.19</span><span class="mm-label">D/E 比率</span></div>
+        </div>
+    </div>
+    <div class="detail-block" style="border-color:#ff5252">
+        <h3 style="color:#ff5252">⚠ 风险提示</h3>
+        <div class="block-content">
+            <p>{'var_95_pct': 4.4198, 'cvar_95_pct': 9.8399, 'annual_vol': 62.4}</p>
+            <p style="margin-top:8px;color:#888">大盘环境:  (评分39/100) · 【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭</p>
+        </div>
+    </div>
+    </div>
+    <div class="detail-section" id="detail-301195">
+        <div class="detail-header">
+            <span class="detail-code">301195</span>
+            <span class="detail-name">北路智控</span>
+            <span class="detail-sw2">软件-工业</span>
+            <span style="color:#888">|</span>
+            <span style="font-size:18px;color:#69f0ae">24.26</span>
+            <span style="color:#888">| PE 23.6 | PB 1.34 | 市值 21亿</span>
+            <a href="#top" class="back-link">↑ 回顶部</a>
+        </div>
+        
+    <div class="detail-block">
+        <h3>📋 公司概览</h3>
+        <div class="block-content">
+            <p><strong>主营业务：</strong>智能矿山工业软件及系统解决方案，产品覆盖煤矿智能化管控平台/精确定位系统/ AI视频分析/综合自动化等。背靠中煤科工集团，煤矿智能化政策驱动成长。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🏭 行业竞争格局</h3>
+        <div class="block-content">
+            <p>煤矿智能化市场格局：北路智控(定位/通信)/梅安森(监测监控)/龙软科技(GIS系统)/科达自控(自动化)。公司在精确定位和智能管控平台领域技术领先。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⭐ 核心竞争优势</h3>
+        <div class="block-content">
+            <ol><li>1</li><li>煤矿智能化政策强制推动(2026年大型煤矿全部实现智能化</li><li>2</li><li>UWB精确定位技术领先 3</li><li>中煤科工集团产业背景 4</li><li>从煤矿向非煤矿山/化工园区拓展</li></ol>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🎯 发展计划</h3>
+        <div class="block-content">
+            <p>煤矿智能化覆盖率从30%→60%目标，AI+矿山大模型应用落地，化工园区安全管控平台新市场</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📊 财务概览 (最新一期)</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">2.1亿</span><span class="mm-label">营业收入</span></div>
+            <div class="mini-metric"><span class="mm-val">0.3亿</span><span class="mm-label">归母净利润</span></div>
+            <div class="mini-metric"><span class="mm-val">29.1亿</span><span class="mm-label">总资产</span></div>
+            <div class="mini-metric"><span class="mm-val">15.1%</span><span class="mm-label">资产负债率</span></div>
+        </div>
+        <p style="color:#888;font-size:13px;margin-top:8px">数据来源: 新浪财报三表(利润表/资产负债表/现金流量表)，共 8 期</p>
+    </div>
+    <div class="detail-block">
+        <h3>💰 估值分析</h3>
+        <div class="val-grid">
+            <div class="val-card">
+                <div class="val-title">综合估值</div>
+                <div class="val-number" style="color:#00e676">37.36 元</div>
+                <div class="val-sub">安全边际 +35.1% · 显著低估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">DCF 估值</div>
+                <div class="val-number">63.49 元</div>
+                <div class="val-sub">WACC 5.9% · g 3.0% · 终值占比 90%</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PE-PEG 估值</div>
+                <div class="val-number">9.53 元</div>
+                <div class="val-sub">PE=23.6, EPS CAGR=8.3%, PEG=2.84 · 严重高估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PB-ROE 估值</div>
+                <div class="val-number">14.08 元</div>
+                <div class="val-sub">ROE 4.1% · 合理PB 0.5</div>
+            </div>
+        </div>
+        <div class="scenario-row">
+            <div class="scenario-card">
+                <div class="sc-title">乐观</div>
+                <div class="sc-value">51.53</div>
+                <div class="sc-upside">+112.4%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">中性</div>
+                <div class="sc-value">37.46</div>
+                <div class="sc-upside">+54.4%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">悲观</div>
+                <div class="sc-value">28.02</div>
+                <div class="sc-upside">+15.5%</div>
+            </div></div></div>
+        <div class="detail-block">
+            <h3>🔮 一致预期 (同花顺)</h3>
+            <div class="metric-row">
+                <div class="mini-metric"><span class="mm-val">1.39</span><span class="mm-label">2026E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">1.63</span><span class="mm-label">2027E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">15.3x</span><span class="mm-label">2026E PE</span></div>
+                <div class="mini-metric"><span class="mm-val">2023: 1.71 → 2024: 1.54 → 2025: 1.15</span><span class="mm-label">历史EPS</span></div>
+            </div>
+        </div>
+    <div class="detail-block">
+        <h3>📈 技术分析</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val" style="color:#ff9100">偏空</span><span class="mm-label">择时信号</span></div>
+            <div class="mini-metric"><span class="mm-val">30/100</span><span class="mm-label">综合评分</span></div>
+            <div class="mini-metric"><span class="mm-val">0/100</span><span class="mm-label">均线评分</span></div>
+            <div class="mini-metric"><span class="mm-val">强势空头排列</span><span class="mm-label">均线排列</span></div>
+        </div>
+        
+        <p style="color:#888;margin-top:4px">置信度: 中 · 仓位建议: 减仓至轻仓</p>
+    </div>
+    <div class="detail-block">
+        <h3>🛡 风险度量（基于历史日收益率的统计模型）</h3>
+        <div class="metric-row">
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">4.1%</span>
+                <span class="mm-label">VaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">每日最大亏损率</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff5252">6.1%</span>
+                <span class="mm-label">CVaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">超出VaR的平均亏损</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">41%</span>
+                <span class="mm-label">年化波动率 (偏高)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">日波动×√252</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val">0.62</span>
+                <span class="mm-label">Beta 系数</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">相对大盘波动倍数</span>
+            </div>
+        </div>
+        <div style="background:#1a2332;border-radius:8px;padding:12px;margin-top:12px;font-size:13px;color:#8b949e;line-height:1.8">
+            <strong style="color:#c9d1d9">📖 如何理解这些指标：</strong><br>
+            <strong>VaR (风险价值)</strong>：基于过去一年日收益率分布，在95%置信度下，<span style="color:#ff9100">持有一股该股票，一天内亏损超过 <strong>4.1%</strong>（约0.99元）的概率仅为5%</span>。换句话说，100个交易日中约有5天亏损会超过这个比例。<br>
+            <strong>CVaR (条件风险价值)</strong>：当亏损已经超过VaR阈值时，<span style="color:#ff5252">平均会亏 <strong>6.1%</strong></span>。CVaR总是大于等于VaR，代表"尾部风险"的严重程度。<br>
+            <strong>年化波动率 41%</strong>：股价年化标准差。<span style="color:#ff9100">波动率越高，股价涨跌越剧烈</span>。一般A股科技股年化波动在40-60%属于常态，40-60%正常范围。<br>
+            <strong>Beta 0.62</strong>：相对沪深300的波动倍数。Beta=1表示与大盘同步，Beta>1表示弹性更大（涨跌都更猛），Beta<1表示防御性更强。
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⚙ WACC 参数</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">5.9%</span><span class="mm-label">WACC</span></div>
+            <div class="mini-metric"><span class="mm-val">6.8%</span><span class="mm-label">Ke (股权成本)</span></div>
+            <div class="mini-metric"><span class="mm-val">0.8%</span><span class="mm-label">Kd (税后)</span></div>
+            <div class="mini-metric"><span class="mm-val">0.18</span><span class="mm-label">D/E 比率</span></div>
+        </div>
+    </div>
+    <div class="detail-block" style="border-color:#ff5252">
+        <h3 style="color:#ff5252">⚠ 风险提示</h3>
+        <div class="block-content">
+            <p>{'var_95_pct': 4.0629, 'cvar_95_pct': 6.1237, 'annual_vol': 40.7}</p>
+            <p style="margin-top:8px;color:#888">大盘环境:  (评分39/100) · 【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭</p>
+        </div>
+    </div>
+    </div>
+    <div class="detail-section" id="detail-003019">
+        <div class="detail-header">
+            <span class="detail-code">003019</span>
+            <span class="detail-name">宸展光电</span>
+            <span class="detail-sw2">元件-显示模组</span>
+            <span style="color:#888">|</span>
+            <span style="font-size:18px;color:#69f0ae">22.08</span>
+            <span style="color:#888">| PE 22.7 | PB 2.39 | 市值 38亿</span>
+            <a href="#top" class="back-link">↑ 回顶部</a>
+        </div>
+        
+    <div class="detail-block">
+        <h3>📋 公司概览</h3>
+        <div class="block-content">
+            <p><strong>主营业务：</strong>商用显示及触控一体机解决方案，产品覆盖POS/自助终端/数字标牌/智能健身镜/医疗显示等。ODM+自有品牌双轮驱动，客户包括NCR/Diebold/富士通等全球头部POS厂商。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🏭 行业竞争格局</h3>
+        <div class="block-content">
+            <p>全球商用显示市场分散，POS终端市场CR3约40%(NCR/Diebold/Toshiba)。公司以ODM模式切入全球供应链，同时培育自有品牌(3R系列)提升毛利率。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⭐ 核心竞争优势</h3>
+        <div class="block-content">
+            <ol><li>1</li><li>全球POS ODM龙头地位(市占率约15%</li><li>2</li><li>智能健身镜/医疗显示等新品类放量 3</li><li>自有品牌提升毛利率(从20%→30%</li><li>4</li><li>在东南亚/印度等新兴市场布局</li></ol>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🎯 发展计划</h3>
+        <div class="block-content">
+            <p>自有品牌收入占比从15%→30%，医疗显示认证推进，东南亚制造基地降低关税风险</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📊 财务概览 (最新一期)</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">5.8亿</span><span class="mm-label">营业收入</span></div>
+            <div class="mini-metric"><span class="mm-val">0.3亿</span><span class="mm-label">归母净利润</span></div>
+            <div class="mini-metric"><span class="mm-val">29.7亿</span><span class="mm-label">总资产</span></div>
+            <div class="mini-metric"><span class="mm-val">42.0%</span><span class="mm-label">资产负债率</span></div>
+        </div>
+        <p style="color:#888;font-size:13px;margin-top:8px">数据来源: 新浪财报三表(利润表/资产负债表/现金流量表)，共 8 期</p>
+    </div>
+    <div class="detail-block">
+        <h3>💰 估值分析</h3>
+        <div class="val-grid">
+            <div class="val-card">
+                <div class="val-title">综合估值</div>
+                <div class="val-number" style="color:#ff5252">8.81 元</div>
+                <div class="val-sub">安全边际 -150.6% · 显著高估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">DCF 估值</div>
+                <div class="val-number">0.40 元</div>
+                <div class="val-sub">WACC 6.8% · g 3.0% · 终值占比 90%</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PE-PEG 估值</div>
+                <div class="val-number">20.39 元</div>
+                <div class="val-sub">PE=22.7, EPS CAGR=18.0%, PEG=1.26 · 高估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PB-ROE 估值</div>
+                <div class="val-number">11.95 元</div>
+                <div class="val-sub">ROE 11.2% · 合理PB 1.2</div>
+            </div>
+        </div>
+        <div class="scenario-row">
+            <div class="scenario-card">
+                <div class="sc-title">乐观</div>
+                <div class="sc-value">9.62</div>
+                <div class="sc-upside">-56.4%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">中性</div>
+                <div class="sc-value">8.64</div>
+                <div class="sc-upside">-60.9%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">悲观</div>
+                <div class="sc-value">7.72</div>
+                <div class="sc-upside">-65.0%</div>
+            </div></div></div>
+        <div class="detail-block">
+            <h3>🔮 一致预期 (同花顺)</h3>
+            <div class="metric-row">
+                <div class="mini-metric"><span class="mm-val">1.22</span><span class="mm-label">2026E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">1.70</span><span class="mm-label">2027E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">31.0x</span><span class="mm-label">2026E PE</span></div>
+                <div class="mini-metric"><span class="mm-val">2023: 0.93 → 2024: 1.11 → 2025: 1.13</span><span class="mm-label">历史EPS</span></div>
+            </div>
+        </div>
+    <div class="detail-block">
+        <h3>📈 技术分析</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val" style="color:#ff9100">偏空</span><span class="mm-label">择时信号</span></div>
+            <div class="mini-metric"><span class="mm-val">30/100</span><span class="mm-label">综合评分</span></div>
+            <div class="mini-metric"><span class="mm-val">0/100</span><span class="mm-label">均线评分</span></div>
+            <div class="mini-metric"><span class="mm-val">强势空头排列</span><span class="mm-label">均线排列</span></div>
+        </div>
+        
+        <p style="color:#888;margin-top:4px">置信度: 中 · 仓位建议: 减仓至轻仓</p>
+    </div>
+    <div class="detail-block">
+        <h3>🛡 风险度量（基于历史日收益率的统计模型）</h3>
+        <div class="metric-row">
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">5.7%</span>
+                <span class="mm-label">VaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">每日最大亏损率</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff5252">7.7%</span>
+                <span class="mm-label">CVaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">超出VaR的平均亏损</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">52%</span>
+                <span class="mm-label">年化波动率 (偏高)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">日波动×√252</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val">1.10</span>
+                <span class="mm-label">Beta 系数</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">相对大盘波动倍数</span>
+            </div>
+        </div>
+        <div style="background:#1a2332;border-radius:8px;padding:12px;margin-top:12px;font-size:13px;color:#8b949e;line-height:1.8">
+            <strong style="color:#c9d1d9">📖 如何理解这些指标：</strong><br>
+            <strong>VaR (风险价值)</strong>：基于过去一年日收益率分布，在95%置信度下，<span style="color:#ff9100">持有一股该股票，一天内亏损超过 <strong>5.7%</strong>（约1.25元）的概率仅为5%</span>。换句话说，100个交易日中约有5天亏损会超过这个比例。<br>
+            <strong>CVaR (条件风险价值)</strong>：当亏损已经超过VaR阈值时，<span style="color:#ff5252">平均会亏 <strong>7.7%</strong></span>。CVaR总是大于等于VaR，代表"尾部风险"的严重程度。<br>
+            <strong>年化波动率 52%</strong>：股价年化标准差。<span style="color:#ff9100">波动率越高，股价涨跌越剧烈</span>。一般A股科技股年化波动在40-60%属于常态，40-60%正常范围。<br>
+            <strong>Beta 1.10</strong>：相对沪深300的波动倍数。Beta=1表示与大盘同步，Beta>1表示弹性更大（涨跌都更猛），Beta<1表示防御性更强。
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⚙ WACC 参数</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">6.8%</span><span class="mm-label">WACC</span></div>
+            <div class="mini-metric"><span class="mm-val">9.9%</span><span class="mm-label">Ke (股权成本)</span></div>
+            <div class="mini-metric"><span class="mm-val">2.2%</span><span class="mm-label">Kd (税后)</span></div>
+            <div class="mini-metric"><span class="mm-val">0.68</span><span class="mm-label">D/E 比率</span></div>
+        </div>
+    </div>
+    <div class="detail-block" style="border-color:#ff5252">
+        <h3 style="color:#ff5252">⚠ 风险提示</h3>
+        <div class="block-content">
+            <p>{'var_95_pct': 5.6546, 'cvar_95_pct': 7.6891, 'annual_vol': 51.5}</p>
+            <p style="margin-top:8px;color:#888">大盘环境:  (评分39/100) · 【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭</p>
+        </div>
+    </div>
+    </div>
+    <div class="detail-section" id="detail-000551">
+        <div class="detail-header">
+            <span class="detail-code">000551</span>
+            <span class="detail-name">创元科技</span>
+            <span class="detail-sw2">机械-环保</span>
+            <span style="color:#888">|</span>
+            <span style="font-size:18px;color:#69f0ae">12.79</span>
+            <span style="color:#888">| PE 18.2 | PB 2.06 | 市值 62亿</span>
+            <a href="#top" class="back-link">↑ 回顶部</a>
+        </div>
+        
+    <div class="detail-block">
+        <h3>📋 公司概览</h3>
+        <div class="block-content">
+            <p><strong>主营业务：</strong>环保设备+精密制造双主业。环保板块：垃圾焚烧/危废处理/水处理设备(中环环保)。精密制造：超高压液压件/精密轴承/光学镜头(苏州轴承厂/创元光电)。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🏭 行业竞争格局</h3>
+        <div class="block-content">
+            <p>环保设备行业高度分散，公司在垃圾焚烧和危废处理设备细分领域有一定优势。精密制造板块竞争激烈但技术壁垒较高。</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⭐ 核心竞争优势</h3>
+        <div class="block-content">
+            <ol><li>1</li><li>双主业分散风险 2</li><li>精密轴承国产替代逻辑 3</li><li>环保设备受益于无废城市建设 4</li><li>国企改革预期(苏州国资旗下</li></ol>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>🎯 发展计划</h3>
+        <div class="block-content">
+            <p>环保设备从垃圾焚烧向危废/固废全产业链延伸，精密制造向高端液压件/机器人关节升级</p>
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>📊 财务概览 (最新一期)</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">12.2亿</span><span class="mm-label">营业收入</span></div>
+            <div class="mini-metric"><span class="mm-val">1.6亿</span><span class="mm-label">归母净利润</span></div>
+            <div class="mini-metric"><span class="mm-val">65.2亿</span><span class="mm-label">总资产</span></div>
+            <div class="mini-metric"><span class="mm-val">53.3%</span><span class="mm-label">资产负债率</span></div>
+        </div>
+        <p style="color:#888;font-size:13px;margin-top:8px">数据来源: 新浪财报三表(利润表/资产负债表/现金流量表)，共 8 期</p>
+    </div>
+    <div class="detail-block">
+        <h3>💰 估值分析</h3>
+        <div class="val-grid">
+            <div class="val-card">
+                <div class="val-title">综合估值</div>
+                <div class="val-number" style="color:#ffd740">11.94 元</div>
+                <div class="val-sub">安全边际 -7.1% · 合理估值</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">DCF 估值</div>
+                <div class="val-number">18.43 元</div>
+                <div class="val-sub">WACC 5.7% · g 3.0% · 终值占比 90%</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PE-PEG 估值</div>
+                <div class="val-number">4.64 元</div>
+                <div class="val-sub">PE=18.2, EPS CAGR=7.6%, PEG=2.40 · 严重高估</div>
+            </div>
+            <div class="val-card">
+                <div class="val-title">PB-ROE 估值</div>
+                <div class="val-number">6.80 元</div>
+                <div class="val-sub">ROE 9.7% · 合理PB 1.1</div>
+            </div>
+        </div>
+        <div class="scenario-row">
+            <div class="scenario-card">
+                <div class="sc-title">乐观</div>
+                <div class="sc-value">14.64</div>
+                <div class="sc-upside">+14.5%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">中性</div>
+                <div class="sc-value">11.98</div>
+                <div class="sc-upside">-6.3%</div>
+            </div>
+            <div class="scenario-card">
+                <div class="sc-title">悲观</div>
+                <div class="sc-value">9.39</div>
+                <div class="sc-upside">-26.6%</div>
+            </div></div></div>
+        <div class="detail-block">
+            <h3>🔮 一致预期 (同花顺)</h3>
+            <div class="metric-row">
+                <div class="mini-metric"><span class="mm-val">0.76</span><span class="mm-label">2026E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">0.88</span><span class="mm-label">2027E EPS</span></div>
+                <div class="mini-metric"><span class="mm-val">81.5x</span><span class="mm-label">2026E PE</span></div>
+                <div class="mini-metric"><span class="mm-val">2023: 0.38 → 2024: 0.52 → 2025: 0.61</span><span class="mm-label">历史EPS</span></div>
+            </div>
+        </div>
+    <div class="detail-block">
+        <h3>📈 技术分析</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val" style="color:#ff9100">偏空</span><span class="mm-label">择时信号</span></div>
+            <div class="mini-metric"><span class="mm-val">30/100</span><span class="mm-label">综合评分</span></div>
+            <div class="mini-metric"><span class="mm-val">0/100</span><span class="mm-label">均线评分</span></div>
+            <div class="mini-metric"><span class="mm-val">强势空头排列</span><span class="mm-label">均线排列</span></div>
+        </div>
+        
+        <p style="color:#888;margin-top:4px">置信度: 中 · 仓位建议: 减仓至轻仓</p>
+    </div>
+    <div class="detail-block">
+        <h3>🛡 风险度量（基于历史日收益率的统计模型）</h3>
+        <div class="metric-row">
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">4.5%</span>
+                <span class="mm-label">VaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">每日最大亏损率</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff5252">7.8%</span>
+                <span class="mm-label">CVaR 日(95%置信)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">超出VaR的平均亏损</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val" style="color:#ff9100">49%</span>
+                <span class="mm-label">年化波动率 (偏高)</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">日波动×√252</span>
+            </div>
+            <div class="mini-metric">
+                <span class="mm-val">0.98</span>
+                <span class="mm-label">Beta 系数</span>
+                <span style="font-size:10px;color:#8b949e;display:block;margin-top:4px">相对大盘波动倍数</span>
+            </div>
+        </div>
+        <div style="background:#1a2332;border-radius:8px;padding:12px;margin-top:12px;font-size:13px;color:#8b949e;line-height:1.8">
+            <strong style="color:#c9d1d9">📖 如何理解这些指标：</strong><br>
+            <strong>VaR (风险价值)</strong>：基于过去一年日收益率分布，在95%置信度下，<span style="color:#ff9100">持有一股该股票，一天内亏损超过 <strong>4.5%</strong>（约0.58元）的概率仅为5%</span>。换句话说，100个交易日中约有5天亏损会超过这个比例。<br>
+            <strong>CVaR (条件风险价值)</strong>：当亏损已经超过VaR阈值时，<span style="color:#ff5252">平均会亏 <strong>7.8%</strong></span>。CVaR总是大于等于VaR，代表"尾部风险"的严重程度。<br>
+            <strong>年化波动率 49%</strong>：股价年化标准差。<span style="color:#ff9100">波动率越高，股价涨跌越剧烈</span>。一般A股科技股年化波动在40-60%属于常态，40-60%正常范围。<br>
+            <strong>Beta 0.98</strong>：相对沪深300的波动倍数。Beta=1表示与大盘同步，Beta>1表示弹性更大（涨跌都更猛），Beta<1表示防御性更强。
+        </div>
+    </div>
+    <div class="detail-block">
+        <h3>⚙ WACC 参数</h3>
+        <div class="metric-row">
+            <div class="mini-metric"><span class="mm-val">5.7%</span><span class="mm-label">WACC</span></div>
+            <div class="mini-metric"><span class="mm-val">9.2%</span><span class="mm-label">Ke (股权成本)</span></div>
+            <div class="mini-metric"><span class="mm-val">1.0%</span><span class="mm-label">Kd (税后)</span></div>
+            <div class="mini-metric"><span class="mm-val">0.76</span><span class="mm-label">D/E 比率</span></div>
+        </div>
+    </div>
+    <div class="detail-block" style="border-color:#ff5252">
+        <h3 style="color:#ff5252">⚠ 风险提示</h3>
+        <div class="block-content">
+            <p>{'var_95_pct': 4.521, 'cvar_95_pct': 7.7819, 'annual_vol': 49.4}</p>
+            <p style="margin-top:8px;color:#888">大盘环境:  (评分39/100) · 【底部特征】熊市/偏空格局但评分偏高，下跌动能可能衰竭</p>
+        </div>
+    </div>
+    </div>
+
+<!-- ═══════════ 免责声明 ═══════════ -->
+<div class="detail-block" style="border-radius:12px;margin-top:30px">
+    <h3 style="color:#ff5252">📢 免责声明</h3>
+    <div class="block-content">
+        <p>本报告由 TG-trading-sys V4.0 系统自动生成，仅供研究参考，不构成任何投资建议。</p>
+        <p>数据来源：Tushare Pro(行情/估值)、同花顺(一致预期)、新浪财经(财报三表)、腾讯财经(实时行情)。</p>
+        <p>估值模型(DCF/PEG/PB-ROE)基于公开财务数据和市场参数假设，存在模型风险和参数不确定性。</p>
+        <p>技术面分析基于历史价格数据，不保证未来走势。行业分析基于公开信息和合理推断。</p>
+        <p>投资有风险，入市需谨慎。请结合自身情况独立判断。</p>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="page-footer">
+    TG-trading-sys V4.0 · 生成时间 2026-07-28 18:26:18 ·
+    <a href="https://github.com/A-STOCK-DATA/a-stock-data">GitHub</a>
+</div>
+
+</div>
+<a href="#top" class="nav-top">↑</a>
+</body>
+</html>

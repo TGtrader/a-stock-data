@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股MLCC行业深度分析报告</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f6fa; color: #2c3e50; line-height: 1.6; }
+.container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+/* Header */
+.header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 40px; border-radius: 16px; margin-bottom: 24px; }
+.header h1 { font-size: 28px; margin-bottom: 8px; }
+.header .subtitle { font-size: 14px; opacity: 0.8; }
+.header .meta { font-size: 12px; opacity: 0.6; margin-top: 12px; }
+
+/* Summary Cards */
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.summary-card { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center; }
+.summary-card .s-val { font-size: 28px; font-weight: 700; color: #1a1a2e; }
+.summary-card .s-label { font-size: 13px; color: #999; margin-top: 4px; }
+.summary-card.negative .s-val { color: #52c41a; }
+
+/* Section */
+.section-title-main { font-size: 20px; font-weight: 700; margin: 32px 0 16px; padding-left: 12px; border-left: 4px solid #1a1a2e; }
+
+/* Stock Cards */
+.stock-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 20px; }
+.stock-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden; }
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; padding: 18px 20px; border-bottom: 1px solid #f0f0f0; }
+.stock-name { font-size: 18px; font-weight: 700; margin-right: 8px; }
+.stock-code { font-size: 12px; color: #999; margin-right: 8px; }
+.stock-type { font-size: 11px; background: #e6f7ff; color: #1890ff; padding: 2px 8px; border-radius: 10px; }
+.card-desc { font-size: 13px; color: #666; padding: 10px 20px; border-bottom: 1px solid #f0f0f0; line-height: 1.5; }
+.card-body { padding: 16px 20px; }
+.card-section { margin-bottom: 14px; }
+.section-title { font-size: 14px; font-weight: 600; color: #1a1a2e; margin-bottom: 8px; }
+.metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.metric { background: #fafafa; padding: 8px; border-radius: 6px; }
+.metric .lbl { font-size: 11px; color: #999; display: block; }
+.metric .val { font-size: 14px; font-weight: 600; display: block; margin-top: 2px; }
+.perf-row { display: flex; gap: 16px; font-size: 13px; }
+.flow-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #f5f5f5; font-size: 13px; }
+.flow-label { color: #999; }
+.reasons { font-size: 12px; color: #666; line-height: 1.5; }
+
+/* Score Badge */
+.score-badge { width: 64px; height: 64px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; }
+.score-num { font-size: 22px; font-weight: 700; line-height: 1; }
+.score-label { font-size: 10px; margin-top: 2px; }
+
+/* Badges */
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; display: inline-block; }
+.badge-up { background: #fff1f0; color: #f5222d; }
+.badge-down { background: #f6ffed; color: #52c41a; }
+.badge-neutral { background: #f0f0f0; color: #666; }
+
+/* Table */
+.comparison-table { width: 100%; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 24px; }
+.comparison-table table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.comparison-table th { background: #1a1a2e; color: #fff; padding: 12px 10px; text-align: left; font-weight: 500; white-space: nowrap; }
+.comparison-table td { padding: 10px; border-bottom: 1px solid #f0f0f0; }
+.comparison-table tr:hover { background: #fafafa; }
+
+/* Recommendation */
+.rec-card { background: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-left: 4px solid #1a1a2e; }
+.rec-header { display: flex; align-items: center; margin-bottom: 8px; }
+.rec-level { font-size: 20px; margin-right: 8px; }
+.rec-name { font-size: 16px; font-weight: 700; margin-right: 12px; }
+.rec-score { font-size: 13px; margin-left: auto; }
+.rec-body { font-size: 14px; color: #333; line-height: 1.7; margin-bottom: 8px; }
+.rec-reasons { font-size: 12px; color: #888; background: #fafafa; padding: 8px 12px; border-radius: 6px; }
+
+/* Disclaimer */
+.disclaimer { background: #fff; border-radius: 12px; padding: 20px; margin-top: 24px; font-size: 12px; color: #999; line-height: 1.8; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stock-grid { grid-template-columns: 1fr; }
+  .metric-grid { grid-template-columns: repeat(2, 1fr); }
+  .summary-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>🔬 A股MLCC行业深度分析报告</h1>
+    <div class="subtitle">覆盖MLCC全产业链：制造（风华高科/三环集团/火炬电子/鸿远电子）· 上游材料（国瓷材料）· 上游配套（洁美科技）· 军用电子平台（振华科技）</div>
+    <div class="meta">
+      数据源：Tushare（行情K线）+ 腾讯财经（实时估值）+ 东方财富（资金流向/融资融券）<br>
+      分析日期：20260722（数据截止到最新交易日）· 生成时间：2026-07-23 14:36<br>
+      分析工具：Vibe-Trading AI + a-stock-data 双技能栈
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary-grid">
+    <div class="summary-card"><div class="s-val">7</div><div class="s-label">覆盖标的</div></div>
+    <div class="summary-card"><div class="s-val">85x</div><div class="s-label">板块平均PE(TTM)</div></div>
+    <div class="summary-card"><div class="s-val">5.5x</div><div class="s-label">板块平均PB</div></div>
+    <div class="summary-card"><div class="s-val">3778亿</div><div class="s-label">板块总市值</div></div>
+    <div class="summary-card negative"><div class="s-val">-24.7%</div><div class="s-label">板块平均60日涨跌</div></div>
+    <div class="summary-card"><div class="s-val">73</div><div class="s-label">最高综合评分</div></div>
+  </div>
+
+  <!-- 行业对比表 -->
+  <div class="section-title-main">📊 行业横向对比</div>
+  <div class="comparison-table">
+    <table>
+      <thead>
+        <tr>
+          <th>标的</th><th>最新价</th><th>涨跌%</th><th>PE(TTM)</th><th>PB</th><th>市值(亿)</th>
+          <th>换手%</th><th>量比</th><th>RSI14</th><th>5日%</th><th>20日%</th><th>60日%</th><th>综合评分</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>风华高科</strong><br><small>000636 MLCC制造(龙头)</small></td>
+          <td>42.79</td>
+          <td style="color:#f5222d">+3.61%</td>
+          <td>161.1x</td>
+          <td>4.00x</td>
+          <td>495亿</td>
+          <td>11.43%</td>
+          <td>1.28</td>
+          <td>44.1</td>
+          <td>+0.2%</td>
+          <td>-0.6%</td>
+          <td>-31.3%</td>
+          <td style="background:#f0f0f0;text-align:center;font-weight:700;border-radius:4px">35</td>
+        </tr>
+        <tr>
+          <td><strong>三环集团</strong><br><small>300408 电子陶瓷+MLCC</small></td>
+          <td>105.26</td>
+          <td style="color:#f5222d">+2.21%</td>
+          <td>72.7x</td>
+          <td>9.72x</td>
+          <td>1968亿</td>
+          <td>3.94%</td>
+          <td>1.01</td>
+          <td>39.3</td>
+          <td>-4.5%</td>
+          <td>-7.0%</td>
+          <td>-27.3%</td>
+          <td style="background:#f0f0f0;text-align:center;font-weight:700;border-radius:4px">48</td>
+        </tr>
+        <tr>
+          <td><strong>火炬电子</strong><br><small>603678 军用MLCC</small></td>
+          <td>44.31</td>
+          <td style="color:#f5222d">+0.73%</td>
+          <td>83.4x</td>
+          <td>3.45x</td>
+          <td>211亿</td>
+          <td>6.27%</td>
+          <td>1.29</td>
+          <td>34.6</td>
+          <td>-2.9%</td>
+          <td>-14.8%</td>
+          <td>-19.4%</td>
+          <td style="background:#f0f0f0;text-align:center;font-weight:700;border-radius:4px">42</td>
+        </tr>
+        <tr>
+          <td><strong>鸿远电子</strong><br><small>603267 军用MLCC</small></td>
+          <td>46.38</td>
+          <td style="color:#f5222d">+1.76%</td>
+          <td>37.5x</td>
+          <td>2.40x</td>
+          <td>107亿</td>
+          <td>4.52%</td>
+          <td>0.99</td>
+          <td>35.5</td>
+          <td>-0.9%</td>
+          <td>-9.1%</td>
+          <td>-21.2%</td>
+          <td style="background:#f5222d;text-align:center;font-weight:700;border-radius:4px">73</td>
+        </tr>
+        <tr>
+          <td><strong>洁美科技</strong><br><small>002859 MLCC载带(上游)</small></td>
+          <td>60.67</td>
+          <td style="color:#f5222d">+0.28%</td>
+          <td>117.7x</td>
+          <td>9.10x</td>
+          <td>260亿</td>
+          <td>4.25%</td>
+          <td>1.07</td>
+          <td>44.7</td>
+          <td>-0.2%</td>
+          <td>+3.9%</td>
+          <td>-28.5%</td>
+          <td style="background:#f0f0f0;text-align:center;font-weight:700;border-radius:4px">46</td>
+        </tr>
+        <tr>
+          <td><strong>国瓷材料</strong><br><small>300285 MLCC粉体(上游)</small></td>
+          <td>60.59</td>
+          <td style="color:#f5222d">+0.60%</td>
+          <td>97.9x</td>
+          <td>8.50x</td>
+          <td>517亿</td>
+          <td>15.68%</td>
+          <td>1.48</td>
+          <td>35.2</td>
+          <td>+0.0%</td>
+          <td>-17.3%</td>
+          <td>-35.5%</td>
+          <td style="background:#f0f0f0;text-align:center;font-weight:700;border-radius:4px">36</td>
+        </tr>
+        <tr>
+          <td><strong>振华科技</strong><br><small>000733 军用电子元器件</small></td>
+          <td>39.72</td>
+          <td style="color:#f5222d">+1.53%</td>
+          <td>22.4x</td>
+          <td>1.42x</td>
+          <td>220亿</td>
+          <td>2.33%</td>
+          <td>0.77</td>
+          <td>32.5</td>
+          <td>-1.2%</td>
+          <td>-9.0%</td>
+          <td>-9.9%</td>
+          <td style="background:#fa8c16;text-align:center;font-weight:700;border-radius:4px">60</td>
+        </tr></tbody>
+    </table>
+  </div>
+
+  <!-- 个股分析 -->
+  <div class="section-title-main">🔍 个股深度分析</div>
+  <div class="stock-grid">
+        <div class="stock-card">
+          <div class="card-header">
+            <div>
+              <span class="stock-name">风华高科</span>
+              <span class="stock-code">000636</span>
+              <span class="stock-type">MLCC制造(龙头)</span>
+            </div>
+            <div class="score-badge" style="background:#52c41a">
+              <div class="score-num">35</div>
+              <div class="score-label">暂避观望</div>
+            </div>
+          </div>
+          <div class="card-desc">国内最大MLCC制造商，产品覆盖消费电子、汽车、工业等领域，产能持续扩张</div>
+          <div class="card-body">
+            <div class="card-section">
+              <div class="section-title">📊 行情估值</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">最新价</span><span class="val">42.79</span></div>
+                <div class="metric"><span class="lbl">涨跌幅</span><span class="val" style="color:#f5222d">+3.61%</span></div>
+                <div class="metric"><span class="lbl">PE(TTM)</span><span class="val">161.1x</span></div>
+                <div class="metric"><span class="lbl">PB</span><span class="val">4.00x</span></div>
+                <div class="metric"><span class="lbl">市值</span><span class="val">495亿</span></div>
+                <div class="metric"><span class="lbl">换手率</span><span class="val">11.43%</span></div>
+                <div class="metric"><span class="lbl">量比</span><span class="val">1.28</span></div>
+                <div class="metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#f5222d">+165.1%</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📈 技术指标</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">MACD</span><span class="val" style="color:#f5222d">金叉向上·多头强势</span></div>
+                <div class="metric"><span class="lbl">RSI(14)</span><span class="val">44.1</span></div>
+                <div class="metric"><span class="lbl">MA5</span><span class="val">16.10</span></div>
+                <div class="metric"><span class="lbl">MA20</span><span class="val">16.14</span></div>
+                <div class="metric"><span class="lbl">MA60</span><span class="val">19.00</span></div>
+                <div class="metric"><span class="lbl">布林上轨</span><span class="val">16.88</span></div>
+                <div class="metric"><span class="lbl">布林中轨</span><span class="val">16.14</span></div>
+                <div class="metric"><span class="lbl">布林下轨</span><span class="val">15.40</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📉 涨跌幅</div>
+              <div class="perf-row">
+                <span>5日: <span style="color:#fa8c16">0.2</span></span>
+                <span>10日: <span style="color:#73d13d">-0.8</span></span>
+                <span>20日: <span style="color:#73d13d">-0.6</span></span>
+                <span>60日: <span style="color:#52c41a">-31.3</span></span>
+              </div>
+            </div>
+            
+            <div class="flow-row">
+              <span class="flow-label">近20日主力净流入</span>
+              <span style="color:#52c41a;font-weight:700">-25.68亿</span>
+            </div>
+            <div class="flow-row">
+              <span class="flow-label">超大单净流入</span>
+              <span style="color:#52c41a;font-weight:700">-9.17亿</span>
+            </div>
+            
+            <div class="flow-row">
+              <span class="flow-label">融资余额</span>
+              <span>26.34亿</span>
+            </div>
+            <div class="card-section">
+              <div class="section-title">💡 评分依据</div>
+              <div class="reasons">PE偏高(>100x) · MACD金叉 · 近60日超跌(中线布局) · 资金持续流出 · 融资余额减少</div>
+            </div>
+          </div>
+        </div>
+        <div class="stock-card">
+          <div class="card-header">
+            <div>
+              <span class="stock-name">三环集团</span>
+              <span class="stock-code">300408</span>
+              <span class="stock-type">电子陶瓷+MLCC</span>
+            </div>
+            <div class="score-badge" style="background:#666">
+              <div class="score-num">48</div>
+              <div class="score-label">中性观察</div>
+            </div>
+          </div>
+          <div class="card-desc">国内电子陶瓷龙头，MLCC业务快速增长，光纤陶瓷插芯全球第一</div>
+          <div class="card-body">
+            <div class="card-section">
+              <div class="section-title">📊 行情估值</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">最新价</span><span class="val">105.26</span></div>
+                <div class="metric"><span class="lbl">涨跌幅</span><span class="val" style="color:#f5222d">+2.21%</span></div>
+                <div class="metric"><span class="lbl">PE(TTM)</span><span class="val">72.7x</span></div>
+                <div class="metric"><span class="lbl">PB</span><span class="val">9.72x</span></div>
+                <div class="metric"><span class="lbl">市值</span><span class="val">1968亿</span></div>
+                <div class="metric"><span class="lbl">换手率</span><span class="val">3.94%</span></div>
+                <div class="metric"><span class="lbl">量比</span><span class="val">1.01</span></div>
+                <div class="metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#f5222d">+138.4%</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📈 技术指标</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">MACD</span><span class="val" style="color:#f5222d">金叉向上·多头强势</span></div>
+                <div class="metric"><span class="lbl">RSI(14)</span><span class="val">39.3</span></div>
+                <div class="metric"><span class="lbl">MA5</span><span class="val">42.61</span></div>
+                <div class="metric"><span class="lbl">MA20</span><span class="val">44.14</span></div>
+                <div class="metric"><span class="lbl">MA60</span><span class="val">49.93</span></div>
+                <div class="metric"><span class="lbl">布林上轨</span><span class="val">46.81</span></div>
+                <div class="metric"><span class="lbl">布林中轨</span><span class="val">44.14</span></div>
+                <div class="metric"><span class="lbl">布林下轨</span><span class="val">41.48</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📉 涨跌幅</div>
+              <div class="perf-row">
+                <span>5日: <span style="color:#73d13d">-4.5</span></span>
+                <span>10日: <span style="color:#73d13d">-3.0</span></span>
+                <span>20日: <span style="color:#73d13d">-7.0</span></span>
+                <span>60日: <span style="color:#52c41a">-27.3</span></span>
+              </div>
+            </div>
+            
+            
+            <div class="flow-row">
+              <span class="flow-label">融资余额</span>
+              <span>36.76亿</span>
+            </div>
+            <div class="card-section">
+              <div class="section-title">💡 评分依据</div>
+              <div class="reasons">PE略高(>60x) · PB偏高(>8x) · MACD金叉 · 近60日超跌(中线布局)</div>
+            </div>
+          </div>
+        </div>
+        <div class="stock-card">
+          <div class="card-header">
+            <div>
+              <span class="stock-name">火炬电子</span>
+              <span class="stock-code">603678</span>
+              <span class="stock-type">军用MLCC</span>
+            </div>
+            <div class="score-badge" style="background:#666">
+              <div class="score-num">42</div>
+              <div class="score-label">中性观察</div>
+            </div>
+          </div>
+          <div class="card-desc">军用MLCC核心供应商，产品应用于航空航天、武器装备等高端领域</div>
+          <div class="card-body">
+            <div class="card-section">
+              <div class="section-title">📊 行情估值</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">最新价</span><span class="val">44.31</span></div>
+                <div class="metric"><span class="lbl">涨跌幅</span><span class="val" style="color:#f5222d">+0.73%</span></div>
+                <div class="metric"><span class="lbl">PE(TTM)</span><span class="val">83.4x</span></div>
+                <div class="metric"><span class="lbl">PB</span><span class="val">3.45x</span></div>
+                <div class="metric"><span class="lbl">市值</span><span class="val">211亿</span></div>
+                <div class="metric"><span class="lbl">换手率</span><span class="val">6.27%</span></div>
+                <div class="metric"><span class="lbl">量比</span><span class="val">1.29</span></div>
+                <div class="metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#f5222d">+36.0%</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📈 技术指标</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">MACD</span><span class="val" style="color:#f5222d">金叉向上·多头强势</span></div>
+                <div class="metric"><span class="lbl">RSI(14)</span><span class="val">34.6</span></div>
+                <div class="metric"><span class="lbl">MA5</span><span class="val">30.94</span></div>
+                <div class="metric"><span class="lbl">MA20</span><span class="val">32.59</span></div>
+                <div class="metric"><span class="lbl">MA60</span><span class="val">37.14</span></div>
+                <div class="metric"><span class="lbl">布林上轨</span><span class="val">36.23</span></div>
+                <div class="metric"><span class="lbl">布林中轨</span><span class="val">32.59</span></div>
+                <div class="metric"><span class="lbl">布林下轨</span><span class="val">28.94</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📉 涨跌幅</div>
+              <div class="perf-row">
+                <span>5日: <span style="color:#73d13d">-2.9</span></span>
+                <span>10日: <span style="color:#73d13d">-4.5</span></span>
+                <span>20日: <span style="color:#52c41a">-14.8</span></span>
+                <span>60日: <span style="color:#52c41a">-19.4</span></span>
+              </div>
+            </div>
+            
+            
+            <div class="flow-row">
+              <span class="flow-label">融资余额</span>
+              <span>5.27亿</span>
+            </div>
+            <div class="card-section">
+              <div class="section-title">💡 评分依据</div>
+              <div class="reasons">PE略高(>60x) · MACD金叉 · 近20日超跌 · 融资余额减少</div>
+            </div>
+          </div>
+        </div>
+        <div class="stock-card">
+          <div class="card-header">
+            <div>
+              <span class="stock-name">鸿远电子</span>
+              <span class="stock-code">603267</span>
+              <span class="stock-type">军用MLCC</span>
+            </div>
+            <div class="score-badge" style="background:#f5222d">
+              <div class="score-num">73</div>
+              <div class="score-label">强烈推荐</div>
+            </div>
+          </div>
+          <div class="card-desc">军用MLCC+直流滤波器双主业，军品占比高，客户集中度低</div>
+          <div class="card-body">
+            <div class="card-section">
+              <div class="section-title">📊 行情估值</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">最新价</span><span class="val">46.38</span></div>
+                <div class="metric"><span class="lbl">涨跌幅</span><span class="val" style="color:#f5222d">+1.76%</span></div>
+                <div class="metric"><span class="lbl">PE(TTM)</span><span class="val">37.5x</span></div>
+                <div class="metric"><span class="lbl">PB</span><span class="val">2.40x</span></div>
+                <div class="metric"><span class="lbl">市值</span><span class="val">107亿</span></div>
+                <div class="metric"><span class="lbl">换手率</span><span class="val">4.52%</span></div>
+                <div class="metric"><span class="lbl">量比</span><span class="val">0.99</span></div>
+                <div class="metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#52c41a">-4.9%</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📈 技术指标</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">MACD</span><span class="val" style="color:#f5222d">金叉向上·多头强势</span></div>
+                <div class="metric"><span class="lbl">RSI(14)</span><span class="val">35.5</span></div>
+                <div class="metric"><span class="lbl">MA5</span><span class="val">47.40</span></div>
+                <div class="metric"><span class="lbl">MA20</span><span class="val">48.76</span></div>
+                <div class="metric"><span class="lbl">MA60</span><span class="val">54.33</span></div>
+                <div class="metric"><span class="lbl">布林上轨</span><span class="val">51.82</span></div>
+                <div class="metric"><span class="lbl">布林中轨</span><span class="val">48.76</span></div>
+                <div class="metric"><span class="lbl">布林下轨</span><span class="val">45.70</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📉 涨跌幅</div>
+              <div class="perf-row">
+                <span>5日: <span style="color:#73d13d">-0.9</span></span>
+                <span>10日: <span style="color:#73d13d">-2.7</span></span>
+                <span>20日: <span style="color:#73d13d">-9.1</span></span>
+                <span>60日: <span style="color:#52c41a">-21.2</span></span>
+              </div>
+            </div>
+            
+            
+            <div class="flow-row">
+              <span class="flow-label">融资余额</span>
+              <span>6.88亿</span>
+            </div>
+            <div class="card-section">
+              <div class="section-title">💡 评分依据</div>
+              <div class="reasons">PE合理(<40x) · PB合理(<3x) · MACD金叉 · 近60日超跌(中线布局)</div>
+            </div>
+          </div>
+        </div>
+        <div class="stock-card">
+          <div class="card-header">
+            <div>
+              <span class="stock-name">洁美科技</span>
+              <span class="stock-code">002859</span>
+              <span class="stock-type">MLCC载带(上游)</span>
+            </div>
+            <div class="score-badge" style="background:#666">
+              <div class="score-num">46</div>
+              <div class="score-label">中性观察</div>
+            </div>
+          </div>
+          <div class="card-desc">全球MLCC载带龙头，市占率超50%，受益于MLCC产能扩张</div>
+          <div class="card-body">
+            <div class="card-section">
+              <div class="section-title">📊 行情估值</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">最新价</span><span class="val">60.67</span></div>
+                <div class="metric"><span class="lbl">涨跌幅</span><span class="val" style="color:#f5222d">+0.28%</span></div>
+                <div class="metric"><span class="lbl">PE(TTM)</span><span class="val">117.7x</span></div>
+                <div class="metric"><span class="lbl">PB</span><span class="val">9.10x</span></div>
+                <div class="metric"><span class="lbl">市值</span><span class="val">260亿</span></div>
+                <div class="metric"><span class="lbl">换手率</span><span class="val">4.25%</span></div>
+                <div class="metric"><span class="lbl">量比</span><span class="val">1.07</span></div>
+                <div class="metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#f5222d">+110.7%</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📈 技术指标</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">MACD</span><span class="val" style="color:#f5222d">金叉向上·多头强势</span></div>
+                <div class="metric"><span class="lbl">RSI(14)</span><span class="val">44.7</span></div>
+                <div class="metric"><span class="lbl">MA5</span><span class="val">28.82</span></div>
+                <div class="metric"><span class="lbl">MA20</span><span class="val">28.79</span></div>
+                <div class="metric"><span class="lbl">MA60</span><span class="val">33.63</span></div>
+                <div class="metric"><span class="lbl">布林上轨</span><span class="val">29.85</span></div>
+                <div class="metric"><span class="lbl">布林中轨</span><span class="val">28.79</span></div>
+                <div class="metric"><span class="lbl">布林下轨</span><span class="val">27.74</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📉 涨跌幅</div>
+              <div class="perf-row">
+                <span>5日: <span style="color:#73d13d">-0.2</span></span>
+                <span>10日: <span style="color:#fa8c16">1.5</span></span>
+                <span>20日: <span style="color:#fa8c16">3.9</span></span>
+                <span>60日: <span style="color:#52c41a">-28.5</span></span>
+              </div>
+            </div>
+            
+            
+            <div class="flow-row">
+              <span class="flow-label">融资余额</span>
+              <span>7.15亿</span>
+            </div>
+            <div class="card-section">
+              <div class="section-title">💡 评分依据</div>
+              <div class="reasons">PE偏高(>100x) · PB偏高(>8x) · MACD金叉 · 近60日超跌(中线布局) · 融资余额增加</div>
+            </div>
+          </div>
+        </div>
+        <div class="stock-card">
+          <div class="card-header">
+            <div>
+              <span class="stock-name">国瓷材料</span>
+              <span class="stock-code">300285</span>
+              <span class="stock-type">MLCC粉体(上游)</span>
+            </div>
+            <div class="score-badge" style="background:#52c41a">
+              <div class="score-num">36</div>
+              <div class="score-label">暂避观望</div>
+            </div>
+          </div>
+          <div class="card-desc">MLCC陶瓷粉体核心供应商，钛酸钡粉体技术领先，国产替代先锋</div>
+          <div class="card-body">
+            <div class="card-section">
+              <div class="section-title">📊 行情估值</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">最新价</span><span class="val">60.59</span></div>
+                <div class="metric"><span class="lbl">涨跌幅</span><span class="val" style="color:#f5222d">+0.60%</span></div>
+                <div class="metric"><span class="lbl">PE(TTM)</span><span class="val">97.9x</span></div>
+                <div class="metric"><span class="lbl">PB</span><span class="val">8.50x</span></div>
+                <div class="metric"><span class="lbl">市值</span><span class="val">517亿</span></div>
+                <div class="metric"><span class="lbl">换手率</span><span class="val">15.68%</span></div>
+                <div class="metric"><span class="lbl">量比</span><span class="val">1.48</span></div>
+                <div class="metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#f5222d">+139.0%</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📈 技术指标</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">MACD</span><span class="val" style="color:#52c41a">死叉向下·空头强势</span></div>
+                <div class="metric"><span class="lbl">RSI(14)</span><span class="val">35.2</span></div>
+                <div class="metric"><span class="lbl">MA5</span><span class="val">22.52</span></div>
+                <div class="metric"><span class="lbl">MA20</span><span class="val">25.36</span></div>
+                <div class="metric"><span class="lbl">MA60</span><span class="val">29.80</span></div>
+                <div class="metric"><span class="lbl">布林上轨</span><span class="val">30.23</span></div>
+                <div class="metric"><span class="lbl">布林中轨</span><span class="val">25.36</span></div>
+                <div class="metric"><span class="lbl">布林下轨</span><span class="val">20.48</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📉 涨跌幅</div>
+              <div class="perf-row">
+                <span>5日: <span style="color:#999">0.0</span></span>
+                <span>10日: <span style="color:#52c41a">-19.8</span></span>
+                <span>20日: <span style="color:#52c41a">-17.3</span></span>
+                <span>60日: <span style="color:#52c41a">-35.5</span></span>
+              </div>
+            </div>
+            
+            
+            <div class="flow-row">
+              <span class="flow-label">融资余额</span>
+              <span>29.94亿</span>
+            </div>
+            <div class="card-section">
+              <div class="section-title">💡 评分依据</div>
+              <div class="reasons">PE略高(>60x) · PB偏高(>8x) · MACD死叉 · 近20日超跌 · 近60日超跌(中线布局) · 融资余额增加</div>
+            </div>
+          </div>
+        </div>
+        <div class="stock-card">
+          <div class="card-header">
+            <div>
+              <span class="stock-name">振华科技</span>
+              <span class="stock-code">000733</span>
+              <span class="stock-type">军用电子元器件</span>
+            </div>
+            <div class="score-badge" style="background:#fa8c16">
+              <div class="score-num">60</div>
+              <div class="score-label">推荐关注</div>
+            </div>
+          </div>
+          <div class="card-desc">军用电子元器件平台型企业，产品涵盖MLCC、电阻、电感、半导体等</div>
+          <div class="card-body">
+            <div class="card-section">
+              <div class="section-title">📊 行情估值</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">最新价</span><span class="val">39.72</span></div>
+                <div class="metric"><span class="lbl">涨跌幅</span><span class="val" style="color:#f5222d">+1.53%</span></div>
+                <div class="metric"><span class="lbl">PE(TTM)</span><span class="val">22.4x</span></div>
+                <div class="metric"><span class="lbl">PB</span><span class="val">1.42x</span></div>
+                <div class="metric"><span class="lbl">市值</span><span class="val">220亿</span></div>
+                <div class="metric"><span class="lbl">换手率</span><span class="val">2.33%</span></div>
+                <div class="metric"><span class="lbl">量比</span><span class="val">0.77</span></div>
+                <div class="metric"><span class="lbl">价vsMA20</span><span class="val" style="color:#52c41a">-19.3%</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📈 技术指标</div>
+              <div class="metric-grid">
+                <div class="metric"><span class="lbl">MACD</span><span class="val" style="color:#52c41a">死叉向下·空头强势</span></div>
+                <div class="metric"><span class="lbl">RSI(14)</span><span class="val">32.5</span></div>
+                <div class="metric"><span class="lbl">MA5</span><span class="val">47.54</span></div>
+                <div class="metric"><span class="lbl">MA20</span><span class="val">49.20</span></div>
+                <div class="metric"><span class="lbl">MA60</span><span class="val">53.24</span></div>
+                <div class="metric"><span class="lbl">布林上轨</span><span class="val">52.06</span></div>
+                <div class="metric"><span class="lbl">布林中轨</span><span class="val">49.20</span></div>
+                <div class="metric"><span class="lbl">布林下轨</span><span class="val">46.34</span></div>
+              </div>
+            </div>
+            <div class="card-section">
+              <div class="section-title">📉 涨跌幅</div>
+              <div class="perf-row">
+                <span>5日: <span style="color:#73d13d">-1.2</span></span>
+                <span>10日: <span style="color:#73d13d">-3.8</span></span>
+                <span>20日: <span style="color:#73d13d">-9.0</span></span>
+                <span>60日: <span style="color:#73d13d">-9.9</span></span>
+              </div>
+            </div>
+            
+            
+            <div class="flow-row">
+              <span class="flow-label">融资余额</span>
+              <span>15.37亿</span>
+            </div>
+            <div class="card-section">
+              <div class="section-title">💡 评分依据</div>
+              <div class="reasons">PE合理(<40x) · PB合理(<3x) · MACD死叉</div>
+            </div>
+          </div>
+        </div></div>
+
+  <!-- 投资建议 -->
+  <div class="section-title-main">🎯 投资建议（按综合评分排序）</div>
+  
+        <div class="rec-card">
+          <div class="rec-header">
+            <span class="rec-level">⭐</span>
+            <span class="rec-name">鸿远电子 (603267)</span>
+            <span class="rec-score" style="color:#f5222d">评分: 73/100</span>
+          </div>
+          <div class="rec-body">PE 37.5x为板块最低估值，军用MLCC+滤波器双主业稳定性强。近60日回调21%已较充分，基本面扎实，可作为稳健型配置。</div>
+          <div class="rec-reasons">关键信号: PE合理(<40x) · PB合理(<3x) · MACD金叉 · 近60日超跌(中线布局)</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-header">
+            <span class="rec-level">👍</span>
+            <span class="rec-name">振华科技 (000733)</span>
+            <span class="rec-score" style="color:#fa8c16">评分: 60/100</span>
+          </div>
+          <div class="rec-body">PE仅22.4x为板块最低，PB 1.42x也为最低，估值安全边际最高。军品订单稳定，60日仅回调9.9%最为抗跌。适合作为防守型底仓。</div>
+          <div class="rec-reasons">关键信号: PE合理(<40x) · PB合理(<3x) · MACD死叉</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-header">
+            <span class="rec-level">👀</span>
+            <span class="rec-name">三环集团 (300408)</span>
+            <span class="rec-score" style="color:#666">评分: 48/100</span>
+          </div>
+          <div class="rec-body">电子陶瓷平台型企业，MLCC+光纤插芯+PKG多轮驱动。估值相对合理，但近期跟随板块调整。技术面MACD死叉需时间修复，等待RSI企稳后再考虑。</div>
+          <div class="rec-reasons">关键信号: PE略高(>60x) · PB偏高(>8x) · MACD金叉 · 近60日超跌(中线布局)</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-header">
+            <span class="rec-level">👀</span>
+            <span class="rec-name">洁美科技 (002859)</span>
+            <span class="rec-score" style="color:#666">评分: 46/100</span>
+          </div>
+          <div class="rec-body">MLCC载带全球龙头，市占率超50%。作为上游配套商，业绩与下游MLCC扩产直接相关。近20日+3.85%在板块中表现最强，但PE偏高需关注业绩兑现。</div>
+          <div class="rec-reasons">关键信号: PE偏高(>100x) · PB偏高(>8x) · MACD金叉 · 近60日超跌(中线布局) · 融资余额增加</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-header">
+            <span class="rec-level">👀</span>
+            <span class="rec-name">火炬电子 (603678)</span>
+            <span class="rec-score" style="color:#666">评分: 42/100</span>
+          </div>
+          <div class="rec-body">军用MLCC核心标的，受益于国防信息化建设。PB仅3.45x在板块中估值较低，成交量萎缩显示抛压减轻。适合作为军工电子配置。</div>
+          <div class="rec-reasons">关键信号: PE略高(>60x) · MACD金叉 · 近20日超跌 · 融资余额减少</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-header">
+            <span class="rec-level">👀</span>
+            <span class="rec-name">国瓷材料 (300285)</span>
+            <span class="rec-score" style="color:#666">评分: 36/100</span>
+          </div>
+          <div class="rec-body">MLCC粉体国产替代核心标的，近60日-35.5%为本板块最大跌幅。PB 8.5x仍偏高，技术面尚未企稳。中长期逻辑不变，短期等待右侧信号。</div>
+          <div class="rec-reasons">关键信号: PE略高(>60x) · PB偏高(>8x) · MACD死叉 · 近20日超跌 · 近60日超跌(中线布局)</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-header">
+            <span class="rec-level">👀</span>
+            <span class="rec-name">风华高科 (000636)</span>
+            <span class="rec-score" style="color:#666">评分: 35/100</span>
+          </div>
+          <div class="rec-body">国内MLCC龙头，产能扩张期。短期受消费电子低迷拖累，但汽车MLCC放量+国产替代逻辑清晰。60日超跌后估值消化中，适合中线分批布局。关注Q3产能利用率拐点。</div>
+          <div class="rec-reasons">关键信号: PE偏高(>100x) · MACD金叉 · 近60日超跌(中线布局) · 资金持续流出 · 融资余额减少</div>
+        </div>
+
+  <!-- 风险提示 -->
+  <div class="disclaimer">
+    <strong>⚠️ 风险提示与免责声明</strong><br>
+    本报告由 AI 投资分析系统自动生成，基于公开市场数据和量化模型，仅供参考，不构成投资建议。<br>
+    <strong>主要风险因素：</strong><br>
+    ① MLCC行业周期性波动风险——下游消费电子需求变化可能导致产能利用率波动；<br>
+    ② 原材料价格波动——钛酸钡、镍电极等原材料成本占比高；<br>
+    ③ 国产替代进程不及预期——高端MLCC（车规级、军工级）国产化仍处于早期阶段；<br>
+    ④ 军品订单不确定性——军工电子标的（火炬电子、鸿远电子、振华科技）受国防采购节奏影响；<br>
+    ⑤ 市场情绪风险——当前板块整体处于调整期，短期波动较大。<br>
+    ⑥ 数据时效性——部分数据可能存在延迟，技术指标基于历史数据，不预示未来走势。<br><br>
+    <strong>投资有风险，入市需谨慎。请结合自身风险承受能力和投资目标做出决策。</strong>
+  </div>
+
+</div>
+</body>
+</html>
