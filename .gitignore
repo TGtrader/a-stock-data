@@ -16,6 +16,7 @@ data/*.csv
 data/*.json
 data/*.html
 data/*.png
+data/*.db
 *.pdf
 
 # Output reports
