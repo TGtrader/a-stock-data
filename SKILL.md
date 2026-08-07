@@ -1,17 +1,17 @@
 ---
 name: a-stock-data
-description: A股全栈数据工具包 — 覆盖行情(mootdx+腾讯+百度K线)、研报(东财+同花顺+iwencai)、信号(同花顺热点+北向+龙虎榜+解禁+行业)、资金面(融资融券+大宗交易+股东户数+分红+资金流分钟级+资金流120日)、新闻(东财个股+全球资讯)、基础数据(mootdx财务/F10+东财+新浪三表)、公告(巨潮)、打板(涨停池/连板梯队/炸板率/跌停)、ETF期权(T型报价/希腊字母/IV)、舆情互动(互动易问答/热榜/人气榜)十层数据源，内嵌全部调用代码，自包含零依赖外部文件。优先用通达信(mootdx)/腾讯(不封IP)，东财接口已内置限流防封。适用于个股估值、研报检索、题材归因、龙虎榜跟踪、解禁预警、行业轮动、融资融券跟踪、筹码分析、产业链调研、批量筛选、打板情绪跟踪、ETF期权策略、投资者互动问答、市场热度选题等场景。
+description: A股全栈数据工具包 — 覆盖行情(mootdx个股K线+腾讯+百度K线+Ashare指数分钟K线★v3.4)、研报(东财+同花顺+iwencai)、信号(同花顺热点+北向+龙虎榜+解禁+行业)、资金面(融资融券+大宗交易+股东户数+分红+资金流分钟级+资金流120日)、新闻(东财个股+全球资讯)、基础数据(mootdx财务/F10+东财+新浪三表)、公告(巨潮)、打板(涨停池/连板梯队/炸板率/跌停)、ETF期权(T型报价/希腊字母/IV)、舆情互动(互动易问答/热榜/人气榜)十层+1数据源，内嵌全部调用代码，自包含零依赖外部文件。优先用通达信(mootdx)/腾讯(不封IP)，东财接口已内置限流防封。适用于个股估值、研报检索、题材归因、龙虎榜跟踪、解禁预警、行业轮动、融资融券跟踪、筹码分析、产业链调研、批量筛选、打板情绪跟踪、ETF期权策略、投资者互动问答、市场热度选题、指数分钟级K线等场景。
 origin: custom
-version: 3.3.0
+version: 3.4.0
 ---
 
 > 📦 项目主页：https://github.com/simonlin1212/a-stock-data — 更新、反馈、支持作者
 > 
 > 作者：Simon 林 · 抖音「Simon林」· 公众号「硅基世纪」
 
-# A股全栈数据工具包 V3.3.0
+# A股全栈数据工具包 V3.4.0
 
-十层数据架构，40 个端点实测可用（2026-06 验证；财联社快讯已下线，详见 §5.2），覆盖主板/中小板/科创板/ST。
+十层+1 数据架构，41 个端点实测可用（2026-08 验证），覆盖主板/中小板/科创板/ST。
 
 > **V3.2.3（行业研报新增）：**
 > - **§2.1 东财行业研报 `eastmoney_industry_reports()`**：研报层补上行业研报端点（此前只有个股研报）。与个股研报**同端点** `reportapi.eastmoney.com/report/list`，仅 `qType=1`；`industry_code="*"` 拉全行业、传东财行业码（如 `1238`=IT服务Ⅱ）精确过滤，PDF 复用 `download_pdf()`，走 `em_get` 限流。端点数 27 → 28。
@@ -528,6 +528,101 @@ print("字段:", data["keys"][:10])
 print("最近5根K线:", data["rows"][-5:])
 # keys 包含: time, open, close, high, low, volume, amount, ma5avgprice, ma10avgprice, ma20avgprice 等
 ```
+
+### 1.4 Ashare — 指数分钟K线（V3.4 新增 · 新浪+腾讯双源）
+
+**核心价值：** A股主要指数分钟级K线，新浪+腾讯双源自动切换，不封IP，零额外依赖。
+
+覆盖七大指数: 上证指数(sh000001)、深证成指(sz399001)、创业板指(sz399006)、
+科创50(sh000688)、沪深300(sh000300)、上证50(sh000016)、中证500(sh000905)。
+
+频率: `1m`(近2日) / `5m`(近7日) / `15m`(近16日) / `30m` / `60m`(近1月) / `1d`(日线)
+
+```python
+import requests, json
+import pandas as pd
+
+def index_minute_kline(code: str, frequency: str = "5m", count: int = 50) -> pd.DataFrame:
+    """
+    A股指数分钟级K线 · 新浪+腾讯双源自动切换 · 不封IP · 零额外依赖
+
+    Args:
+        code: 指数代码，sh000001/sz399006/sh000300/sz399001/sh000016/sh000688/sh000905
+        frequency: 1m=1分钟 / 5m=5分钟 / 15m=15分钟 / 30m=30分钟 / 60m=60分钟 / 1d=日线
+        count: 返回K线数量 (max: 1m≈500, 5m≈300, 15m≈200, 60m≈100)
+    Returns:
+        DataFrame with index=time, columns=[open, high, low, close, volume]
+    """
+    # ── 新浪源（主力，分钟级全频率支持）─────────────────
+    def _sina(code, count, ts):
+        url = f"http://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol={code}&scale={ts}&ma=5&datalen={count}"
+        dstr = json.loads(requests.get(url).content)
+        df = pd.DataFrame(dstr, columns=["day", "open", "high", "low", "close", "volume"])
+        for col in ["open", "high", "low", "close", "volume"]:
+            df[col] = df[col].astype(float)
+        df.day = pd.to_datetime(df.day)
+        df.set_index("day", inplace=True)
+        df.index.name = ""
+        return df
+
+    # ── 腾讯源（备用，1分钟专用）─────────────────────────
+    def _tencent_min(code, count, ts):
+        url = f"http://ifzq.gtimg.cn/appstock/app/kline/mkline?param={code},m{ts},,{count}"
+        st = json.loads(requests.get(url).content)
+        buf = st["data"][code]["m" + str(ts)]
+        df = pd.DataFrame(buf, columns=["time", "open", "close", "high", "low", "volume", "n1", "n2"])
+        df = df[["time", "open", "close", "high", "low", "volume"]]
+        for col in ["open", "close", "high", "low", "volume"]:
+            df[col] = df[col].astype(float)
+        df.time = pd.to_datetime(df.time)
+        df.set_index("time", inplace=True)
+        df.index.name = ""
+        df["close"].iloc[-1] = float(st["data"][code]["qt"][code][3])
+        return df
+
+    # ── 腾讯源（日线专用）─────────────────────────────────
+    def _tencent_day(code, count):
+        url = f"http://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param={code},day,,,{count},qfq"
+        st = json.loads(requests.get(url).content)
+        buf = st["data"][code].get("qfqday") or st["data"][code]["day"]
+        df = pd.DataFrame(buf, columns=["time", "open", "close", "high", "low", "volume"], dtype="float")
+        df.time = pd.to_datetime(df.time)
+        df.set_index("time", inplace=True)
+        df.index.name = ""
+        return df
+
+    # ── 调度逻辑 ──────────────────────────────────────────
+    freq_map = {"1m": 1, "5m": 5, "15m": 15, "30m": 30, "60m": 60,
+                "1d": 240, "1w": 1200, "1M": 7200}
+    ts = freq_map.get(frequency, 5)
+
+    if frequency == "1m":
+        return _tencent_min(code, count, ts)              # 1分钟仅腾讯
+    elif frequency in ("1d", "1w", "1M"):
+        try:
+            return _sina(code, count, ts)                 # 日线新浪主力
+        except Exception:
+            return _tencent_day(code, count)              # 日线腾讯备用
+    else:
+        try:
+            return _sina(code, count, ts)                 # 分钟新浪主力
+        except Exception:
+            return _tencent_min(code, count, ts)          # 分钟腾讯备用
+
+# 用法
+# 上证指数 5分钟K线
+df = index_minute_kline("sh000001", frequency="5m", count=80)
+# 深证成指 15分钟K线
+df = index_minute_kline("sz399001", frequency="15m", count=60)
+# 沪深300 日线
+df = index_minute_kline("sh000300", frequency="1d", count=30)
+```
+
+**数据源优先级**: 新浪(主力,全频率) → 腾讯(备用,1分钟/日线) | 两者均不封IP，可高频调用。
+**局限**: 1分钟仅保留近2个交易日，5分钟近7个交易日。回测场景建议用日线或降低频率。
+
+**注**: 完整 `Ashare.py`（70 行）已放入 `scripts/Ashare.py`，可直接 `from scripts.Ashare import get_price` 使用。
+  原版 Ashare 仓库: https://github.com/mpquant/Ashare
 
 ---
 
