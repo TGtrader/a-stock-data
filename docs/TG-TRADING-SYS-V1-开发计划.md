@@ -172,6 +172,16 @@ class BaseAdapter:
 - `stock_daily_snapshot` 所有字段非空率 > 95%（部分字段如研报覆盖天然为空）
 - 完整运行一次 < 30分钟（L3总量~5000只股票）
 
+### P2.9 消息舆情模块（Day 30-32）
+
+| # | 任务 | 产出 | 复用 | 预估 |
+|---|------|------|------|------|
+| 2.9.1 | 新闻适配器 | `l1_data/adapters/news_adapter.py` — 封装5端点 | SKILL.md 新闻/舆情/公告层 | 3h |
+| 2.9.2 | 新闻汇总 | `l2_aggregation/news_aggregator.py` — 去重入 `news_items` | - | 3h |
+| 2.9.3 | 规则筛选打分 | `l3_analysis/news/news_calc.py` — 词典打分+标的匹配+影响度 | - | 6h |
+| 2.9.4 | LLM精评 | `l3_analysis/news/news_llm.py` — 薄接口 `assess(news)` + provider适配 | - | 4h |
+| 2.9.5 | 评估入库 | 写入 `news_assessment` 表 + 文本情绪指标 | - | 2h |
+
 ---
 
 ## P3：应用层 MVP L4（Day 31-45）
@@ -183,7 +193,7 @@ class BaseAdapter:
 | 3.1.1 | 筛选器 | `l4_application/decision_forest/df_screener.py` — 5步筛选流程（ST/流动性/涨跌幅/因子打分/排序） | 6h |
 | 3.1.2 | 打分引擎 | `l4_application/decision_forest/df_scorer.py` — 13因子加权评分 + 申万L1/L2行业中性化 | 6h |
 | 3.1.3 | 权重配置 | `config/decision_forest_weights.yaml` — YAML可编辑权重 | 2h |
-| 3.1.4 | 回测引擎 | `l4_application/decision_forest/df_backtest.py` — 基于历史 snapshot 的选股回测（滑点+手续费） | 8h |
+| 3.1.4 | 回测引擎 | `l4_application/decision_forest/df_backtest.py` — 基于历史 snapshot 的选股回测（复用 `scripts/slippage_model.py` 成本/滑点模型） | 8h |
 | 3.1.5 | 参数优化 | `l4_application/decision_forest/df_optimizer.py` — 网格搜索/贝叶斯优化权重 | 6h |
 | 3.1.6 | 选股报告 | `l4_application/decision_forest/df_report.py` — Top50 HTML 汇总表 + 单票详情 | 5h |
 
@@ -222,6 +232,14 @@ class BaseAdapter:
 - 回测引擎可在历史数据上评估策略收益
 - 7指数日线缠论报告可读
 - 行业估值热力图可查看
+
+### P3.6 消息预警与舆情参考（Day 45-47）
+
+| # | 任务 | 产出 | 预估 |
+|---|------|------|------|
+| 3.6.1 | 持仓/板块预警 | `l4_application/news_alert/news_alert.py` — 分级预警 + `news_alerts` 表 | 4h |
+| 3.6.2 | 市场要闻摘要 | `l4_application/news_alert/news_digest.py` — 每日摘要 HTML/JSON | 4h |
+| 3.6.3 | 舆情参考视图 | 单票时间线 + 行业聚合（复用 7.5/7.6 报告组件） | 3h |
 
 ---
 
