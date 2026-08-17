@@ -1,0 +1,13 @@
+# a-stock-data 核心依赖（A股数据包 + TG_trading_sys 决策系统）
+# 安装：pip install -r requirements.txt
+tushare
+mootdx
+requests
+pandas
+numpy
+stockstats
+
+# ── 可选 ─────────────────────────────────────────
+# 缠论分析（Rust 内核预编译包，需 Python ≥3.10 + VC++ Redistributable）
+#   pip install czsc -U
+# czsc

@@ -68,6 +68,33 @@ pip install mootdx requests pandas stockstats
 
 ---
 
+## 完整安装（本地仓库 · TG_trading_sys / 决策系统）
+
+需要跑估值 / 选股 / 缠论 / 消息舆情等完整系统时，clone 整个仓库：
+
+```bash
+git clone https://github.com/TGtrader/a-stock-data.git
+cd a-stock-data
+pip install -r requirements.txt          # 核心依赖
+pip install czsc -U                       # 可选：缠论分析
+```
+
+**Tushare token**（TG_trading_sys 数据源，二选一）：
+
+```bash
+# 方式 A：环境变量（cmd；PowerShell 用 $env:TUSHARE_TOKEN="你的token"）
+set TUSHARE_TOKEN=你的token
+
+# 方式 B：写文件 ~/.vibe-trading/.env，内容一行
+TUSHARE_TOKEN=你的token
+```
+
+**数据库**：`data/*.db` 不随仓库分发（git 忽略），首次运行数据管线自动重建，或从旧机器拷贝 `data/tg_trading.db`。
+
+> 环境要求：Windows 10+ 64 位 · Python 3.10+（推荐 3.11–3.13）。czsc 报 `DLL load failed` 时装 [VC++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe)。
+
+---
+
 ## 41 个端点能力清单
 
 ### 行情层（实时，不封 IP）
